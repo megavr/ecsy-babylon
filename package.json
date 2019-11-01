@@ -1,0 +1,37 @@
+{
+  "name": "ecsy-babylon",
+  "version": "0.0.1",
+  "description": "babylon.js ecsy binding and helpers",
+  "main": "dist/ecsy-babylon.js",
+  "scripts": {
+    "build": "eslint ./src/**/*.ts && tsc -p ./src && rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/megavr/ecsy-babylon.git"
+  },
+  "keywords": [
+    "ecsy",
+    "babylonjs"
+  ],
+  "author": "Shang Huang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/megavr/ecsy-babylon/issues"
+  },
+  "homepage": "https://github.com/megavr/ecsy-babylon#readme",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.6.0",
+    "@typescript-eslint/parser": "^2.6.0",
+    "eslint": "^6.6.0",
+    "rollup": "^1.26.2",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "rollup-plugin-terser": "^5.1.2",
+    "typescript": "^3.6.4"
+  },
+  "dependencies": {
+    "@babylonjs/core": "^4.0.3",
+    "@babylonjs/gui": "^4.0.3",
+    "ecsy": "^0.1.4"
+  }
+}
