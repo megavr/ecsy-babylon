@@ -42,7 +42,6 @@ export default [
   {
     external: [
       "ecsy",
-      "@babylonjs/core",
       "@ecsy-babylon"
     ],
     input: "packages/examples/app.js",
@@ -51,7 +50,6 @@ export default [
       format: "iife",
       globals: {
         "ecsy": "ECSY",
-        "@babylonjs/core": "BABYLON",
         "@ecsy-babylon": "EB"
       },
     },

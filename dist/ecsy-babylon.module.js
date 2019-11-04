@@ -1,4 +1,4 @@
-import { Angle, VRExperienceHelper, Engine, Scene, MeshBuilder, Vector3, HemisphericLight, SpotLight, DirectionalLight, PointLight, StandardMaterial, Color3 } from '../js-modules/babylon.module.js';
+import { Angle, VRExperienceHelper, Engine, Scene, MeshBuilder, Vector3, HemisphericLight, SpotLight, DirectionalLight, PointLight, StandardMaterial, Color3, Texture } from '../js-modules/babylon.module.js';
 import { System } from 'https://ecsy.io/build/ecsy.module.js';
 
 class Transform {
@@ -235,10 +235,10 @@ LightSystem.queries = {
 
 var ColorValues;
 (function (ColorValues) {
-    ColorValues[ColorValues["diffuse"] = 0] = "diffuse";
-    ColorValues[ColorValues["specular"] = 1] = "specular";
-    ColorValues[ColorValues["emissive"] = 2] = "emissive";
-    ColorValues[ColorValues["ambient"] = 3] = "ambient";
+    ColorValues["diffuse"] = "diffuse";
+    ColorValues["specular"] = "specular";
+    ColorValues["emissive"] = "emissive";
+    ColorValues["ambient"] = "ambient";
 })(ColorValues || (ColorValues = {}));
 class MaterialSystem extends System {
     execute() {
@@ -252,16 +252,27 @@ class MaterialSystem extends System {
             this._updateMaterial(entity.getComponent(Material));
         });
         this.queries.meshMaterial.removed.forEach((entity) => {
-            let material = entity.getComponent(Material);
-            disposeObject(material);
+            disposeObject(entity.getComponent(Material));
             entity.getComponent(Mesh).object.material = null;
         });
     }
     _updateMaterial(material) {
-        Object.keys(material).forEach(name => {
+        Object.keys(material).filter(name => name !== "texture").forEach(name => {
             ColorValues[name] !== undefined ?
                 material.object[`${name}Color`] = Color3.FromHexString(material[name]) :
                 material.object[name] = material[name];
+        });
+        material.texture !== undefined && this._updateTexture(material, material.texture);
+    }
+    _updateTexture(material, textureComponent) {
+        Object.keys(textureComponent).forEach(name => {
+            let texture = textureComponent[name];
+            let textureObject = new Texture(texture.url, getActiveScene(this, material.sceneName));
+            Object.keys(texture).filter(prop => prop !== "url").forEach(prop => {
+                textureObject[prop] = texture[prop];
+            });
+            material.object[`${name}Texture`] !== null && disposeObject(material.object[`${name}Texture`]);
+            material.object[`${name}Texture`] = textureObject;
         });
     }
 }

@@ -10,5 +10,5 @@ export {
   // Light
   Light, PointLight, DirectionalLight, SpotLight, HemisphericLight,
   // Material
-  Material, StandardMaterial
+  Material, StandardMaterial, Texture
 } from "@babylonjs/core/index";
