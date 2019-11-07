@@ -1,6 +1,6 @@
-import { World } from "ecsy";
 import * as BABYLON from "@babylonjs/core";
-import { ObjectComponent } from "../components/types/index";
+import { System, World } from "ecsy";
+import { ObjectComponent, ParticleTextureProperties, TextureComponent, TextureProperties, TextureAttributes, XYZProperties } from "../components/types/index";
 
 /**
  * Translate degree to radians in Babylon.js.
@@ -22,8 +22,8 @@ export function radiansToDegree(radians: number): number {
  * Hack on ecsy 0.1.4 to get World instance from system itself.
  * @param system A registered ecsy System class
  */
-export function getWorld(system: any): World {
-  return (system["world"] as World);
+export function getWorld(system: System): World {
+  return ((system as any)["world"] as World);
 }
 
 /**
@@ -31,7 +31,7 @@ export function getWorld(system: any): World {
  * @param object Component contains Babylon.js object
  */
 export function disposeObject(component: ObjectComponent): void {
-  component.object !== undefined && component.object.dispose();
+  component.object && component.object.dispose();
 }
 
 /**
@@ -39,6 +39,32 @@ export function disposeObject(component: ObjectComponent): void {
  * @param system A registered ecsy System class
  * @param sceneName Name to get specific scene in system 
  */
-export function getActiveScene(system: any, sceneName?: string): BABYLON.Scene {
+export function getActiveScene(system: System, sceneName?: string): BABYLON.Scene {
   return (getWorld(system).getSystems().find(system => { return (system as any).activeScene !== undefined }) as any).getScene(sceneName);
+}
+
+/**
+ * Convert XYZ value to Vector3 from a TransformProperties object. 
+ * @param properties Defined XYZ values
+ */
+export function xyzToVector3(properties: XYZProperties): BABYLON.Vector3 {
+  return new BABYLON.Vector3(properties.x, properties.y, properties.z);
+}
+
+/**
+ * Update Babylon texture for the texture properties in a TextureComponent.
+ * @param component TextureComponent in the entity
+ * @param properties Properties to be update
+ * @param system A registered ecsy System class
+ */
+export function updateTexture(component: TextureComponent, properties: TextureProperties | ParticleTextureProperties, system: System): void {
+  Object.keys(properties).forEach(name => {
+    let textureAttributes = (properties as any)[name] as TextureAttributes;
+    let textureObject = new BABYLON.Texture(textureAttributes.url, getActiveScene(system, component.sceneName));
+    Object.keys(textureAttributes).filter(prop => prop === "url").forEach(prop => {
+      (textureObject as any)[prop] = (textureAttributes as any)[prop];
+    });
+    component.object[`${name}Texture`] && disposeObject(component.object[`${name}Texture`]);
+    component.object[`${name}Texture`] = textureObject;
+  });
 }

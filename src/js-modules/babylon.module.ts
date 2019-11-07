@@ -2,7 +2,7 @@ export {
   // Core
   Engine, Scene,
   // Math
-  Angle, Vector3, Color3,
+  Angle, Vector3, Color3, Color4,
   // Camera
   VRExperienceHelper,
   // Mesh
@@ -10,5 +10,7 @@ export {
   // Light
   Light, PointLight, DirectionalLight, SpotLight, HemisphericLight,
   // Material
-  Material, StandardMaterial, Texture
+  Material, StandardMaterial, Texture,
+  // Particle
+  ParticleSystem
 } from "@babylonjs/core/index";

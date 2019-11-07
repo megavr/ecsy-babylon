@@ -1,7 +1,16 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
 import { Light, LightTypes } from "../components/index";
-import { getActiveScene, disposeObject, degreeToRadians } from "../utils/index";
+import { getActiveScene, disposeObject, degreeToRadians, xyzToVector3 } from "../utils/index";
+import { XYZProperties } from "components/types";
+
+enum LightColorValues {
+  specular = "specular"
+}
+
+enum LightXyzValues {
+  direction = "direction"
+}
 
 export class LightSystem extends System {
   static queries = {
@@ -13,7 +22,7 @@ export class LightSystem extends System {
   execute() {
     this.queries.light.added.forEach((entity: Entity) => {
       let light = entity.getComponent(Light) as Light;
-      let direction = new BABYLON.Vector3(light.direction.x, light.direction.y, light.direction.z);
+      let direction = xyzToVector3(light.direction);
       let scene = getActiveScene(this, light.sceneName);
       switch (light.type) {
         case LightTypes.Point:
@@ -29,16 +38,28 @@ export class LightSystem extends System {
           light.object = new BABYLON.HemisphericLight(light.type, direction, scene);
           break;
       }
+      this._updateLight(light);
     });
 
     this.queries.light.changed.forEach((entity: Entity) => {
-      let light = entity.getComponent(Light) as Light;
-      light.direction !== undefined && (light.object.direction = new BABYLON.Vector3(light.direction.x, light.direction.y, light.direction.z));
+      this._updateLight(entity.getComponent(Light));
     });
 
     this.queries.light.removed.forEach((entity: Entity) => {
-      let light = entity.getComponent(Light) as Light;
-      disposeObject(light);
+      disposeObject(entity.getComponent(Light));
+    });
+  }
+
+  private _updateLight(light: Light) {
+    let lightObject = light.object;
+    Object.keys(light).forEach(name => {
+      if ((LightColorValues as any)[name]) {
+        (lightObject as any)[name] = BABYLON.Color3.FromHexString(((light as any)[name]) as string);
+      } else if ((LightXyzValues as any)[name]) {
+        (lightObject as any)[name] = xyzToVector3((light as any)[name] as XYZProperties);
+      } else {
+        (lightObject as any)[name] = (light as any)[name];
+      }
     });
   }
 }

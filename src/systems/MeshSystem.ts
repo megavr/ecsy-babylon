@@ -15,9 +15,9 @@ export class MeshSystem extends System {
       let mesh = entity.getComponent(Mesh) as Mesh;
       mesh.object = (BABYLON.MeshBuilder as any)[`Create${mesh.type}`].call(null, mesh.type, mesh.options, getActiveScene(this, mesh.sceneName));
     });
+    
     this.queries.mesh.removed.forEach((entity: Entity) => {
-      let mesh = entity.getComponent(Mesh) as Mesh;
-      disposeObject(mesh);
+      disposeObject(entity.getComponent(Mesh));
     });
   }
 }

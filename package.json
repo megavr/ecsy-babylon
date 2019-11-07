@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "babylon.js ecsy binding and helpers",
   "main": "dist/ecsy-babylon.js",
+  "types": "packages/index.d.ts",
   "scripts": {
     "build": "eslint ./src/**/*.ts && tsc -p ./src && rollup -c"
   },

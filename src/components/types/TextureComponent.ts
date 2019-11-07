@@ -1,13 +1,8 @@
-import { TextureProperties } from "./TextureProerties";
+import { SceneComponent } from "./SceneComponent";
+import { ObjectComponent } from "./ObjectComponent";
+import { TextureProperties } from "./TextureProperties";
+import { ParticleTextureProperties } from "./ParticleTextureProperties";
 
-export interface TextureComponent extends Object {
-  diffuse?: TextureProperties;
-  specular?: TextureProperties;
-  emissive?: TextureProperties;
-  ambient?: TextureProperties;
-  bump?: TextureProperties;
-  lightmap?: TextureProperties;
-  opacity?: TextureProperties;
-  reflection?: TextureProperties;
-  refraction?: TextureProperties;
+export interface TextureComponent extends SceneComponent, ObjectComponent {
+  texture?: TextureProperties | ParticleTextureProperties;
 }

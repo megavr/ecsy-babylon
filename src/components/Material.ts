@@ -1,12 +1,12 @@
 import * as BABYLON from "@babylonjs/core";
-import { MaterialComponent, ObjectComponent, SceneComponent, TextureComponent } from "./types/index";
+import { MaterialComponent, TextureProperties, TextureComponent } from "./types/index";
 
-export class Material implements SceneComponent, ObjectComponent, MaterialComponent {
+export class Material implements TextureComponent, MaterialComponent {
   sceneName?: string;
-  object: BABYLON.StandardMaterial;
-  diffuse = "#ffffff";
+  object!: BABYLON.StandardMaterial;
+  diffuse: string = "#ffffff";
   specular?: string;
   emissive?: string;
   ambient?: string;
-  texture?: TextureComponent;
+  texture?: TextureProperties;
 }

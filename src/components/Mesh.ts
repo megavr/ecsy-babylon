@@ -11,6 +11,6 @@ export enum MeshTypes {
 export class Mesh implements SceneComponent, ObjectComponent {
   sceneName?: string;
   object!: BABYLON.Mesh;
-  type = MeshTypes.Box;
-  options?: MeshOptions = {};
+  type: MeshTypes = MeshTypes.Box;
+  options: MeshOptions = {};
 }

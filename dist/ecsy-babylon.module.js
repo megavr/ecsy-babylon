@@ -1,4 +1,4 @@
-import { Angle, VRExperienceHelper, Engine, Scene, MeshBuilder, Vector3, HemisphericLight, SpotLight, DirectionalLight, PointLight, StandardMaterial, Color3, Texture } from '../js-modules/babylon.module.js';
+import { Vector3, Angle, Texture, VRExperienceHelper, Engine, Scene, MeshBuilder, HemisphericLight, SpotLight, DirectionalLight, PointLight, Color3, StandardMaterial, ParticleSystem as ParticleSystem$1, Color4 } from '../js-modules/babylon.module.js';
 import { System } from 'https://ecsy.io/build/ecsy.module.js';
 
 class Transform {
@@ -49,6 +49,28 @@ class Material {
     }
 }
 
+var ParticleTypes;
+(function (ParticleTypes) {
+    ParticleTypes["Point"] = "Point";
+    ParticleTypes["Box"] = "Box";
+    ParticleTypes["Sphere"] = "Sphere";
+    ParticleTypes["DirectedSphere"] = "DirectedSphere";
+    ParticleTypes["Hemisphere"] = "Hemisphere";
+    ParticleTypes["Cylinder"] = "Cylinder";
+    ParticleTypes["DirectedCylinder"] = "DirectedCylinder";
+    ParticleTypes["Cone"] = "Cone";
+})(ParticleTypes || (ParticleTypes = {}));
+class Particle {
+    constructor() {
+        this.type = ParticleTypes.Point;
+        this.capacity = 100;
+        this.emitter = { x: 0, y: 0, z: 0 };
+        // Point, Box, DirectedSphere, Cylinder
+        this.direction1 = { x: 0, y: 0, z: 0 };
+        this.direction2 = { x: 0, y: 10, z: 10 };
+    }
+}
+
 /**
  * Translate degree to radians in Babylon.js.
  * @param degree Degree
@@ -68,7 +90,7 @@ function getWorld(system) {
  * @param object Component contains Babylon.js object
  */
 function disposeObject(component) {
-    component.object !== undefined && component.object.dispose();
+    component.object && component.object.dispose();
 }
 /**
  * Get active scene from GameSystem.
@@ -77,6 +99,30 @@ function disposeObject(component) {
  */
 function getActiveScene(system, sceneName) {
     return getWorld(system).getSystems().find(system => { return system.activeScene !== undefined; }).getScene(sceneName);
+}
+/**
+ * Convert XYZ value to Vector3 from a TransformProperties object.
+ * @param properties Defined XYZ values
+ */
+function xyzToVector3(properties) {
+    return new Vector3(properties.x, properties.y, properties.z);
+}
+/**
+ * Update Babylon texture for the texture properties in a TextureComponent.
+ * @param component TextureComponent in the entity
+ * @param properties Properties to be update
+ * @param system A registered ecsy System class
+ */
+function updateTexture(component, properties, system) {
+    Object.keys(properties).forEach(name => {
+        let textureAttributes = properties[name];
+        let textureObject = new Texture(textureAttributes.url, getActiveScene(system, component.sceneName));
+        Object.keys(textureAttributes).filter(prop => prop === "url").forEach(prop => {
+            textureObject[prop] = textureAttributes[prop];
+        });
+        component.object[`${name}Texture`] && disposeObject(component.object[`${name}Texture`]);
+        component.object[`${name}Texture`] = textureObject;
+    });
 }
 
 class GameSystem extends System {
@@ -154,28 +200,18 @@ GameSystem.queries = {
 class TransformSystem extends System {
     execute() {
         this.queries.object.results.forEach((entity) => {
-            let transform = entity.getComponent(Transform);
-            let components = entity.getComponents();
-            let names = Object.keys(components).filter(name => {
-                return components[name].object !== undefined;
-            });
-            names.length > 0 && names.forEach(name => {
-                let object = components[name].object;
-                object.position !== undefined && this._position(transform.position, object.position);
-                object.rotation !== undefined && this._rotation(transform.rotation, object.rotation);
-                // https://doc.babylonjs.com/api/classes/babylon.transformnode#scaling
-                object.scaling !== undefined && this._scale(transform.scale, object.scaling);
-            });
+            this._updateTransform(entity.getComponent(Transform), entity.getComponents());
         });
     }
-    _position(source, target) {
-        target.set(source.x, source.y, source.z);
-    }
-    _rotation(source, target) {
-        target.set(degreeToRadians(source.x), degreeToRadians(source.y), degreeToRadians(source.z));
-    }
-    _scale(source, target) {
-        target.set(source.x, source.y, source.z);
+    _updateTransform(transform, components) {
+        Object.keys(components)
+            .filter(name => { return components[name].object !== undefined; })
+            .forEach(name => {
+            let object = components[name].object;
+            object.position && (object.position = xyzToVector3(transform.position));
+            object.rotation && object.rotation.set(degreeToRadians(transform.rotation.x), degreeToRadians(transform.rotation.y), degreeToRadians(transform.rotation.z));
+            object.scaling && (object.scaling = xyzToVector3(transform.scale));
+        });
     }
 }
 TransformSystem.queries = {
@@ -189,8 +225,7 @@ class MeshSystem extends System {
             mesh.object = MeshBuilder[`Create${mesh.type}`].call(null, mesh.type, mesh.options, getActiveScene(this, mesh.sceneName));
         });
         this.queries.mesh.removed.forEach((entity) => {
-            let mesh = entity.getComponent(Mesh);
-            disposeObject(mesh);
+            disposeObject(entity.getComponent(Mesh));
         });
     }
 }
@@ -198,11 +233,19 @@ MeshSystem.queries = {
     mesh: { components: [Mesh], listen: { added: true, removed: true } },
 };
 
+var LightColorValues;
+(function (LightColorValues) {
+    LightColorValues["specular"] = "specular";
+})(LightColorValues || (LightColorValues = {}));
+var LightXyzValues;
+(function (LightXyzValues) {
+    LightXyzValues["direction"] = "direction";
+})(LightXyzValues || (LightXyzValues = {}));
 class LightSystem extends System {
     execute() {
         this.queries.light.added.forEach((entity) => {
             let light = entity.getComponent(Light);
-            let direction = new Vector3(light.direction.x, light.direction.y, light.direction.z);
+            let direction = xyzToVector3(light.direction);
             let scene = getActiveScene(this, light.sceneName);
             switch (light.type) {
                 case LightTypes.Point:
@@ -218,14 +261,27 @@ class LightSystem extends System {
                     light.object = new HemisphericLight(light.type, direction, scene);
                     break;
             }
+            this._updateLight(light);
         });
         this.queries.light.changed.forEach((entity) => {
-            let light = entity.getComponent(Light);
-            light.direction !== undefined && (light.object.direction = new Vector3(light.direction.x, light.direction.y, light.direction.z));
+            this._updateLight(entity.getComponent(Light));
         });
         this.queries.light.removed.forEach((entity) => {
-            let light = entity.getComponent(Light);
-            disposeObject(light);
+            disposeObject(entity.getComponent(Light));
+        });
+    }
+    _updateLight(light) {
+        let lightObject = light.object;
+        Object.keys(light).forEach(name => {
+            if (LightColorValues[name]) {
+                lightObject[name] = Color3.FromHexString((light[name]));
+            }
+            else if (LightXyzValues[name]) {
+                lightObject[name] = xyzToVector3(light[name]);
+            }
+            else {
+                lightObject[name] = light[name];
+            }
         });
     }
 }
@@ -233,13 +289,13 @@ LightSystem.queries = {
     light: { components: [Light], listen: { added: true, removed: true, changed: true } },
 };
 
-var ColorValues;
-(function (ColorValues) {
-    ColorValues["diffuse"] = "diffuse";
-    ColorValues["specular"] = "specular";
-    ColorValues["emissive"] = "emissive";
-    ColorValues["ambient"] = "ambient";
-})(ColorValues || (ColorValues = {}));
+var MaterialColorValues;
+(function (MaterialColorValues) {
+    MaterialColorValues["diffuse"] = "diffuse";
+    MaterialColorValues["specular"] = "specular";
+    MaterialColorValues["emissive"] = "emissive";
+    MaterialColorValues["ambient"] = "ambient";
+})(MaterialColorValues || (MaterialColorValues = {}));
 class MaterialSystem extends System {
     execute() {
         this.queries.meshMaterial.added.forEach((entity) => {
@@ -257,22 +313,17 @@ class MaterialSystem extends System {
         });
     }
     _updateMaterial(material) {
-        Object.keys(material).filter(name => name !== "texture").forEach(name => {
-            ColorValues[name] !== undefined ?
-                material.object[`${name}Color`] = Color3.FromHexString(material[name]) :
-                material.object[name] = material[name];
-        });
-        material.texture !== undefined && this._updateTexture(material, material.texture);
-    }
-    _updateTexture(material, textureComponent) {
-        Object.keys(textureComponent).forEach(name => {
-            let texture = textureComponent[name];
-            let textureObject = new Texture(texture.url, getActiveScene(this, material.sceneName));
-            Object.keys(texture).filter(prop => prop !== "url").forEach(prop => {
-                textureObject[prop] = texture[prop];
-            });
-            material.object[`${name}Texture`] !== null && disposeObject(material.object[`${name}Texture`]);
-            material.object[`${name}Texture`] = textureObject;
+        let materialObject = material.object;
+        Object.keys(material).forEach(name => {
+            if (MaterialColorValues[name]) {
+                materialObject[`${name}Color`] = Color3.FromHexString(material[name]);
+            }
+            else if (name === "texture") {
+                material.texture && updateTexture(material, material.texture, this);
+            }
+            else {
+                materialObject[name] = material[name];
+            }
         });
     }
 }
@@ -280,4 +331,80 @@ MaterialSystem.queries = {
     meshMaterial: { components: [Mesh, Material], listen: { added: true, removed: true, changed: [Material] } },
 };
 
-export { Camera, GameSystem, Light, LightSystem, LightTypes, Material, MaterialSystem, Mesh, MeshSystem, MeshTypes, Transform, TransformSystem };
+var ParticleColorValues;
+(function (ParticleColorValues) {
+    ParticleColorValues["textureMask"] = "textureMask";
+})(ParticleColorValues || (ParticleColorValues = {}));
+var ParticleXyzValues;
+(function (ParticleXyzValues) {
+    ParticleXyzValues["emitter"] = "emitter";
+    ParticleXyzValues["direction1"] = "direction1";
+    ParticleXyzValues["direction2"] = "direction2";
+})(ParticleXyzValues || (ParticleXyzValues = {}));
+class ParticleSystem extends System {
+    execute() {
+        this.queries.particle.added.forEach((entity) => {
+            let particle = entity.getComponent(Particle);
+            particle.object = new ParticleSystem$1(particle.type, particle.capacity, getActiveScene(this, particle.sceneName));
+            let particleObject = particle.object;
+            switch (particle.type) {
+                case ParticleTypes.Point:
+                    particleObject.createPointEmitter(xyzToVector3(particle.direction1), xyzToVector3(particle.direction2));
+                    break;
+                case ParticleTypes.Box:
+                    particleObject.createBoxEmitter(xyzToVector3(particle.direction1), xyzToVector3(particle.direction2), xyzToVector3(particle.minEmitBox), xyzToVector3(particle.maxEmitBox));
+                    break;
+                case ParticleTypes.Sphere:
+                    particleObject.createSphereEmitter(particle.radius, particle.radiusRange);
+                    break;
+                case ParticleTypes.DirectedSphere:
+                    particleObject.createDirectedSphereEmitter(particle.radius, xyzToVector3(particle.direction1), xyzToVector3(particle.direction2));
+                    break;
+                case ParticleTypes.Hemisphere:
+                    particleObject.createHemisphericEmitter(particle.radius, particle.radiusRange);
+                    break;
+                case ParticleTypes.Cylinder:
+                    particleObject.createCylinderEmitter(particle.radius, particle.height, particle.radiusRange, Math.random());
+                    break;
+                case ParticleTypes.DirectedCylinder:
+                    particleObject.createDirectedCylinderEmitter(particle.radius, particle.height, particle.radiusRange, xyzToVector3(particle.direction1), xyzToVector3(particle.direction2));
+                    break;
+                case ParticleTypes.Cone:
+                    particleObject.createConeEmitter(particle.radius, particle.angle);
+                    break;
+            }
+            this._updateParticle(particle);
+            particleObject.start();
+        });
+        this.queries.particle.changed.forEach((entity) => {
+            this._updateParticle(entity.getComponent(Particle));
+        });
+        this.queries.particle.removed.forEach((entity) => {
+            let particle = entity.getComponent(Particle);
+            particle.object.stop();
+            disposeObject(particle);
+        });
+    }
+    _updateParticle(particle) {
+        let particleObject = particle.object;
+        Object.keys(particle).forEach(name => {
+            if (ParticleXyzValues[name]) {
+                particleObject[name] = xyzToVector3(particle[name]);
+            }
+            else if (ParticleColorValues[name]) {
+                particleObject[name] = Color4.FromHexString(particle[name]);
+            }
+            else if (name === "texture") {
+                particle.texture && updateTexture(particle, particle.texture, this);
+            }
+            else {
+                particleObject[name] = particle[name];
+            }
+        });
+    }
+}
+ParticleSystem.queries = {
+    particle: { components: [Particle], listen: { added: true, changed: true, removed: true } },
+};
+
+export { Camera, GameSystem, Light, LightSystem, LightTypes, Material, MaterialSystem, Mesh, MeshSystem, MeshTypes, Particle, ParticleSystem, ParticleTypes, Transform, TransformSystem };

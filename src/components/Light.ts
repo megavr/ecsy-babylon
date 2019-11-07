@@ -1,5 +1,5 @@
 import * as BABYLON from "@babylonjs/core";
-import { SceneComponent, ObjectComponent, DirectionComponent } from "./types/index";
+import { SceneComponent, ObjectComponent, XYZProperties } from "./types/index";
 
 export enum LightTypes {
   Point = "Point",
@@ -8,11 +8,15 @@ export enum LightTypes {
   Hemispheric = "Hemispheric"
 }
 
-export class Light implements SceneComponent, ObjectComponent, DirectionComponent {
+export class Light implements SceneComponent, ObjectComponent {
   sceneName?: string;
   object!: BABYLON.HemisphericLight | BABYLON.ShadowLight;
-  type = LightTypes.Hemispheric;
-  direction = { x: 0, y: 0, z: 0 };
+  type: LightTypes = LightTypes.Hemispheric;
+  direction: XYZProperties = { x: 0, y: 0, z: 0 };
+  intensity?: number;
+  radius?: number;
+  range?: number;
+  specular?: string;
   angle?: number;
   exponent?: number;
 }

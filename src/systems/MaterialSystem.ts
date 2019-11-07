@@ -1,10 +1,9 @@
 import * as BABYLON from "@babylonjs/core";
 import { System, Entity } from "ecsy";
 import { Material, Mesh } from "../components/index";
-import { getActiveScene, disposeObject } from "../utils/index";
-import { TextureComponent, TextureProperties } from "components/types/index";
+import { getActiveScene, disposeObject, updateTexture } from "../utils/index";
 
-enum ColorValues {
+enum MaterialColorValues {
   diffuse = "diffuse",
   specular = "specular",
   emissive = "emissive",
@@ -37,23 +36,15 @@ export class MaterialSystem extends System {
   }
 
   private _updateMaterial(material: Material) {
-    Object.keys(material).filter(name => name !== "texture").forEach(name => {
-      (ColorValues as any)[name] !== undefined ?
-        (material.object as any)[`${name}Color`] = BABYLON.Color3.FromHexString((material as any)[name]) :
-        (material.object as any)[name] = (material as any)[name];
-    });
-    material.texture !== undefined && this._updateTexture(material, material.texture);
-  }
-
-  private _updateTexture(material: Material, textureComponent: TextureComponent) {
-    Object.keys(textureComponent).forEach(name => {
-      let texture = (textureComponent as any)[name] as TextureProperties;
-      let textureObject = new BABYLON.Texture(texture.url, getActiveScene(this, material.sceneName));
-      Object.keys(texture).filter(prop => prop !== "url").forEach(prop => {
-        (textureObject as any)[prop] = (texture as any)[prop];
-      });
-      (material.object as any)[`${name}Texture`] !== null && disposeObject((material.object as any)[`${name}Texture`]);
-      (material.object as any)[`${name}Texture`] = textureObject;
+    let materialObject = material.object;
+    Object.keys(material).forEach(name => {
+      if ((MaterialColorValues as any)[name]) {
+        (materialObject as any)[`${name}Color`] = BABYLON.Color3.FromHexString((material as any)[name]);
+      } else if (name === "texture") {
+        material.texture && updateTexture(material, material.texture, this);
+      } else {
+        (materialObject as any)[name] = (material as any)[name];
+      }
     });
   }
 }

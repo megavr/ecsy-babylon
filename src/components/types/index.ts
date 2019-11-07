@@ -1,8 +1,9 @@
 export * from "./SceneComponent";
 export * from "./ObjectComponent";
-export * from "./DirectionComponent";
 export * from "./MaterialComponent";
-
 export * from "./MeshOptions";
 export * from "./TextureComponent";
-export * from "./TextureProerties";
+export * from "./TextureProperties";
+export * from "./TextureAttributes";
+export * from "./XYZProperties";
+export * from "./ParticleTextureProperties";
