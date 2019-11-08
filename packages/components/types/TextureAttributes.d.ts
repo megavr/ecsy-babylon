@@ -1,3 +1,3 @@
 export interface TextureAttributes {
-  url: string;
+    url: string;
 }

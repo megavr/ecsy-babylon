@@ -1,7 +1,7 @@
 import * as BABYLON from "@babylonjs/core";
 import { System, Entity } from "ecsy";
 import { Material, Mesh } from "../components/index";
-import { getActiveScene, disposeObject, updateTexture } from "../utils/index";
+import { getActiveScene, disposeObject, updateTexture, hexToColor3 } from "../utils/index";
 
 enum MaterialColorValues {
   diffuse = "diffuse",
@@ -39,7 +39,8 @@ export class MaterialSystem extends System {
     let materialObject = material.object;
     Object.keys(material).forEach(name => {
       if ((MaterialColorValues as any)[name]) {
-        (materialObject as any)[`${name}Color`] = BABYLON.Color3.FromHexString((material as any)[name]);
+        // (materialObject as any)[`${name}Color`] = BABYLON.Color3.FromHexString((material as any)[name]);
+        (materialObject as any)[`${name}Color`] = hexToColor3((material as any)[name]);
       } else if (name === "texture") {
         material.texture && updateTexture(material, material.texture, this);
       } else {

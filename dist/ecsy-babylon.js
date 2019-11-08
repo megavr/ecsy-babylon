@@ -108,6 +108,20 @@
         return new BABYLON.Vector3(properties.x, properties.y, properties.z);
     }
     /**
+     * Convert hex color value to Color3.
+     * @param hexString Text of hex color value(e.g., #123def)
+     */
+    function hexToColor3(hexString) {
+        return BABYLON.Color3.FromHexString(hexString);
+    }
+    /**
+     * Convert hex color value to Color4 (has alpha).
+     * @param hexString Text of hex color value(e.g., #123def1f)
+     */
+    function hexToColor4(hexString) {
+        return BABYLON.Color4.FromHexString(hexString);
+    }
+    /**
      * Update Babylon texture for the texture properties in a TextureComponent.
      * @param component TextureComponent in the entity
      * @param properties Properties to be update
@@ -274,7 +288,8 @@
             let lightObject = light.object;
             Object.keys(light).forEach(name => {
                 if (LightColorValues[name]) {
-                    lightObject[name] = BABYLON.Color3.FromHexString((light[name]));
+                    // (lightObject as any)[name] = BABYLON.Color3.FromHexString(((light as any)[name]) as string);
+                    lightObject[name] = hexToColor3(light[name]);
                 }
                 else if (LightXyzValues[name]) {
                     lightObject[name] = xyzToVector3(light[name]);
@@ -316,7 +331,8 @@
             let materialObject = material.object;
             Object.keys(material).forEach(name => {
                 if (MaterialColorValues[name]) {
-                    materialObject[`${name}Color`] = BABYLON.Color3.FromHexString(material[name]);
+                    // (materialObject as any)[`${name}Color`] = BABYLON.Color3.FromHexString((material as any)[name]);
+                    materialObject[`${name}Color`] = hexToColor3(material[name]);
                 }
                 else if (name === "texture") {
                     material.texture && updateTexture(material, material.texture, this);
@@ -392,7 +408,8 @@
                     particleObject[name] = xyzToVector3(particle[name]);
                 }
                 else if (ParticleColorValues[name]) {
-                    particleObject[name] = BABYLON.Color4.FromHexString(particle[name]);
+                    // (particleObject as any)[name] = BABYLON.Color4.FromHexString((particle as any)[name]);
+                    particleObject[name] = hexToColor4(particle[name]);
                 }
                 else if (name === "texture") {
                     particle.texture && updateTexture(particle, particle.texture, this);

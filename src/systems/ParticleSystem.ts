@@ -1,7 +1,7 @@
 import * as BABYLON from "@babylonjs/core";
 import { System, Entity } from "ecsy";
 import { Particle, ParticleTypes } from "../components/index";
-import { getActiveScene, disposeObject, xyzToVector3, updateTexture } from "../utils/index";
+import { getActiveScene, disposeObject, xyzToVector3, updateTexture, hexToColor4 } from "../utils/index";
 
 enum ParticleColorValues {
   textureMask = "textureMask"
@@ -72,7 +72,8 @@ export class ParticleSystem extends System {
       if ((ParticleXyzValues as any)[name]) {
         (particleObject as any)[name] = xyzToVector3((particle as any)[name]);
       } else if ((ParticleColorValues as any)[name]) {
-        (particleObject as any)[name] = BABYLON.Color4.FromHexString((particle as any)[name]);
+        // (particleObject as any)[name] = BABYLON.Color4.FromHexString((particle as any)[name]);
+        (particleObject as any)[name] = hexToColor4((particle as any)[name]);
       } else if (name === "texture") {
         particle.texture && updateTexture(particle, particle.texture, this);
       } else {

@@ -52,6 +52,22 @@ export function xyzToVector3(properties: XYZProperties): BABYLON.Vector3 {
 }
 
 /**
+ * Convert hex color value to Color3. 
+ * @param hexString Text of hex color value(e.g., #123def)
+ */
+export function hexToColor3(hexString: string): BABYLON.Color3 {
+  return BABYLON.Color3.FromHexString(hexString);
+}
+
+/**
+ * Convert hex color value to Color4 (has alpha). 
+ * @param hexString Text of hex color value(e.g., #123def1f)
+ */
+export function hexToColor4(hexString: string): BABYLON.Color4 {
+  return BABYLON.Color4.FromHexString(hexString);
+}
+
+/**
  * Update Babylon texture for the texture properties in a TextureComponent.
  * @param component TextureComponent in the entity
  * @param properties Properties to be update
