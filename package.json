@@ -1,5 +1,5 @@
 {
-  "name": "ecsy-babylon",
+  "name": "@megavr/ecsy-babylon",
   "version": "0.0.2",
   "description": "babylon.js ecsy binding and helpers",
   "main": "dist/ecsy-babylon.js",
