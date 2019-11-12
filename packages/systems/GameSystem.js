@@ -45,11 +45,11 @@ export class GameSystem extends System {
      * @param name Scene name
      */
     getScene(name) {
-        if (name === undefined) {
-            return this._activeScene;
+        if (name) {
+            return this.scenes.get(name);
         }
         else {
-            return this.scenes.get(name);
+            return this._activeScene;
         }
     }
     /**

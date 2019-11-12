@@ -39,7 +39,6 @@ export class MaterialSystem extends System {
     let materialObject = material.object;
     Object.keys(material).forEach(name => {
       if ((MaterialColorValues as any)[name]) {
-        // (materialObject as any)[`${name}Color`] = BABYLON.Color3.FromHexString((material as any)[name]);
         (materialObject as any)[`${name}Color`] = hexToColor3((material as any)[name]);
       } else if (name === "texture") {
         material.texture && updateTexture(material, material.texture, this);

@@ -57,7 +57,7 @@ export function hexToColor4(hexString) {
     return BABYLON.Color4.FromHexString(hexString);
 }
 /**
- * Update Babylon texture for the texture properties in a TextureComponent.
+ * Update texture object to a component for its texture properties.
  * @param component TextureComponent in the entity
  * @param properties Properties to be update
  * @param system A registered ecsy System class
@@ -72,4 +72,17 @@ export function updateTexture(component, properties, system) {
         component.object[`${name}Texture`] && disposeObject(component.object[`${name}Texture`]);
         component.object[`${name}Texture`] = textureObject;
     });
+}
+/**
+ * Update transformation to a component with object.
+ * @param transform Transfrom component in the entity
+ * @param component Component with object
+ */
+export function updateTransform(transform, component) {
+    if (component.object) {
+        let object = component.object;
+        object.position && (object.position = xyzToVector3(transform.position));
+        object.rotation && object.rotation.set(degreeToRadians(transform.rotation.x), degreeToRadians(transform.rotation.y), degreeToRadians(transform.rotation.z));
+        object.scaling && (object.scaling = xyzToVector3(transform.scale));
+    }
 }

@@ -1,8 +1,8 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
 import { Light, LightTypes } from "../components/index";
+import { XYZProperties } from "../components/types/index";
 import { getActiveScene, disposeObject, degreeToRadians, xyzToVector3, hexToColor3 } from "../utils/index";
-import { XYZProperties } from "components/types";
 
 enum LightColorValues {
   specular = "specular"
@@ -54,7 +54,6 @@ export class LightSystem extends System {
     let lightObject = light.object;
     Object.keys(light).forEach(name => {
       if ((LightColorValues as any)[name]) {
-        // (lightObject as any)[name] = BABYLON.Color3.FromHexString(((light as any)[name]) as string);
         (lightObject as any)[name] = hexToColor3((light as any)[name]);
       } else if ((LightXyzValues as any)[name]) {
         (lightObject as any)[name] = xyzToVector3((light as any)[name] as XYZProperties);

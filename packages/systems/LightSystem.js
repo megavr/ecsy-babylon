@@ -43,7 +43,6 @@ export class LightSystem extends System {
         let lightObject = light.object;
         Object.keys(light).forEach(name => {
             if (LightColorValues[name]) {
-                // (lightObject as any)[name] = BABYLON.Color3.FromHexString(((light as any)[name]) as string);
                 lightObject[name] = hexToColor3(light[name]);
             }
             else if (LightXyzValues[name]) {

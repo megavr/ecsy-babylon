@@ -1,6 +1,6 @@
 {
   "name": "@megavr/ecsy-babylon",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "babylon.js ecsy binding and helpers",
   "main": "dist/ecsy-babylon.js",
   "types": "packages/index.d.ts",
@@ -25,12 +25,12 @@
     "@typescript-eslint/eslint-plugin": "^2.6.1",
     "@typescript-eslint/parser": "^2.6.1",
     "eslint": "^6.6.0",
-    "rollup": "^1.26.3",
+    "rollup": "^1.26.5",
     "rollup-plugin-terser": "^5.1.2",
     "typescript": "^3.7.2"
   },
   "dependencies": {
-    "@babylonjs/core": "^4.1.0-beta.1",
+    "@babylonjs/core": "^4.1.0-beta.2",
     "ecsy": "^0.1.4"
   }
 }

@@ -1,5 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
 import { System, World } from "ecsy";
+import { Transform } from "../components/index";
 import { ObjectComponent, ParticleTextureProperties, TextureComponent, TextureProperties, XYZProperties } from "../components/types/index";
 /**
  * Translate degree to radians in Babylon.js.
@@ -43,9 +44,15 @@ export declare function hexToColor3(hexString: string): BABYLON.Color3;
  */
 export declare function hexToColor4(hexString: string): BABYLON.Color4;
 /**
- * Update Babylon texture for the texture properties in a TextureComponent.
+ * Update texture object to a component for its texture properties.
  * @param component TextureComponent in the entity
  * @param properties Properties to be update
  * @param system A registered ecsy System class
  */
 export declare function updateTexture(component: TextureComponent, properties: TextureProperties | ParticleTextureProperties, system: System): void;
+/**
+ * Update transformation to a component with object.
+ * @param transform Transfrom component in the entity
+ * @param component Component with object
+ */
+export declare function updateTransform(transform: Transform, component: ObjectComponent): void;

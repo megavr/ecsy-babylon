@@ -71,6 +71,16 @@
         }
     }
 
+    var AssetTypes;
+    (function (AssetTypes) {
+        AssetTypes["babylon"] = "Babylon";
+    })(AssetTypes || (AssetTypes = {}));
+    class Asset {
+        constructor() {
+            this.type = AssetTypes.babylon;
+        }
+    }
+
     /**
      * Translate degree to radians in Babylon.js.
      * @param degree Degree
@@ -122,7 +132,7 @@
         return BABYLON.Color4.FromHexString(hexString);
     }
     /**
-     * Update Babylon texture for the texture properties in a TextureComponent.
+     * Update texture object to a component for its texture properties.
      * @param component TextureComponent in the entity
      * @param properties Properties to be update
      * @param system A registered ecsy System class
@@ -137,6 +147,19 @@
             component.object[`${name}Texture`] && disposeObject(component.object[`${name}Texture`]);
             component.object[`${name}Texture`] = textureObject;
         });
+    }
+    /**
+     * Update transformation to a component with object.
+     * @param transform Transfrom component in the entity
+     * @param component Component with object
+     */
+    function updateTransform(transform, component) {
+        if (component.object) {
+            let object = component.object;
+            object.position && (object.position = xyzToVector3(transform.position));
+            object.rotation && object.rotation.set(degreeToRadians(transform.rotation.x), degreeToRadians(transform.rotation.y), degreeToRadians(transform.rotation.z));
+            object.scaling && (object.scaling = xyzToVector3(transform.scale));
+        }
     }
 
     class GameSystem extends ecsy.System {
@@ -182,11 +205,11 @@
          * @param name Scene name
          */
         getScene(name) {
-            if (name === undefined) {
-                return this._activeScene;
+            if (name) {
+                return this.scenes.get(name);
             }
             else {
-                return this.scenes.get(name);
+                return this._activeScene;
             }
         }
         /**
@@ -212,24 +235,26 @@
     };
 
     class TransformSystem extends ecsy.System {
+        init() {
+            window.addEventListener("load", () => {
+                this.queries.object.results.forEach((entity) => {
+                    this._updateTransform(entity.getComponent(Transform), entity.getComponents());
+                });
+            });
+        }
         execute() {
-            this.queries.object.results.forEach((entity) => {
+            this.queries.object.changed.forEach((entity) => {
                 this._updateTransform(entity.getComponent(Transform), entity.getComponents());
             });
         }
         _updateTransform(transform, components) {
             Object.keys(components)
                 .filter(name => { return components[name].object !== undefined; })
-                .forEach(name => {
-                let object = components[name].object;
-                object.position && (object.position = xyzToVector3(transform.position));
-                object.rotation && object.rotation.set(degreeToRadians(transform.rotation.x), degreeToRadians(transform.rotation.y), degreeToRadians(transform.rotation.z));
-                object.scaling && (object.scaling = xyzToVector3(transform.scale));
-            });
+                .forEach(name => updateTransform(transform, components[name]));
         }
     }
     TransformSystem.queries = {
-        object: { components: [Transform] },
+        object: { components: [Transform], listen: { changed: [Transform] } },
     };
 
     class MeshSystem extends ecsy.System {
@@ -288,7 +313,6 @@
             let lightObject = light.object;
             Object.keys(light).forEach(name => {
                 if (LightColorValues[name]) {
-                    // (lightObject as any)[name] = BABYLON.Color3.FromHexString(((light as any)[name]) as string);
                     lightObject[name] = hexToColor3(light[name]);
                 }
                 else if (LightXyzValues[name]) {
@@ -331,7 +355,6 @@
             let materialObject = material.object;
             Object.keys(material).forEach(name => {
                 if (MaterialColorValues[name]) {
-                    // (materialObject as any)[`${name}Color`] = BABYLON.Color3.FromHexString((material as any)[name]);
                     materialObject[`${name}Color`] = hexToColor3(material[name]);
                 }
                 else if (name === "texture") {
@@ -408,7 +431,6 @@
                     particleObject[name] = xyzToVector3(particle[name]);
                 }
                 else if (ParticleColorValues[name]) {
-                    // (particleObject as any)[name] = BABYLON.Color4.FromHexString((particle as any)[name]);
                     particleObject[name] = hexToColor4(particle[name]);
                 }
                 else if (name === "texture") {
@@ -424,6 +446,34 @@
         particle: { components: [Particle], listen: { added: true, changed: true, removed: true } },
     };
 
+    class AssetSystem extends ecsy.System {
+        execute() {
+            this.queries.asset.added.forEach((entity) => {
+                let asset = entity.getComponent(Asset);
+                this.assetManager || (this.assetManager = new BABYLON.AssetsManager(getActiveScene(this, asset.sceneName)));
+                this.assetManager.useDefaultLoadingScreen = false;
+                switch (asset.type) {
+                    case AssetTypes.babylon: {
+                        let filenameIndex = asset.url.lastIndexOf("/") + 1;
+                        let task = this.assetManager.addMeshTask(asset.type, "", asset.url.substring(0, filenameIndex), asset.url.substring(filenameIndex, asset.url.length));
+                        task.onSuccess = (task) => {
+                            asset.object = task.loadedMeshes[0];
+                            updateTransform(entity.getComponent(Transform), asset);
+                        };
+                        break;
+                    }
+                }
+                this.assetManager.load();
+            });
+            this.queries.asset.removed.forEach((entity) => {
+                disposeObject(entity.getComponent(Asset));
+            });
+        }
+    }
+    AssetSystem.queries = {
+        asset: { components: [Transform, Asset], listen: { added: true, removed: true } },
+    };
+
 
 
     var EB = /*#__PURE__*/Object.freeze({
@@ -434,6 +484,7 @@
         LightSystem: LightSystem,
         MaterialSystem: MaterialSystem,
         ParticleSystem: ParticleSystem,
+        AssetSystem: AssetSystem,
         Transform: Transform,
         Camera: Camera,
         get MeshTypes () { return MeshTypes; },
@@ -442,7 +493,9 @@
         Light: Light,
         Material: Material,
         get ParticleTypes () { return ParticleTypes; },
-        Particle: Particle
+        Particle: Particle,
+        get AssetTypes () { return AssetTypes; },
+        Asset: Asset
     });
 
     window.EB = EB;

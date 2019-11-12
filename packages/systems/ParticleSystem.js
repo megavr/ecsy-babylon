@@ -63,7 +63,6 @@ export class ParticleSystem extends System {
                 particleObject[name] = xyzToVector3(particle[name]);
             }
             else if (ParticleColorValues[name]) {
-                // (particleObject as any)[name] = BABYLON.Color4.FromHexString((particle as any)[name]);
                 particleObject[name] = hexToColor4(particle[name]);
             }
             else if (name === "texture") {

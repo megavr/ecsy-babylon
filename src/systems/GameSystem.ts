@@ -57,10 +57,10 @@ export class GameSystem extends System {
    * @param name Scene name
    */
   public getScene(name?: string): BABYLON.Scene {
-    if (name === undefined) {
-      return this._activeScene;
-    } else {
+    if (name) {
       return this.scenes.get(name) as BABYLON.Scene;
+    } else {
+      return this._activeScene;
     }
   }
 
