@@ -5,9 +5,13 @@ export var MeshTypes;
     MeshTypes["Sphere"] = "Sphere";
     MeshTypes["Ground"] = "Ground";
 })(MeshTypes || (MeshTypes = {}));
+/**
+ * Usage:
+ * ```
+ * entity.addComponent(Mesh);
+ * entity.addComponent(Mesh, { type: MeshTypes.Ground, options: { width: 2, height: 2 } });
+ * entity.addComponent(Mesh, { type: MeshTypes.Sphere, options: { diameter: 2 } });
+ * ```
+ */
 export class Mesh {
-    constructor() {
-        this.type = MeshTypes.Box;
-        this.options = {};
-    }
 }

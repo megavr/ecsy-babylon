@@ -3,9 +3,19 @@ import { SceneComponent, ObjectComponent } from "./types/index";
 export declare enum AssetTypes {
     babylon = "Babylon"
 }
-export declare class Asset implements SceneComponent, ObjectComponent {
+/**
+ * Usage:
+ * ```
+ * entity.addComponent(Asset, { url: "PATH_TO_ASSET" });
+ * entity.addComponent(Asset, { sceneName: "Scene", url: "PATH_TO_ASSET" });
+ * entity.addComponent(Asset, { type: AssetTypes.babylon, url: "PATH_TO_ASSET" });
+ * ```
+ */
+export declare class Asset implements SceneComponent, ObjectComponent<BABYLON.Mesh> {
     sceneName?: string;
     object: BABYLON.Mesh;
-    type: AssetTypes;
+    /** Default: "Babylon" */
+    type?: AssetTypes;
+    /** Path of an asset file with filename. */
     url?: string;
 }

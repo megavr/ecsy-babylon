@@ -1,7 +1,9 @@
 import { System } from "ecsy";
 import { Transform } from "../components/index";
 import { updateTransform } from "../utils/index";
+/** System for Transform component */
 export class TransformSystem extends System {
+    /** @hidden */
     init() {
         window.addEventListener("load", () => {
             this.queries.object.results.forEach((entity) => {
@@ -9,6 +11,7 @@ export class TransformSystem extends System {
             });
         });
     }
+    /** @hidden */
     execute() {
         this.queries.object.changed.forEach((entity) => {
             this._updateTransform(entity.getComponent(Transform), entity.getComponents());
@@ -20,6 +23,7 @@ export class TransformSystem extends System {
             .forEach(name => updateTransform(transform, components[name]));
     }
 }
+/** @hidden */
 TransformSystem.queries = {
     object: { components: [Transform], listen: { changed: [Transform] } },
 };

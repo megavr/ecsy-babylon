@@ -2,21 +2,25 @@ import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Particle, ParticleTypes } from "../components/index";
 import { getActiveScene, disposeObject, xyzToVector3, updateTexture, hexToColor4 } from "../utils/index";
+/** @hidden */
 var ParticleColorValues;
 (function (ParticleColorValues) {
     ParticleColorValues["textureMask"] = "textureMask";
 })(ParticleColorValues || (ParticleColorValues = {}));
+/** @hidden */
 var ParticleXyzValues;
 (function (ParticleXyzValues) {
     ParticleXyzValues["emitter"] = "emitter";
     ParticleXyzValues["direction1"] = "direction1";
     ParticleXyzValues["direction2"] = "direction2";
 })(ParticleXyzValues || (ParticleXyzValues = {}));
+/** System for Particle component */
 export class ParticleSystem extends System {
+    /** @hidden */
     execute() {
         this.queries.particle.added.forEach((entity) => {
             let particle = entity.getComponent(Particle);
-            particle.object = new BABYLON.ParticleSystem(particle.type, particle.capacity, getActiveScene(this, particle.sceneName));
+            particle.object = new BABYLON.ParticleSystem(particle.type ? particle.type : ParticleTypes.Point, particle.capacity ? particle.capacity : 100, getActiveScene(this, particle.sceneName));
             let particleObject = particle.object;
             switch (particle.type) {
                 case ParticleTypes.Point:
@@ -74,6 +78,7 @@ export class ParticleSystem extends System {
         });
     }
 }
+/** @hidden */
 ParticleSystem.queries = {
     particle: { components: [Particle], listen: { added: true, changed: true, removed: true } },
 };

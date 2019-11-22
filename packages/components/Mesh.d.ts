@@ -6,9 +6,18 @@ export declare enum MeshTypes {
     Sphere = "Sphere",
     Ground = "Ground"
 }
-export declare class Mesh implements SceneComponent, ObjectComponent {
+/**
+ * Usage:
+ * ```
+ * entity.addComponent(Mesh);
+ * entity.addComponent(Mesh, { type: MeshTypes.Ground, options: { width: 2, height: 2 } });
+ * entity.addComponent(Mesh, { type: MeshTypes.Sphere, options: { diameter: 2 } });
+ * ```
+ */
+export declare class Mesh implements SceneComponent, ObjectComponent<BABYLON.Mesh> {
     sceneName?: string;
     object: BABYLON.Mesh;
-    type: MeshTypes;
-    options: MeshOptions;
+    /** Default: "Box" */
+    type?: MeshTypes;
+    options?: MeshOptions;
 }

@@ -3,27 +3,32 @@ import { System, Entity } from "ecsy";
 import { Particle, ParticleTypes } from "../components/index";
 import { getActiveScene, disposeObject, xyzToVector3, updateTexture, hexToColor4 } from "../utils/index";
 
+/** @hidden */
 enum ParticleColorValues {
   textureMask = "textureMask"
 }
 
+/** @hidden */
 enum ParticleXyzValues {
   emitter = "emitter",
   direction1 = "direction1",
   direction2 = "direction2"
 }
 
+/** System for Particle component */
 export class ParticleSystem extends System {
+  /** @hidden */
   static queries = {
     particle: { components: [Particle], listen: { added: true, changed: true, removed: true } },
   };
-
+  /** @hidden */
   queries: any;
 
+  /** @hidden */
   execute() {
     this.queries.particle.added.forEach((entity: Entity) => {
       let particle = entity.getComponent(Particle) as Particle;
-      particle.object = new BABYLON.ParticleSystem(particle.type, particle.capacity, getActiveScene(this, particle.sceneName));
+      particle.object = new BABYLON.ParticleSystem(particle.type ? particle.type : ParticleTypes.Point, particle.capacity ? particle.capacity : 100, getActiveScene(this, particle.sceneName));
       let particleObject = particle.object;
       switch (particle.type) {
         case ParticleTypes.Point:

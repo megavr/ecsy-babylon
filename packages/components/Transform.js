@@ -1,3 +1,9 @@
+/**
+ * Usage:
+ * ```
+ * entity.addComponent(Transform);
+ * ```
+ */
 export class Transform {
     constructor() {
         this.position = { x: 0, y: 0, z: 0 };

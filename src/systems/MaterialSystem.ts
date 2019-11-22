@@ -3,6 +3,7 @@ import { System, Entity } from "ecsy";
 import { Material, Mesh } from "../components/index";
 import { getActiveScene, disposeObject, updateTexture, hexToColor3 } from "../utils/index";
 
+/** @hidden */
 enum MaterialColorValues {
   diffuse = "diffuse",
   specular = "specular",
@@ -10,17 +11,20 @@ enum MaterialColorValues {
   ambient = "ambient"
 }
 
+/** System for Material component */
 export class MaterialSystem extends System {
+  /** @hidden */
   static queries = {
     meshMaterial: { components: [Mesh, Material], listen: { added: true, removed: true, changed: [Material] } },
   };
-
+  /** @hidden */
   queries: any;
-
+  
+  /** @hidden */
   execute() {
     this.queries.meshMaterial.added.forEach((entity: Entity) => {
       let material = entity.getComponent(Material) as Material;
-      material.object = new BABYLON.StandardMaterial(material.diffuse, getActiveScene(this, material.sceneName));
+      material.object = new BABYLON.StandardMaterial(material.diffuse ? material.diffuse : "#ffffff", getActiveScene(this, material.sceneName));
       this._updateMaterial(material);
       entity.getComponent(Mesh).object.material = material.object;
     });

@@ -4,21 +4,26 @@ import { Light, LightTypes } from "../components/index";
 import { XYZProperties } from "../components/types/index";
 import { getActiveScene, disposeObject, degreeToRadians, xyzToVector3, hexToColor3 } from "../utils/index";
 
+/** @hidden */
 enum LightColorValues {
   specular = "specular"
 }
 
+/** @hidden */
 enum LightXyzValues {
   direction = "direction"
 }
 
+/** System for Light component */
 export class LightSystem extends System {
+  /** @hidden */
   static queries = {
     light: { components: [Light], listen: { added: true, removed: true, changed: true } },
   };
-
+  /** @hidden */
   queries: any;
 
+  /** @hidden */
   execute() {
     this.queries.light.added.forEach((entity: Entity) => {
       let light = entity.getComponent(Light) as Light;
@@ -34,8 +39,8 @@ export class LightSystem extends System {
         case LightTypes.Spot:
           light.object = new BABYLON.SpotLight(light.type, BABYLON.Vector3.Zero(), direction, degreeToRadians(light.angle as number), light.exponent as number, scene);
           break;
-        case LightTypes.Hemispheric:
-          light.object = new BABYLON.HemisphericLight(light.type, direction, scene);
+        default:
+          light.object = new BABYLON.HemisphericLight(LightTypes.Hemispheric, direction, scene);
           break;
       }
       this._updateLight(light);

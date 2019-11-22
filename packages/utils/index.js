@@ -1,13 +1,13 @@
 import * as BABYLON from "@babylonjs/core";
 /**
- * Translate degree to radians in Babylon.js.
+ * Translate degree to radians.
  * @param degree Degree
  */
 export function degreeToRadians(degree) {
     return BABYLON.Angle.FromDegrees(degree).radians();
 }
 /**
- * Translate radians to degree in Babylon.js.
+ * Translate radians to degree.
  * @param degree Radians
  */
 export function radiansToDegree(radians) {

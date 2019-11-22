@@ -4,7 +4,7 @@ import { Transform } from "../components/index";
 import { ObjectComponent, ParticleTextureProperties, TextureComponent, TextureProperties, TextureAttributes, XYZProperties } from "../components/types/index";
 
 /**
- * Translate degree to radians in Babylon.js.
+ * Translate degree to radians.
  * @param degree Degree
  */
 export function degreeToRadians(degree: number): number {
@@ -12,7 +12,7 @@ export function degreeToRadians(degree: number): number {
 }
 
 /**
- * Translate radians to degree in Babylon.js.
+ * Translate radians to degree.
  * @param degree Radians
  */
 export function radiansToDegree(radians: number): number {
@@ -31,7 +31,7 @@ export function getWorld(system: System): World {
  * Dispose a generated Babylon.js object if existed. 
  * @param object Component contains Babylon.js object
  */
-export function disposeObject(component: ObjectComponent): void {
+export function disposeObject(component: ObjectComponent<any>): void {
   component.object && component.object.dispose();
 }
 
@@ -91,7 +91,7 @@ export function updateTexture(component: TextureComponent, properties: TexturePr
  * @param transform Transfrom component in the entity
  * @param component Component with object
  */
-export function updateTransform(transform: Transform, component: ObjectComponent) {
+export function updateTransform(transform: Transform, component: ObjectComponent<any>) {
   if (component.object) {
     let object = component.object;
     object.position && (object.position = xyzToVector3(transform.position));

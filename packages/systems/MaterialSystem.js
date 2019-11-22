@@ -2,6 +2,7 @@ import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Material, Mesh } from "../components/index";
 import { getActiveScene, disposeObject, updateTexture, hexToColor3 } from "../utils/index";
+/** @hidden */
 var MaterialColorValues;
 (function (MaterialColorValues) {
     MaterialColorValues["diffuse"] = "diffuse";
@@ -9,11 +10,13 @@ var MaterialColorValues;
     MaterialColorValues["emissive"] = "emissive";
     MaterialColorValues["ambient"] = "ambient";
 })(MaterialColorValues || (MaterialColorValues = {}));
+/** System for Material component */
 export class MaterialSystem extends System {
+    /** @hidden */
     execute() {
         this.queries.meshMaterial.added.forEach((entity) => {
             let material = entity.getComponent(Material);
-            material.object = new BABYLON.StandardMaterial(material.diffuse, getActiveScene(this, material.sceneName));
+            material.object = new BABYLON.StandardMaterial(material.diffuse ? material.diffuse : "#ffffff", getActiveScene(this, material.sceneName));
             this._updateMaterial(material);
             entity.getComponent(Mesh).object.material = material.object;
         });
@@ -40,6 +43,7 @@ export class MaterialSystem extends System {
         });
     }
 }
+/** @hidden */
 MaterialSystem.queries = {
     meshMaterial: { components: [Mesh, Material], listen: { added: true, removed: true, changed: [Material] } },
 };

@@ -2,17 +2,20 @@ import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Camera } from "../components/index";
 import { disposeObject, getWorld } from "../utils/index";
+/** Core system of ecsy-babylon. */
 export class GameSystem extends System {
     constructor() {
         super(...arguments);
+        /** A map holds created scene(s) instance and its name. */
         this.scenes = new Map();
         this._lastTime = 0;
         this._isRendering = false;
     }
+    /** Get current scene instance. */
     get activeScene() { return this._activeScene; }
-    init() {
-        this._render = this._render.bind(this);
-    }
+    /** @hidden */
+    init() { this._render = this._render.bind(this); }
+    /** @hidden */
     execute() {
         this.queries.camera.added.forEach((entity) => {
             let camera = entity.getComponent(Camera);
@@ -28,10 +31,11 @@ export class GameSystem extends System {
         });
     }
     /**
-     * Start the core system can be used by other systems & components.
+     * Start game system in the world can be used by other systems & components.
+     * https://doc.babylonjs.com/api/classes/babylon.engine#constructor
      * @param canvas WebGL context to be used for rendering
      * @param antialias defines enable antialiasing (default: false)
-     * @param options defines further options to be sent to the getContext() function
+     * @param options https://doc.babylonjs.com/api/interfaces/babylon.engineoptions
      * @param adaptToDeviceRatio defines whether to adapt to the device's viewport characteristics (default: false)
      */
     start(canvas, antialias, options, adaptToDeviceRatio) {
@@ -42,7 +46,7 @@ export class GameSystem extends System {
     }
     /**
      * Get a scene by provided name or return current scene if not available.
-     * @param name Scene name
+     * @param name Name of the scene
      */
     getScene(name) {
         if (name) {
@@ -53,9 +57,10 @@ export class GameSystem extends System {
         }
     }
     /**
-     * Add a new scene.
-     * @param name Name can be used to switch or remove in the system
-     * @param options SceneOptions for the new Scene instance
+     * Add a new scene with a name.
+     * https://doc.babylonjs.com/api/classes/babylon.scene#constructor
+     * @param name Readable name to be used to switch or remove scene in the system
+     * @param options https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions
      */
     addScene(name, options) {
         let scene = new BABYLON.Scene(this.engine, options);
@@ -70,6 +75,7 @@ export class GameSystem extends System {
         this._lastTime = time;
     }
 }
+/** @hidden */
 GameSystem.queries = {
     camera: { components: [Camera], listen: { added: true, removed: true } }
 };

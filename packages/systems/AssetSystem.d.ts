@@ -1,7 +1,8 @@
-import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Transform, Asset } from "../components/index";
+/** System for Asset component */
 export declare class AssetSystem extends System {
+    /** @hidden */
     static queries: {
         asset: {
             components: (typeof Transform | typeof Asset)[];
@@ -11,7 +12,10 @@ export declare class AssetSystem extends System {
             };
         };
     };
+    /** @hidden */
     queries: any;
-    assetManager: BABYLON.AssetsManager;
+    private _assetManager;
+    /** @hidden */
     execute(): void;
+    private _loadBabylon;
 }
