@@ -12,6 +12,7 @@
             this.position = { x: 0, y: 0, z: 0 };
             this.rotation = { x: 0, y: 0, z: 0 };
             this.scale = { x: 1, y: 1, z: 1 };
+            this.updateObjects = true;
         }
     }
 
@@ -24,7 +25,11 @@
      */
     class Camera {
         constructor() {
-            /** https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions */
+            /**
+             * Default: {}
+             *
+             * https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions
+             */
             this.options = {};
         }
     }
@@ -45,6 +50,11 @@
      * ```
      */
     class Mesh {
+        constructor() {
+            /** Default: "Box" */
+            this.type = MeshTypes.Box;
+            this.options = {};
+        }
     }
 
     var LightTypes;
@@ -65,6 +75,8 @@
      */
     class Light {
         constructor() {
+            /** Default: "Hemispheric" */
+            this.type = LightTypes.Hemispheric;
             this.direction = { x: 0, y: 0, z: 0 };
         }
     }
@@ -80,6 +92,14 @@
      * ```
      */
     class Material {
+        constructor() {
+            /**
+             * Default: "#ffffff"
+             *
+             * https://doc.babylonjs.com/api/classes/babylon.standardmaterial#diffusecolor
+             */
+            this.diffuse = "#ffffff";
+        }
     }
 
     var ParticleTypes;
@@ -106,12 +126,16 @@
      */
     class Particle {
         constructor() {
+            /** default: "Point" */
+            this.type = ParticleTypes.Point;
+            /** default: 100 */
+            this.capacity = 100;
             /** https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter */
             this.emitter = { x: 0, y: 0, z: 0 };
             /** Point, Box, DirectedSphere, Cylinder */
             this.direction1 = { x: 0, y: 0, z: 0 };
-            /** Point, Box, DirectedSphere, Cylinder */
-            this.direction2 = { x: 0, y: 10, z: 10 };
+            /** Point, Box, DirectedSphere, Cylinder; Default to emit at right-up-front 10 units. */
+            this.direction2 = { x: 10, y: 10, z: 10 };
             /** Box */
             this.minEmitBox = { x: 0, y: 0, z: 0 };
             /** Box */
@@ -121,17 +145,46 @@
 
     var AssetTypes;
     (function (AssetTypes) {
-        AssetTypes["babylon"] = "Babylon";
+        AssetTypes["Babylon"] = "Babylon";
     })(AssetTypes || (AssetTypes = {}));
     /**
      * Usage:
      * ```
      * entity.addComponent(Asset, { url: "PATH_TO_ASSET" });
      * entity.addComponent(Asset, { sceneName: "Scene", url: "PATH_TO_ASSET" });
-     * entity.addComponent(Asset, { type: AssetTypes.babylon, url: "PATH_TO_ASSET" });
+     * entity.addComponent(Asset, { type: AssetTypes.Babylon, url: "PATH_TO_ASSET" });
      * ```
      */
     class Asset {
+        constructor() {
+            /** Default: "Babylon" */
+            this.type = AssetTypes.Babylon;
+        }
+    }
+
+    var InputTypes;
+    (function (InputTypes) {
+        InputTypes["VrRight"] = "VrRight";
+        InputTypes["VrLeft"] = "VrLeft";
+    })(InputTypes || (InputTypes = {}));
+    /**
+     * Usage:
+     * ```
+     * entity.addComponent(Input, { type:InputTypes.VrLeft, onPad: onPad, onPadValues: onPadValues });
+     * function onPad(pressed, touched) {
+     *   if (pressed) console.log("Pad is pressed.");
+     *   if (touched) console.log("Pad is touched.");
+     * }
+     * function onPadValues(x, y) {
+     *   console.log("Pad is touched on: " + x + ", " + y);
+     * }
+     * ```
+     */
+    class Input {
+        constructor() {
+            /** Default: "VrRight" */
+            this.type = InputTypes.VrRight;
+        }
     }
 
     /**
@@ -142,6 +195,13 @@
         return BABYLON.Angle.FromDegrees(degree).radians();
     }
     /**
+     * Translate radians to degree.
+     * @param degree Radians
+     */
+    function radiansToDegree(radians) {
+        return BABYLON.Angle.FromRadians(radians).degrees();
+    }
+    /**
      * Hack on ecsy 0.1.4 to get World instance from system itself.
      * @param system A registered ecsy System class
      */
@@ -149,26 +209,60 @@
         return system["world"];
     }
     /**
-     * Dispose a generated Babylon.js object if existed.
+     * Dispose Babylon.js object in the component.
      * @param object Component contains Babylon.js object
      */
     function disposeObject(component) {
         component.object && component.object.dispose();
     }
+    /** @hidden */
+    function getGameSystem(system) {
+        return getWorld(system).getSystems().find(system => { return system.engine !== undefined; });
+    }
     /**
-     * Get active scene from GameSystem.
+     * Get scene by name or return active scene.
      * @param system A registered ecsy System class
      * @param sceneName Name to get specific scene in system
      */
-    function getActiveScene(system, sceneName) {
-        return getWorld(system).getSystems().find(system => { return system.activeScene !== undefined; }).getScene(sceneName);
+    function getScene(system, sceneName) {
+        return getGameSystem(system).getScene(sceneName);
     }
     /**
-     * Convert XYZ value to Vector3 from a TransformProperties object.
-     * @param properties Defined XYZ values
+     * Get current Camera entity in the scene.
+     * @param system A registered ecsy System class
+     */
+    function getCamera(system) {
+        return getGameSystem(system).currentCamera;
+    }
+    /**
+     * Convert XYZProperties value to Vector3.
+     * @param properties XYZProperties value
      */
     function xyzToVector3(properties) {
         return new BABYLON.Vector3(properties.x, properties.y, properties.z);
+    }
+    /**
+     * Convert XYZProperties degree value to Vector3 in radians.
+     * @param properties XYZProperties value in degrees
+     */
+    function xyzToVector3Radians(properties) {
+        return new BABYLON.Vector3(degreeToRadians(properties.x), degreeToRadians(properties.y), degreeToRadians(properties.z));
+    }
+    /**
+     * Convert Vector3 value to XYZProperties.
+     * @param vector3 Vector3 value
+     */
+    function vector3ToXyz(vector3) {
+        let x = vector3.x, y = vector3.y, z = vector3.z;
+        return { x, y, z };
+    }
+    /**
+     * Convert Vector3 value to XYZProperties in degrees.
+     * @param vector3 Vector3 degree value
+     */
+    function vector3ToXyzDegree(vector3) {
+        let x = vector3.x, y = vector3.y, z = vector3.z;
+        return { x, y, z };
     }
     /**
      * Convert hex color value to Color3.
@@ -193,26 +287,38 @@
     function updateTexture(component, properties, system) {
         Object.keys(properties).forEach(name => {
             let textureAttributes = properties[name];
-            let textureObject = new BABYLON.Texture(textureAttributes.url, getActiveScene(system, component.sceneName));
-            Object.keys(textureAttributes).filter(prop => prop === "url").forEach(prop => {
-                textureObject[prop] = textureAttributes[prop];
-            });
+            let textureObject = new BABYLON.Texture(textureAttributes.url, getScene(system, component.sceneName));
+            Object.keys(textureAttributes)
+                .filter(prop => { return prop !== "url"; })
+                .forEach(prop => textureObject[prop] = textureAttributes[prop]);
             component.object[`${name}Texture`] && disposeObject(component.object[`${name}Texture`]);
             component.object[`${name}Texture`] = textureObject;
         });
     }
     /**
-     * Update transformation to a component with object.
-     * @param transform Transfrom component in the entity
-     * @param component Component with object
+     * Get ObjectComponents in an Entity.
+     * @param entity Entity to filter ObjectComponents
      */
-    function updateTransform(transform, component) {
-        if (component.object) {
+    function getEntityObjectComponents(entity) {
+        let components = entity.getComponents();
+        let objectComponents = [];
+        Object.keys(components)
+            .filter(name => { return "object" in components[name]; })
+            .forEach(name => objectComponents.push(components[name]));
+        return objectComponents;
+    }
+    /**
+     * Update transformation to ObjectComponents.
+     * @param transform Transfrom component in the entity
+     * @param components Components with object
+     */
+    function updateObjectsTransform(transform, components) {
+        components.forEach(component => {
             let object = component.object;
             object.position && (object.position = xyzToVector3(transform.position));
-            object.rotation && object.rotation.set(degreeToRadians(transform.rotation.x), degreeToRadians(transform.rotation.y), degreeToRadians(transform.rotation.z));
+            object.rotation && (object.rotation = xyzToVector3Radians(transform.rotation));
             object.scaling && (object.scaling = xyzToVector3(transform.scale));
-        }
+        });
     }
 
     /** Core system of ecsy-babylon. */
@@ -226,6 +332,8 @@
         }
         /** Get current scene instance. */
         get activeScene() { return this._activeScene; }
+        /** Get current Camera Entity. */
+        get currentCamera() { return this._currentCamera; }
         /** @hidden */
         init() { this._render = this._render.bind(this); }
         /** @hidden */
@@ -234,7 +342,10 @@
                 let camera = entity.getComponent(Camera);
                 let scene = this.getScene(camera.sceneName);
                 camera.object = new BABYLON.VRExperienceHelper(scene, camera.options);
-                scene === this._activeScene && (this._isRendering = true);
+                if (scene === this._activeScene) {
+                    this._currentCamera = camera;
+                    this._isRendering = true;
+                }
             });
             this.queries.camera.removed.forEach((entity) => {
                 let camera = entity.getComponent(Camera);
@@ -299,20 +410,15 @@
         init() {
             window.addEventListener("load", () => {
                 this.queries.object.results.forEach((entity) => {
-                    this._updateTransform(entity.getComponent(Transform), entity.getComponents());
+                    entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity.getComponent(Transform), getEntityObjectComponents(entity));
                 });
             });
         }
         /** @hidden */
         execute() {
             this.queries.object.changed.forEach((entity) => {
-                this._updateTransform(entity.getComponent(Transform), entity.getComponents());
+                entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity.getComponent(Transform), getEntityObjectComponents(entity));
             });
-        }
-        _updateTransform(transform, components) {
-            Object.keys(components)
-                .filter(name => { return components[name].object !== undefined; })
-                .forEach(name => updateTransform(transform, components[name]));
         }
     }
     /** @hidden */
@@ -326,9 +432,7 @@
         execute() {
             this.queries.mesh.added.forEach((entity) => {
                 let mesh = entity.getComponent(Mesh);
-                let type;
-                mesh.type ? type = mesh.type : type = MeshTypes.Box;
-                mesh.object = BABYLON.MeshBuilder[`Create${type}`].call(null, type, mesh.options ? mesh.options : {}, getActiveScene(this, mesh.sceneName));
+                mesh.object = BABYLON.MeshBuilder[`Create${mesh.type}`].call(null, mesh.type, mesh.options, getScene(this, mesh.sceneName));
             });
             this.queries.mesh.removed.forEach((entity) => {
                 disposeObject(entity.getComponent(Mesh));
@@ -357,7 +461,7 @@
             this.queries.light.added.forEach((entity) => {
                 let light = entity.getComponent(Light);
                 let direction = xyzToVector3(light.direction);
-                let scene = getActiveScene(this, light.sceneName);
+                let scene = getScene(this, light.sceneName);
                 switch (light.type) {
                     case LightTypes.Point:
                         light.object = new BABYLON.PointLight(light.type, BABYLON.Vector3.Zero(), scene);
@@ -415,7 +519,7 @@
         execute() {
             this.queries.meshMaterial.added.forEach((entity) => {
                 let material = entity.getComponent(Material);
-                material.object = new BABYLON.StandardMaterial(material.diffuse ? material.diffuse : "#ffffff", getActiveScene(this, material.sceneName));
+                material.object = new BABYLON.StandardMaterial(material.diffuse, getScene(this, material.sceneName));
                 this._updateMaterial(material);
                 entity.getComponent(Mesh).object.material = material.object;
             });
@@ -465,7 +569,7 @@
         execute() {
             this.queries.particle.added.forEach((entity) => {
                 let particle = entity.getComponent(Particle);
-                particle.object = new BABYLON.ParticleSystem(particle.type ? particle.type : ParticleTypes.Point, particle.capacity ? particle.capacity : 100, getActiveScene(this, particle.sceneName));
+                particle.object = new BABYLON.ParticleSystem(particle.type, particle.capacity, getScene(this, particle.sceneName));
                 let particleObject = particle.object;
                 switch (particle.type) {
                     case ParticleTypes.Point:
@@ -534,7 +638,7 @@
         execute() {
             this.queries.asset.added.forEach((entity) => {
                 let asset = entity.getComponent(Asset);
-                this._assetManager || (this._assetManager = new BABYLON.AssetsManager(getActiveScene(this, asset.sceneName)));
+                this._assetManager || (this._assetManager = new BABYLON.AssetsManager(getScene(this, asset.sceneName)));
                 this._assetManager.useDefaultLoadingScreen = false;
                 switch (asset.type) {
                     default: {
@@ -550,16 +654,93 @@
         }
         _loadBabylon(transform, asset) {
             let filenameIndex = asset.url.lastIndexOf("/") + 1;
-            let task = this._assetManager.addMeshTask(AssetTypes.babylon, "", asset.url.substring(0, filenameIndex), asset.url.substring(filenameIndex, asset.url.length));
+            let task = this._assetManager.addMeshTask(AssetTypes.Babylon, "", asset.url.substring(0, filenameIndex), asset.url.substring(filenameIndex, asset.url.length));
             task.onSuccess = (task) => {
                 asset.object = task.loadedMeshes[0];
-                updateTransform(transform, asset);
+                updateObjectsTransform(transform, [asset]);
             };
         }
     }
     /** @hidden */
     AssetSystem.queries = {
         asset: { components: [Transform, Asset], listen: { added: true, removed: true } },
+    };
+
+    /** @hidden */
+    var VRStateButtons;
+    (function (VRStateButtons) {
+        VRStateButtons["onMainButton"] = "onMainButton";
+        VRStateButtons["onPad"] = "onPad";
+        VRStateButtons["onSecondaryButton"] = "onSecondaryButton";
+        VRStateButtons["onTrigger"] = "onTrigger";
+    })(VRStateButtons || (VRStateButtons = {}));
+    /** @hidden */
+    var VRValueButtons;
+    (function (VRValueButtons) {
+        VRValueButtons["onPadValues"] = "onPadValues";
+    })(VRValueButtons || (VRValueButtons = {}));
+    /** System for Input component */
+    class InputSystem extends ecsy.System {
+        constructor() {
+            super(...arguments);
+            this._isControllerConntected = false;
+        }
+        /** @hidden */
+        execute() {
+            this.queries.input.added.forEach((entity) => {
+                let transform = entity.getMutableComponent(Transform);
+                (transform && entity.getComponent(Input).type.startsWith("Vr")) && (transform.updateObjects = false);
+            });
+            this.queries.input.results.forEach((entity) => {
+                let controllers = getCamera(this).object.webVRCamera.controllers;
+                let input = entity.getMutableComponent(Input);
+                if (controllers.length > 0) {
+                    this._isControllerConntected ?
+                        this._updateObjectsTransform(entity, input.object, entity.getMutableComponent(Transform)) :
+                        this._initVRController(input, controllers);
+                }
+            });
+        }
+        _initVRController(input, controllers) {
+            input.type === InputTypes.VrLeft ?
+                input.object = this._getVRController(controllers, "left") :
+                input.object = this._getVRController(controllers, "right");
+            this._bindControllerBehaviours(input);
+            this._isControllerConntected = true;
+        }
+        _getVRController(controllers, hand) {
+            return controllers.find((controller) => { return controller.hand === hand; });
+        }
+        _bindControllerBehaviours(input) {
+            Object.keys(input).filter(name => { return name in VRStateButtons; }).forEach(name => {
+                input[name] && input.object[`${name}StateChangedObservable`].add(data => {
+                    input[name].call(input, data.pressed, data.touched, data.value);
+                });
+            });
+            Object.keys(input).filter(name => { return name in VRValueButtons; }).forEach(name => {
+                input[name] && input.object[`${name}ChangedObservable`].add(data => {
+                    input[name].call(input, data.x, data.y);
+                });
+            });
+        }
+        _updateObjectsTransform(entity, controller, transform) {
+            transform && getEntityObjectComponents(entity)
+                .filter(component => { return !(component instanceof Input); })
+                .forEach(component => {
+                let pos = controller.devicePosition;
+                let rot = controller.deviceRotationQuaternion.toEulerAngles();
+                let object = component.object;
+                object.position && (object.position = pos);
+                object.rotation && (object.rotation = rot);
+                object.scaling && (object.scaling = xyzToVector3(transform.scale));
+                transform.position = vector3ToXyz(pos);
+                transform.rotation = vector3ToXyzDegree(rot);
+            });
+        }
+    }
+    /** @hidden */
+    InputSystem.queries = {
+        input: { components: [Input], listen: { added: true } },
     };
 
 
@@ -573,6 +754,7 @@
         MaterialSystem: MaterialSystem,
         ParticleSystem: ParticleSystem,
         AssetSystem: AssetSystem,
+        InputSystem: InputSystem,
         Transform: Transform,
         Camera: Camera,
         get MeshTypes () { return MeshTypes; },
@@ -583,7 +765,24 @@
         get ParticleTypes () { return ParticleTypes; },
         Particle: Particle,
         get AssetTypes () { return AssetTypes; },
-        Asset: Asset
+        Asset: Asset,
+        get InputTypes () { return InputTypes; },
+        Input: Input,
+        degreeToRadians: degreeToRadians,
+        radiansToDegree: radiansToDegree,
+        getWorld: getWorld,
+        disposeObject: disposeObject,
+        getScene: getScene,
+        getCamera: getCamera,
+        xyzToVector3: xyzToVector3,
+        xyzToVector3Radians: xyzToVector3Radians,
+        vector3ToXyz: vector3ToXyz,
+        vector3ToXyzDegree: vector3ToXyzDegree,
+        hexToColor3: hexToColor3,
+        hexToColor4: hexToColor4,
+        updateTexture: updateTexture,
+        getEntityObjectComponents: getEntityObjectComponents,
+        updateObjectsTransform: updateObjectsTransform
     });
 
     window.EB = EB;

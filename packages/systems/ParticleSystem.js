@@ -1,7 +1,7 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Particle, ParticleTypes } from "../components/index";
-import { getActiveScene, disposeObject, xyzToVector3, updateTexture, hexToColor4 } from "../utils/index";
+import { getScene, disposeObject, xyzToVector3, updateTexture, hexToColor4 } from "../utils/index";
 /** @hidden */
 var ParticleColorValues;
 (function (ParticleColorValues) {
@@ -20,7 +20,7 @@ export class ParticleSystem extends System {
     execute() {
         this.queries.particle.added.forEach((entity) => {
             let particle = entity.getComponent(Particle);
-            particle.object = new BABYLON.ParticleSystem(particle.type ? particle.type : ParticleTypes.Point, particle.capacity ? particle.capacity : 100, getActiveScene(this, particle.sceneName));
+            particle.object = new BABYLON.ParticleSystem(particle.type, particle.capacity, getScene(this, particle.sceneName));
             let particleObject = particle.object;
             switch (particle.type) {
                 case ParticleTypes.Point:

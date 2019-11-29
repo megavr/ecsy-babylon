@@ -2,7 +2,7 @@ import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
 import { Light, LightTypes } from "../components/index";
 import { XYZProperties } from "../components/types/index";
-import { getActiveScene, disposeObject, degreeToRadians, xyzToVector3, hexToColor3 } from "../utils/index";
+import { getScene, disposeObject, degreeToRadians, xyzToVector3, hexToColor3 } from "../utils/index";
 
 /** @hidden */
 enum LightColorValues {
@@ -26,9 +26,9 @@ export class LightSystem extends System {
   /** @hidden */
   execute() {
     this.queries.light.added.forEach((entity: Entity) => {
-      let light = entity.getComponent(Light) as Light;
+      let light = entity.getComponent(Light);
       let direction = xyzToVector3(light.direction);
-      let scene = getActiveScene(this, light.sceneName);
+      let scene = getScene(this, light.sceneName);
       switch (light.type) {
         case LightTypes.Point:
           light.object = new BABYLON.PointLight(light.type, BABYLON.Vector3.Zero(), scene);
@@ -37,7 +37,7 @@ export class LightSystem extends System {
           light.object = new BABYLON.DirectionalLight(light.type, direction, scene);
           break;
         case LightTypes.Spot:
-          light.object = new BABYLON.SpotLight(light.type, BABYLON.Vector3.Zero(), direction, degreeToRadians(light.angle as number), light.exponent as number, scene);
+          light.object = new BABYLON.SpotLight(light.type, BABYLON.Vector3.Zero(), direction, degreeToRadians(light.angle!), light.exponent!, scene);
           break;
         default:
           light.object = new BABYLON.HemisphericLight(LightTypes.Hemispheric, direction, scene);

@@ -1,14 +1,14 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Transform, Asset, AssetTypes } from "../components/index";
-import { getActiveScene, disposeObject, updateTransform } from "../utils/index";
+import { getScene, disposeObject, updateObjectsTransform } from "../utils/index";
 /** System for Asset component */
 export class AssetSystem extends System {
     /** @hidden */
     execute() {
         this.queries.asset.added.forEach((entity) => {
             let asset = entity.getComponent(Asset);
-            this._assetManager || (this._assetManager = new BABYLON.AssetsManager(getActiveScene(this, asset.sceneName)));
+            this._assetManager || (this._assetManager = new BABYLON.AssetsManager(getScene(this, asset.sceneName)));
             this._assetManager.useDefaultLoadingScreen = false;
             switch (asset.type) {
                 default: {
@@ -24,10 +24,10 @@ export class AssetSystem extends System {
     }
     _loadBabylon(transform, asset) {
         let filenameIndex = asset.url.lastIndexOf("/") + 1;
-        let task = this._assetManager.addMeshTask(AssetTypes.babylon, "", asset.url.substring(0, filenameIndex), asset.url.substring(filenameIndex, asset.url.length));
+        let task = this._assetManager.addMeshTask(AssetTypes.Babylon, "", asset.url.substring(0, filenameIndex), asset.url.substring(filenameIndex, asset.url.length));
         task.onSuccess = (task) => {
             asset.object = task.loadedMeshes[0];
-            updateTransform(transform, asset);
+            updateObjectsTransform(transform, [asset]);
         };
     }
 }

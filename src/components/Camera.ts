@@ -11,6 +11,10 @@ import { SceneComponent, ObjectComponent } from "./types/index";
 export class Camera implements SceneComponent, ObjectComponent<BABYLON.VRExperienceHelper> {
   sceneName?: string;
   object!: BABYLON.VRExperienceHelper;
-  /** https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions */
+  /**
+   * Default: {}
+   * 
+   * https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions 
+   */
   options?: BABYLON.VRExperienceHelperOptions = {};
 }

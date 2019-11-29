@@ -29,21 +29,25 @@ export declare class Light implements SceneComponent, ObjectComponent<BABYLON.He
     range?: number;
     /**
      * hex for Color3 value, e.g., #123abc
+     *
      * https://doc.babylonjs.com/api/classes/babylon.light#diffuse
      */
     diffuse?: string;
     /**
      * hex for Color3 value, e.g., #123abc
+     *
      * https://doc.babylonjs.com/api/classes/babylon.light#specularS
      */
     specular?: string;
     /**
      * Spot
+     *
      * https://doc.babylonjs.com/api/classes/babylon.spotlight#angle
      */
     angle?: number;
     /**
      * Spot
+     *
      * https://doc.babylonjs.com/api/classes/babylon.spotlight#exponent
      */
     exponent?: number;

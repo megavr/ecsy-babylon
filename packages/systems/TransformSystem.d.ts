@@ -17,5 +17,4 @@ export declare class TransformSystem extends System {
     init(): void;
     /** @hidden */
     execute(): void;
-    private _updateTransform;
 }

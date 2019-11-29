@@ -35,7 +35,7 @@ export declare class Particle implements TextureComponent {
     textureMask?: string;
     /** Point, Box, DirectedSphere, Cylinder */
     direction1: XYZProperties;
-    /** Point, Box, DirectedSphere, Cylinder */
+    /** Point, Box, DirectedSphere, Cylinder; Default to emit at right-up-front 10 units. */
     direction2: XYZProperties;
     /** Box */
     minEmitBox: XYZProperties;

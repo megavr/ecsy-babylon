@@ -22,12 +22,16 @@ export var ParticleTypes;
  */
 export class Particle {
     constructor() {
+        /** default: "Point" */
+        this.type = ParticleTypes.Point;
+        /** default: 100 */
+        this.capacity = 100;
         /** https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter */
         this.emitter = { x: 0, y: 0, z: 0 };
         /** Point, Box, DirectedSphere, Cylinder */
         this.direction1 = { x: 0, y: 0, z: 0 };
-        /** Point, Box, DirectedSphere, Cylinder */
-        this.direction2 = { x: 0, y: 10, z: 10 };
+        /** Point, Box, DirectedSphere, Cylinder; Default to emit at right-up-front 10 units. */
+        this.direction2 = { x: 10, y: 10, z: 10 };
         /** Box */
         this.minEmitBox = { x: 0, y: 0, z: 0 };
         /** Box */

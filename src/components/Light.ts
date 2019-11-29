@@ -21,7 +21,7 @@ export class Light implements SceneComponent, ObjectComponent<BABYLON.Hemispheri
   sceneName?: string;
   object!: BABYLON.HemisphericLight | BABYLON.ShadowLight;
   /** Default: "Hemispheric" */
-  type?: LightTypes;
+  type?: LightTypes = LightTypes.Hemispheric;
   direction: XYZProperties = { x: 0, y: 0, z: 0 };
   /** https://doc.babylonjs.com/api/classes/babylon.light#intensity */
   intensity?: number;
@@ -31,21 +31,25 @@ export class Light implements SceneComponent, ObjectComponent<BABYLON.Hemispheri
   range?: number;
   /**
    * hex for Color3 value, e.g., #123abc
+   * 
    * https://doc.babylonjs.com/api/classes/babylon.light#diffuse
    */
   diffuse?: string;
   /**
    * hex for Color3 value, e.g., #123abc
+   * 
    * https://doc.babylonjs.com/api/classes/babylon.light#specularS
    */
   specular?: string;
   /** 
    * Spot
+   * 
    * https://doc.babylonjs.com/api/classes/babylon.spotlight#angle 
    */
   angle?: number;
   /** 
    * Spot
+   * 
    * https://doc.babylonjs.com/api/classes/babylon.spotlight#exponent 
    */
   exponent?: number;

@@ -16,6 +16,8 @@ export var LightTypes;
  */
 export class Light {
     constructor() {
+        /** Default: "Hemispheric" */
+        this.type = LightTypes.Hemispheric;
         this.direction = { x: 0, y: 0, z: 0 };
     }
 }

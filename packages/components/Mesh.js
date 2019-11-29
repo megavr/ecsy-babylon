@@ -14,4 +14,9 @@ export var MeshTypes;
  * ```
  */
 export class Mesh {
+    constructor() {
+        /** Default: "Box" */
+        this.type = MeshTypes.Box;
+        this.options = {};
+    }
 }

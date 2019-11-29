@@ -7,7 +7,11 @@
  */
 export class Camera {
     constructor() {
-        /** https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions */
+        /**
+         * Default: {}
+         *
+         * https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions
+         */
         this.options = {};
     }
 }

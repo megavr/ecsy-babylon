@@ -10,8 +10,8 @@ babylon.js ecsy binding and helpers
 <html>
   <head>
     <script src="https://unpkg.com/ecsy@0.1.4/build/ecsy.min.js"></script>
-    <script src="https://unpkg.com/babylonjs@4.1.0-beta.2/babylon.js"></script>
-    <script src="https://unpkg.com/@megavr/ecsy-babylon@0.0.3/dist/ecsy-babylon.min.js"></script>
+    <script src="https://unpkg.com/babylonjs@4.1.0-beta.4/babylon.js"></script>
+    <script src="https://unpkg.com/@megavr/ecsy-babylon@0.0.5/dist/ecsy-babylon.min.js"></script>
   </head>
   <body>
     <canvas id="renderCanvas" style="width: 100%; height: 100%"></canvas>
@@ -24,7 +24,8 @@ babylon.js ecsy binding and helpers
       world
         .registerSystem(EB.GameSystem)
         .registerSystem(EB.TransformSystem)
-        .registerSystem(EB.MeshSystem);
+        .registerSystem(EB.MeshSystem)
+        .registerSystem(EB.InputSystem);
       // get GameSystem object
       const game = world.getSystem(EB.GameSystem);
       // start GameSystem by providing canvas object
@@ -41,8 +42,16 @@ babylon.js ecsy binding and helpers
       const box = world.createEntity()
         .addComponent(EB.Transform)
         .addComponent(EB.Mesh);
-      // move box in front of camera
+      // put box in front of camera
       box.getMutableComponent(EB.Transform).position.z = 3;
+      // add right hand vr input
+      world.createEntity().addComponent(EB.Input, { onTrigger: onTrigger });
+      // rotate box when vr input trigger button pressed
+      function onTrigger(pressed) {
+        if (pressed) {
+          box.getMutableComponent(EB.Transform).rotation.y += 30;
+        }
+      }
     </script>
   </body>
 </html>

@@ -13,9 +13,17 @@ import { MaterialComponent, TextureProperties, TextureComponent } from "./types/
 export declare class Material implements TextureComponent, MaterialComponent {
     sceneName?: string;
     object: BABYLON.StandardMaterial;
+    /**
+     * Default: "#ffffff"
+     *
+     * https://doc.babylonjs.com/api/classes/babylon.standardmaterial#diffusecolor
+     */
     diffuse?: string;
+    /** https://doc.babylonjs.com/api/classes/babylon.standardmaterial#specularcolor */
     specular?: string;
+    /** https://doc.babylonjs.com/api/classes/babylon.standardmaterial#emissivecolor */
     emissive?: string;
+    /** https://doc.babylonjs.com/api/classes/babylon.standardmaterial#ambientcolor */
     ambient?: string;
     texture?: TextureProperties;
 }

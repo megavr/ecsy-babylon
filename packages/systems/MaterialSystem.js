@@ -1,7 +1,7 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Material, Mesh } from "../components/index";
-import { getActiveScene, disposeObject, updateTexture, hexToColor3 } from "../utils/index";
+import { getScene, disposeObject, updateTexture, hexToColor3 } from "../utils/index";
 /** @hidden */
 var MaterialColorValues;
 (function (MaterialColorValues) {
@@ -16,7 +16,7 @@ export class MaterialSystem extends System {
     execute() {
         this.queries.meshMaterial.added.forEach((entity) => {
             let material = entity.getComponent(Material);
-            material.object = new BABYLON.StandardMaterial(material.diffuse ? material.diffuse : "#ffffff", getActiveScene(this, material.sceneName));
+            material.object = new BABYLON.StandardMaterial(material.diffuse, getScene(this, material.sceneName));
             this._updateMaterial(material);
             entity.getComponent(Mesh).object.material = material.object;
         });

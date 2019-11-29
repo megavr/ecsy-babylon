@@ -21,9 +21,12 @@ export declare class GameSystem extends System {
     scenes: Map<String, BABYLON.Scene>;
     private _lastTime;
     private _activeScene;
+    private _currentCamera;
     private _isRendering;
     /** Get current scene instance. */
     get activeScene(): BABYLON.Scene;
+    /** Get current Camera Entity. */
+    get currentCamera(): Camera;
     /** @hidden */
     init(): void;
     /** @hidden */

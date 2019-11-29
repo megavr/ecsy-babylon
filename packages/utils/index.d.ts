@@ -1,6 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
-import { System, World } from "ecsy";
-import { Transform } from "../components/index";
+import { System, World, Entity } from "ecsy";
+import { Transform, Camera } from "../components/index";
 import { ObjectComponent, ParticleTextureProperties, TextureComponent, TextureProperties, XYZProperties } from "../components/types/index";
 /**
  * Translate degree to radians.
@@ -18,21 +18,41 @@ export declare function radiansToDegree(radians: number): number;
  */
 export declare function getWorld(system: System): World;
 /**
- * Dispose a generated Babylon.js object if existed.
+ * Dispose Babylon.js object in the component.
  * @param object Component contains Babylon.js object
  */
 export declare function disposeObject(component: ObjectComponent<any>): void;
 /**
- * Get active scene from GameSystem.
+ * Get scene by name or return active scene.
  * @param system A registered ecsy System class
  * @param sceneName Name to get specific scene in system
  */
-export declare function getActiveScene(system: System, sceneName?: string): BABYLON.Scene;
+export declare function getScene(system: System, sceneName?: string): BABYLON.Scene;
 /**
- * Convert XYZ value to Vector3 from a TransformProperties object.
- * @param properties Defined XYZ values
+ * Get current Camera entity in the scene.
+ * @param system A registered ecsy System class
+ */
+export declare function getCamera(system: System): Camera;
+/**
+ * Convert XYZProperties value to Vector3.
+ * @param properties XYZProperties value
  */
 export declare function xyzToVector3(properties: XYZProperties): BABYLON.Vector3;
+/**
+ * Convert XYZProperties degree value to Vector3 in radians.
+ * @param properties XYZProperties value in degrees
+ */
+export declare function xyzToVector3Radians(properties: XYZProperties): BABYLON.Vector3;
+/**
+ * Convert Vector3 value to XYZProperties.
+ * @param vector3 Vector3 value
+ */
+export declare function vector3ToXyz(vector3: BABYLON.Vector3): XYZProperties;
+/**
+ * Convert Vector3 value to XYZProperties in degrees.
+ * @param vector3 Vector3 degree value
+ */
+export declare function vector3ToXyzDegree(vector3: BABYLON.Vector3): XYZProperties;
 /**
  * Convert hex color value to Color3.
  * @param hexString Text of hex color value(e.g., #123def)
@@ -51,8 +71,13 @@ export declare function hexToColor4(hexString: string): BABYLON.Color4;
  */
 export declare function updateTexture(component: TextureComponent, properties: TextureProperties | ParticleTextureProperties, system: System): void;
 /**
- * Update transformation to a component with object.
- * @param transform Transfrom component in the entity
- * @param component Component with object
+ * Get ObjectComponents in an Entity.
+ * @param entity Entity to filter ObjectComponents
  */
-export declare function updateTransform(transform: Transform, component: ObjectComponent<any>): void;
+export declare function getEntityObjectComponents(entity: Entity): Array<ObjectComponent<any>>;
+/**
+ * Update transformation to ObjectComponents.
+ * @param transform Transfrom component in the entity
+ * @param components Components with object
+ */
+export declare function updateObjectsTransform(transform: Transform, components: Array<ObjectComponent<any>>): void;

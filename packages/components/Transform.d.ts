@@ -9,4 +9,5 @@ export declare class Transform {
     position: XYZProperties;
     rotation: XYZProperties;
     scale: XYZProperties;
+    updateObjects: boolean;
 }

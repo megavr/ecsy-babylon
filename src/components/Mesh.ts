@@ -20,6 +20,6 @@ export class Mesh implements SceneComponent, ObjectComponent<BABYLON.Mesh> {
   sceneName?: string;
   object!: BABYLON.Mesh;
   /** Default: "Box" */
-  type?: MeshTypes;
-  options?: MeshOptions;
+  type?: MeshTypes = MeshTypes.Box;
+  options?: MeshOptions = {};
 }

@@ -9,4 +9,12 @@
  * ```
  */
 export class Material {
+    constructor() {
+        /**
+         * Default: "#ffffff"
+         *
+         * https://doc.babylonjs.com/api/classes/babylon.standardmaterial#diffusecolor
+         */
+        this.diffuse = "#ffffff";
+    }
 }

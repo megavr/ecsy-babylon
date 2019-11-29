@@ -13,6 +13,8 @@ export class GameSystem extends System {
     }
     /** Get current scene instance. */
     get activeScene() { return this._activeScene; }
+    /** Get current Camera Entity. */
+    get currentCamera() { return this._currentCamera; }
     /** @hidden */
     init() { this._render = this._render.bind(this); }
     /** @hidden */
@@ -21,7 +23,10 @@ export class GameSystem extends System {
             let camera = entity.getComponent(Camera);
             let scene = this.getScene(camera.sceneName);
             camera.object = new BABYLON.VRExperienceHelper(scene, camera.options);
-            scene === this._activeScene && (this._isRendering = true);
+            if (scene === this._activeScene) {
+                this._currentCamera = camera;
+                this._isRendering = true;
+            }
         });
         this.queries.camera.removed.forEach((entity) => {
             let camera = entity.getComponent(Camera);
