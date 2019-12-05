@@ -10,8 +10,8 @@ babylon.js ecsy binding and helpers
 <html>
   <head>
     <script src="https://unpkg.com/ecsy@0.1.4/build/ecsy.min.js"></script>
-    <script src="https://unpkg.com/babylonjs@4.1.0-beta.4/babylon.js"></script>
-    <script src="https://unpkg.com/@megavr/ecsy-babylon@0.0.5/dist/ecsy-babylon.min.js"></script>
+    <script src="https://unpkg.com/babylonjs@4.1.0-beta.5/babylon.js"></script>
+    <script src="https://unpkg.com/@megavr/ecsy-babylon@0.0.6/dist/ecsy-babylon.min.js"></script>
   </head>
   <body>
     <canvas id="renderCanvas" style="width: 100%; height: 100%"></canvas>
@@ -58,4 +58,4 @@ babylon.js ecsy binding and helpers
 ```
 
 ### Examples
-https://megavr.github.io/ecsy-babylon-examples/index.html
+https://megavr.github.io/ecsy-babylon-examples/
