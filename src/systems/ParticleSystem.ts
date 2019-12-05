@@ -1,25 +1,14 @@
 import * as BABYLON from "@babylonjs/core";
 import { System, Entity } from "ecsy";
 import { Particle, ParticleTypes } from "../components/index";
-import { getScene, disposeObject, xyzToVector3, updateTexture, hexToColor4 } from "../utils/index";
-
-/** @hidden */
-enum ParticleColorValues {
-  textureMask = "textureMask"
-}
-
-/** @hidden */
-enum ParticleXyzValues {
-  emitter = "emitter",
-  direction1 = "direction1",
-  direction2 = "direction2"
-}
+import { getScene, disposeObject, xyzToVector3, updateTexture, hexToColor4, updateObjectValue, updateObjectVector3, getAssetManager } from "../utils/index";
+import { ParticleColorProperties } from "../components/types";
 
 /** System for Particle component */
 export class ParticleSystem extends System {
   /** @hidden */
   static queries = {
-    particle: { components: [Particle], listen: { added: true, changed: true, removed: true } },
+    particle: { components: [Particle], listen: { added: true, removed: true, changed: [Particle] } },
   };
   /** @hidden */
   queries: any;
@@ -72,17 +61,31 @@ export class ParticleSystem extends System {
   }
 
   private _updateParticle(particle: Particle) {
-    let particleObject = particle.object;
-    Object.keys(particle).forEach(name => {
-      if ((ParticleXyzValues as any)[name]) {
-        (particleObject as any)[name] = xyzToVector3((particle as any)[name]);
-      } else if ((ParticleColorValues as any)[name]) {
-        (particleObject as any)[name] = hexToColor4((particle as any)[name]);
-      } else if (name === "texture") {
-        particle.texture && updateTexture(particle, particle.texture, this);
-      } else {
-        (particleObject as any)[name] = (particle as any)[name];
+    for (let prop in particle) {
+      switch (prop) {
+        case "emitter":
+        case "direction1":
+        case "direction2":
+        case "minEmitBox":
+        case "maxEmitBox":
+          updateObjectVector3(particle, prop);
+          break;
+        case "texture":
+          updateTexture(particle, particle.texture!, getAssetManager(this, particle.sceneName));
+          break;
+        case "color":
+          this._updateColor(particle, particle.color!);
+          break;
+        default:
+          updateObjectValue(particle, prop);
+          break;
       }
-    });
+    }
+  }
+
+  private _updateColor(particle: Particle, color: ParticleColorProperties) {
+    for (let prop in color) {
+      (particle.object as any)[prop] = hexToColor4((color as any)[prop]);
+    }
   }
 }

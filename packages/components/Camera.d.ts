@@ -1,9 +1,9 @@
 import * as BABYLON from "@babylonjs/core";
 import { SceneComponent, ObjectComponent } from "./types/index";
 /**
- * Usage:
+ * @example
  * ```
- * entity.addComponent(Camera);
+ * entity.addComponent(Camera, { sceneName: "Scene" });
  * entity.addComponent(Camera, { options: { controllerMeshes: false } });
  * ```
  */
@@ -11,9 +11,8 @@ export declare class Camera implements SceneComponent, ObjectComponent<BABYLON.V
     sceneName?: string;
     object: BABYLON.VRExperienceHelper;
     /**
-     * Default: {}
-     *
-     * https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions
+     * @see https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions
+     * @default {}
      */
     options?: BABYLON.VRExperienceHelperOptions;
 }

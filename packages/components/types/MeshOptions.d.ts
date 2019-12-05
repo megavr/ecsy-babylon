@@ -1,30 +1,30 @@
 /**
  * Interface defined options of a Mesh component.
- * https://doc.babylonjs.com/api/classes/babylon.meshbuilder
+ * @see https://doc.babylonjs.com/api/classes/babylon.meshbuilder
  */
 export interface MeshOptions {
-    /** Box, Plane */
+    /** @memberof Box, Plane */
     size?: number;
-    /** Box, Plane, Ground */
+    /** @memberof Box, Plane, Ground */
     width?: number;
-    /** Box, Plane, Ground */
+    /** @memberof Box, Plane, Ground */
     height?: number;
-    /** Box */
+    /** @memberof Box */
     depth?: number;
-    /** Sphere */
+    /** @memberof Sphere */
     segments?: number;
-    /** Sphere */
+    /** @memberof Sphere */
     diameter?: number;
-    /** Sphere */
+    /** @memberof Sphere */
     diameterX?: number;
-    /** Sphere */
+    /** @memberof Sphere */
     diameterY?: number;
-    /** Sphere */
+    /** @memberof Sphere */
     diameterZ?: number;
-    /** Sphere */
+    /** @memberof Sphere */
     arc?: number;
-    /** Sphere */
+    /** @memberof Sphere */
     slice?: number;
-    /** Ground */
+    /** @memberof Ground */
     subdivisions?: number;
 }

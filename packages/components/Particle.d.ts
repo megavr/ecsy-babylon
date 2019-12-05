@@ -1,5 +1,5 @@
 import * as BABYLON from "@babylonjs/core";
-import { XYZProperties, ParticleTextureProperties, TextureComponent } from "./types/index";
+import { XYZProperties, ParticleTextureProperties, TextureComponent, ColorComponent, ParticleColorProperties } from "./types/index";
 export declare enum ParticleTypes {
     Point = "Point",
     Box = "Box",
@@ -11,42 +11,62 @@ export declare enum ParticleTypes {
     Cone = "Cone"
 }
 /**
- * Usage:
+ * @example
  * ```
  * entity.addComponent(Particle, {
- *   emitter: { x: 0, y: 0, z: 1 },
- *   texture: {
- *     diffuse: { url: "PATH_TO_PARTICLE_TEXTURE" }
- *   }
+ *    sceneName: "Scene",
+ *    emitter: { x: 0, y: 0, z: 1 },
+ *    texture: {
+ *      diffuse: { url: "PATH_TO_PARTICLE_TEXTURE" }
+ *    }
  * });
  * ```
  */
-export declare class Particle implements TextureComponent {
+export declare class Particle implements ColorComponent<ParticleColorProperties>, TextureComponent<ParticleTextureProperties> {
     sceneName?: string;
     object: BABYLON.ParticleSystem;
-    /** default: "Point" */
+    /** @default "Point" */
     type?: ParticleTypes;
-    /** default: 100 */
-    capacity?: number;
-    /** https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter */
-    emitter: XYZProperties;
     texture?: ParticleTextureProperties;
-    /** hex for Color4 value, e.g., #123abc00 */
-    textureMask?: string;
-    /** Point, Box, DirectedSphere, Cylinder */
+    color?: ParticleColorProperties;
+    /**
+     * @see https://doc.babylonjs.com/api/classes/babylon.particlesystem#constructor
+     * @default 100
+     */
+    capacity?: number;
+    /** @see https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitrate */
+    emitRate?: number;
+    /**
+     * @see https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter
+     * @default 0,0,0
+     */
+    emitter: XYZProperties;
+    /**
+     * @memberof Point, Box, DirectedSphere, Cylinder
+     * @default 0,0,0
+     */
     direction1: XYZProperties;
-    /** Point, Box, DirectedSphere, Cylinder; Default to emit at right-up-front 10 units. */
+    /**
+     * @memberof Point, Box, DirectedSphere, Cylinder
+     * @default 10,10,10
+     */
     direction2: XYZProperties;
-    /** Box */
+    /**
+     * @memberof Box
+     * @default 0,0,0
+     */
     minEmitBox: XYZProperties;
-    /** Box */
+    /**
+     * @memberof Box
+     * @default 0,0,0
+     */
     maxEmitBox: XYZProperties;
-    /** Sphere, DirectedSphere, Hemispheric, Cylinder, Cone */
+    /** @memberof Sphere, DirectedSphere, Hemispheric, Cylinder, Cone */
     radius?: number;
-    /** Hemispheric, Cylinder */
+    /** @memberof Hemispheric, Cylinder */
     radiusRange?: number;
-    /** Cylinder */
+    /** @memberof Cylinder */
     height?: number;
-    /** Cone */
+    /** @memberof Cone */
     angle?: number;
 }

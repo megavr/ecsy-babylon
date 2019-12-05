@@ -8,8 +8,8 @@ export declare class ParticleSystem extends System {
             components: (typeof Particle)[];
             listen: {
                 added: boolean;
-                changed: boolean;
                 removed: boolean;
+                changed: (typeof Particle)[];
             };
         };
     };
@@ -18,4 +18,5 @@ export declare class ParticleSystem extends System {
     /** @hidden */
     execute(): void;
     private _updateParticle;
+    private _updateColor;
 }

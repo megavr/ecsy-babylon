@@ -1,11 +1,11 @@
 import { System } from "ecsy";
-import { Transform, Asset } from "../components/index";
+import { Asset } from "../components/index";
 /** System for Asset component */
 export declare class AssetSystem extends System {
     /** @hidden */
     static queries: {
         asset: {
-            components: (typeof Transform | typeof Asset)[];
+            components: (typeof Asset)[];
             listen: {
                 added: boolean;
                 removed: boolean;
@@ -14,7 +14,6 @@ export declare class AssetSystem extends System {
     };
     /** @hidden */
     queries: any;
-    private _assetManager;
     /** @hidden */
     execute(): void;
     private _loadBabylon;

@@ -6,15 +6,14 @@ import { disposeObject, getWorld } from "../utils/index";
 export class GameSystem extends System {
     constructor() {
         super(...arguments);
-        /** A map holds created scene(s) instance and its name. */
-        this.scenes = new Map();
-        this._lastTime = 0;
+        this._scenes = new Map();
+        this._assetManagers = new Map();
         this._isRendering = false;
     }
-    /** Get current scene instance. */
-    get activeScene() { return this._activeScene; }
-    /** Get current Camera Entity. */
-    get currentCamera() { return this._currentCamera; }
+    /** Get name of active scene */
+    get activeSceneName() { return this._activeSceneName; }
+    /** Get active Camera Entity. */
+    get activeCameraEntity() { return this._activeCameraEntity; }
     /** @hidden */
     init() { this._render = this._render.bind(this); }
     /** @hidden */
@@ -24,7 +23,7 @@ export class GameSystem extends System {
             let scene = this.getScene(camera.sceneName);
             camera.object = new BABYLON.VRExperienceHelper(scene, camera.options);
             if (scene === this._activeScene) {
-                this._currentCamera = camera;
+                this._activeCameraEntity = entity;
                 this._isRendering = true;
             }
         });
@@ -37,47 +36,82 @@ export class GameSystem extends System {
     }
     /**
      * Start game system in the world can be used by other systems & components.
-     * https://doc.babylonjs.com/api/classes/babylon.engine#constructor
+     * @see https://doc.babylonjs.com/api/classes/babylon.engine#constructor
      * @param canvas WebGL context to be used for rendering
      * @param antialias defines enable antialiasing (default: false)
-     * @param options https://doc.babylonjs.com/api/interfaces/babylon.engineoptions
+     * @param options @see https://doc.babylonjs.com/api/interfaces/babylon.engineoptions
      * @param adaptToDeviceRatio defines whether to adapt to the device's viewport characteristics (default: false)
+     * @returns This GameSystem
      */
     start(canvas, antialias, options, adaptToDeviceRatio) {
         this.engine = new BABYLON.Engine(canvas, antialias, options, adaptToDeviceRatio);
-        this._lastTime = performance.now();
         this.engine.runRenderLoop(this._render);
         return this;
     }
     /**
-     * Get a scene by provided name or return current scene if not available.
-     * @param name Name of the scene
+     * Add a new scene with a name.
+     * @see https://doc.babylonjs.com/api/classes/babylon.scene#constructor
+     * @param sceneName Readable name to be used to switch or remove scene in the system
+     * @param options @see https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions
+     * @returns This GameSystem
      */
-    getScene(name) {
-        if (name) {
-            return this.scenes.get(name);
+    addScene(sceneName, options) {
+        let scene = new BABYLON.Scene(this.engine, options);
+        let assetManager = new BABYLON.AssetsManager(scene);
+        assetManager.useDefaultLoadingScreen = false;
+        this._scenes.set(sceneName, scene);
+        this._assetManagers.set(sceneName, assetManager);
+        if (this.engine.scenes.length === 1) {
+            this._activeScene = scene;
+            this._activeSceneName = sceneName;
+        }
+        return this;
+    }
+    /** Remove an inactive scene by given name */
+    removeScene(sceneName) {
+        sceneName !== this.activeSceneName && this.getScene(sceneName).dispose();
+        return this;
+    }
+    /**
+     * Switch to a scene by given scene name.
+     * @param sceneName Name of scene
+     * @param cameraEntity Default camera for the new scene
+     * @returns This GameSystem
+     */
+    switchScene(sceneName, cameraEntity) {
+        if (this.getScene(sceneName)) {
+            this._activeScene = this.getScene(sceneName);
+            this._activeSceneName = sceneName;
+            this._activeCameraEntity = cameraEntity;
+        }
+        return this;
+    }
+    /**
+     * Get a scene by provided name.
+     * @param sceneName Name of the scene
+     * @returns Scene found in system or active scene if not available
+     */
+    getScene(sceneName) {
+        if (sceneName) {
+            return this._scenes.get(sceneName);
         }
         else {
             return this._activeScene;
         }
     }
     /**
-     * Add a new scene with a name.
-     * https://doc.babylonjs.com/api/classes/babylon.scene#constructor
-     * @param name Readable name to be used to switch or remove scene in the system
-     * @param options https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions
+     * Get a asset manager by provided scene name.
+     * @param sceneName Name of the scene
+     * @returns Asset manager found or asset manager in active scene
      */
-    addScene(name, options) {
-        let scene = new BABYLON.Scene(this.engine, options);
-        this.scenes.set(name, scene);
-        this.engine.scenes.length === 1 && (this._activeScene = scene);
-        return this;
+    getAssetManager(sceneName) {
+        let name = this.activeSceneName;
+        sceneName && (name = sceneName);
+        return this._assetManagers.get(name);
     }
     _render() {
-        let time = performance.now();
-        getWorld(this).execute(time - this._lastTime, time);
+        getWorld(this).execute(this.engine.getDeltaTime(), performance.now());
         (this._isRendering && getWorld(this).enabled) && this._activeScene.render();
-        this._lastTime = time;
     }
 }
 /** @hidden */

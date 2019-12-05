@@ -9,6 +9,7 @@ export declare class MeshSystem extends System {
             listen: {
                 added: boolean;
                 removed: boolean;
+                changed: (typeof Mesh)[];
             };
         };
     };

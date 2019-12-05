@@ -1,26 +1,26 @@
 /**
  * Interface defined properties of a Material component.
- * https://doc.babylonjs.com/api/classes/babylon.standardmaterial
+ * @see https://doc.babylonjs.com/api/classes/babylon.standardmaterial
  */
 export interface MaterialComponent {
     /**
-     * hex for Color3 value, e.g., #123abc
-     * https://doc.babylonjs.com/api/classes/babylon.standardmaterial#diffusecolor
+     * @see https://doc.babylonjs.com/api/classes/babylon.standardmaterial#diffusecolor
+     * @example #123abc
      */
     diffuse?: string;
     /**
-     * hex for Color3 value, e.g., #123abc
-     * https://doc.babylonjs.com/api/classes/babylon.standardmaterial#specularcolor
+     * @see https://doc.babylonjs.com/api/classes/babylon.standardmaterial#specularcolor
+     * @example #123abc
      */
     specular?: string;
     /**
-     * hex for Color3 value, e.g., #123abc
-     * https://doc.babylonjs.com/api/classes/babylon.standardmaterial#emissivecolor
+     * @see https://doc.babylonjs.com/api/classes/babylon.standardmaterial#emissivecolor
+     * @example #123abc
      */
     emissive?: string;
     /**
-     * hex for Color3 value, e.g., #123abc
-     * https://doc.babylonjs.com/api/classes/babylon.standardmaterial#ambientcolor
+     * @see https://doc.babylonjs.com/api/classes/babylon.standardmaterial#ambientcolor
+     * @example #123abc
      */
     ambient?: string;
 }

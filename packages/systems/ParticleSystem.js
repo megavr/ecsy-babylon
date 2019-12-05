@@ -1,19 +1,7 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Particle, ParticleTypes } from "../components/index";
-import { getScene, disposeObject, xyzToVector3, updateTexture, hexToColor4 } from "../utils/index";
-/** @hidden */
-var ParticleColorValues;
-(function (ParticleColorValues) {
-    ParticleColorValues["textureMask"] = "textureMask";
-})(ParticleColorValues || (ParticleColorValues = {}));
-/** @hidden */
-var ParticleXyzValues;
-(function (ParticleXyzValues) {
-    ParticleXyzValues["emitter"] = "emitter";
-    ParticleXyzValues["direction1"] = "direction1";
-    ParticleXyzValues["direction2"] = "direction2";
-})(ParticleXyzValues || (ParticleXyzValues = {}));
+import { getScene, disposeObject, xyzToVector3, updateTexture, hexToColor4, updateObjectValue, updateObjectVector3, getAssetManager } from "../utils/index";
 /** System for Particle component */
 export class ParticleSystem extends System {
     /** @hidden */
@@ -61,24 +49,34 @@ export class ParticleSystem extends System {
         });
     }
     _updateParticle(particle) {
-        let particleObject = particle.object;
-        Object.keys(particle).forEach(name => {
-            if (ParticleXyzValues[name]) {
-                particleObject[name] = xyzToVector3(particle[name]);
+        for (let prop in particle) {
+            switch (prop) {
+                case "emitter":
+                case "direction1":
+                case "direction2":
+                case "minEmitBox":
+                case "maxEmitBox":
+                    updateObjectVector3(particle, prop);
+                    break;
+                case "texture":
+                    updateTexture(particle, particle.texture, getAssetManager(this, particle.sceneName));
+                    break;
+                case "color":
+                    this._updateColor(particle, particle.color);
+                    break;
+                default:
+                    updateObjectValue(particle, prop);
+                    break;
             }
-            else if (ParticleColorValues[name]) {
-                particleObject[name] = hexToColor4(particle[name]);
-            }
-            else if (name === "texture") {
-                particle.texture && updateTexture(particle, particle.texture, this);
-            }
-            else {
-                particleObject[name] = particle[name];
-            }
-        });
+        }
+    }
+    _updateColor(particle, color) {
+        for (let prop in color) {
+            particle.object[prop] = hexToColor4(color[prop]);
+        }
     }
 }
 /** @hidden */
 ParticleSystem.queries = {
-    particle: { components: [Particle], listen: { added: true, changed: true, removed: true } },
+    particle: { components: [Particle], listen: { added: true, removed: true, changed: [Particle] } },
 };

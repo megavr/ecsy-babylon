@@ -1,5 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
-import { XYZProperties, ParticleTextureProperties, TextureComponent } from "./types/index";
+import { XYZProperties, ParticleTextureProperties, TextureComponent, ColorComponent, ParticleColorProperties } from "./types/index";
+import { xyz } from "../utils/index";
 
 export enum ParticleTypes {
   Point = "Point",
@@ -13,42 +14,62 @@ export enum ParticleTypes {
 }
 
 /**
- * Usage:
+ * @example
  * ```
  * entity.addComponent(Particle, { 
- *   emitter: { x: 0, y: 0, z: 1 }, 
- *   texture: {
- *     diffuse: { url: "PATH_TO_PARTICLE_TEXTURE" }
- *   }
+ *    sceneName: "Scene",
+ *    emitter: { x: 0, y: 0, z: 1 }, 
+ *    texture: {
+ *      diffuse: { url: "PATH_TO_PARTICLE_TEXTURE" }
+ *    }
  * });
  * ```
  */
-export class Particle implements TextureComponent {
+export class Particle implements ColorComponent<ParticleColorProperties>, TextureComponent<ParticleTextureProperties> {
   sceneName?: string;
-  object!: BABYLON.ParticleSystem;
-  /** default: "Point" */
+  object: BABYLON.ParticleSystem;
+  /** @default "Point" */
   type?: ParticleTypes = ParticleTypes.Point;
-  /** default: 100 */
-  capacity?: number = 100;
-  /** https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter */
-  emitter: XYZProperties = { x: 0, y: 0, z: 0 };
   texture?: ParticleTextureProperties;
-  /** hex for Color4 value, e.g., #123abc00 */
-  textureMask?: string;
-  /** Point, Box, DirectedSphere, Cylinder */
-  direction1: XYZProperties = { x: 0, y: 0, z: 0 };
-  /** Point, Box, DirectedSphere, Cylinder; Default to emit at right-up-front 10 units. */
-  direction2: XYZProperties = { x: 10, y: 10, z: 10 };
-  /** Box */
-  minEmitBox: XYZProperties = { x: 0, y: 0, z: 0 };
-  /** Box */
-  maxEmitBox: XYZProperties = { x: 0, y: 0, z: 0 };
-  /** Sphere, DirectedSphere, Hemispheric, Cylinder, Cone */
+  color?: ParticleColorProperties;
+  /** 
+   * @see https://doc.babylonjs.com/api/classes/babylon.particlesystem#constructor
+   * @default 100 
+   */
+  capacity?: number = 100;
+  /** @see https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitrate */
+  emitRate?: number;
+  /** 
+   * @see https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter 
+   * @default 0,0,0
+   */
+  emitter: XYZProperties = xyz();
+  /** 
+   * @memberof Point, Box, DirectedSphere, Cylinder
+   * @default 0,0,0
+   */
+  direction1: XYZProperties = xyz();
+  /** 
+   * @memberof Point, Box, DirectedSphere, Cylinder
+   * @default 10,10,10
+   */
+  direction2: XYZProperties = xyz(10, 10, 10);
+  /** 
+   * @memberof Box 
+   * @default 0,0,0
+   */
+  minEmitBox: XYZProperties = xyz();
+  /** 
+   * @memberof Box 
+   * @default 0,0,0
+   */
+  maxEmitBox: XYZProperties = xyz();
+  /** @memberof Sphere, DirectedSphere, Hemispheric, Cylinder, Cone */
   radius?: number;
-  /** Hemispheric, Cylinder */
+  /** @memberof Hemispheric, Cylinder */
   radiusRange?: number;
-  /** Cylinder */
+  /** @memberof Cylinder */
   height?: number;
-  /** Cone */
+  /** @memberof Cone */
   angle?: number;
 }

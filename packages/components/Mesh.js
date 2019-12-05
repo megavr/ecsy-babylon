@@ -6,17 +6,18 @@ export var MeshTypes;
     MeshTypes["Ground"] = "Ground";
 })(MeshTypes || (MeshTypes = {}));
 /**
- * Usage:
+ * @example
  * ```
- * entity.addComponent(Mesh);
+ * entity.addComponent(Mesh, { sceneName: "Scene" });
  * entity.addComponent(Mesh, { type: MeshTypes.Ground, options: { width: 2, height: 2 } });
  * entity.addComponent(Mesh, { type: MeshTypes.Sphere, options: { diameter: 2 } });
  * ```
  */
 export class Mesh {
     constructor() {
-        /** Default: "Box" */
+        /** @default "Box" */
         this.type = MeshTypes.Box;
+        /** @default {} */
         this.options = {};
     }
 }

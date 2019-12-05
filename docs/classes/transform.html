@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Transform | ecsy-babylon@0.0.5</title>
+	<title>Transform | ecsy-babylon@0.0.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ecsy-babylon@0.0.5</a>
+					<a href="../index.html" class="title">ecsy-babylon@0.0.6</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -68,10 +68,10 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Usage:</p>
-						<pre><code>entity.addComponent(Transform)<span class="hljs-comment">;</span></code></pre>
-					</div>
+					<dl class="tsd-comment-tags">
+						<dt>example</dt>
+						<dd><pre><code>entity.addComponent(Transform)<span class="hljs-comment">;</span></code></pre></dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -89,15 +89,10 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="transform.html#position" class="tsd-kind-icon">position</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="transform.html#rotation" class="tsd-kind-icon">rotation</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="transform.html#scale" class="tsd-kind-icon">scale</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="transform.html#updateobjects" class="tsd-kind-icon">update<wbr>Objects</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-external">
-							<h3>Object literals</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-external"><a href="transform.html#position" class="tsd-kind-icon">position</a></li>
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-external"><a href="transform.html#rotation" class="tsd-kind-icon">rotation</a></li>
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-external"><a href="transform.html#scale" class="tsd-kind-icon">scale</a></li>
 							</ul>
 						</section>
 					</div>
@@ -106,137 +101,75 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="position" class="tsd-anchor"></a>
+					<h3>position</h3>
+					<div class="tsd-signature tsd-kind-icon">position<span class="tsd-signature-symbol">:</span> <a href="../interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a><span class="tsd-signature-symbol"> =&nbsp;xyz()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Transform.ts#L12">src/components/Transform.ts:12</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>0,0,0</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="rotation" class="tsd-anchor"></a>
+					<h3>rotation</h3>
+					<div class="tsd-signature tsd-kind-icon">rotation<span class="tsd-signature-symbol">:</span> <a href="../interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a><span class="tsd-signature-symbol"> =&nbsp;xyz()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Transform.ts#L14">src/components/Transform.ts:14</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>0,0,0</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="scale" class="tsd-anchor"></a>
+					<h3>scale</h3>
+					<div class="tsd-signature tsd-kind-icon">scale<span class="tsd-signature-symbol">:</span> <a href="../interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a><span class="tsd-signature-symbol"> =&nbsp;xyz(1, 1, 1)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Transform.ts#L16">src/components/Transform.ts:16</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>1,1,1</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="updateobjects" class="tsd-anchor"></a>
 					<h3>update<wbr>Objects</h3>
 					<div class="tsd-signature tsd-kind-icon">update<wbr>Objects<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">boolean</span><span class="tsd-signature-symbol"> =&nbsp;true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L13">src/components/Transform.ts:13</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Transform.ts#L21">src/components/Transform.ts:21</a></li>
 						</ul>
 					</aside>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-external">
-				<h2>Object literals</h2>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-					<a name="position" class="tsd-anchor"></a>
-					<h3>position</h3>
-					<div class="tsd-signature tsd-kind-icon">position<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L10">src/components/Transform.ts:10</a></li>
-						</ul>
-					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="position.x" class="tsd-anchor"></a>
-						<h3>x</h3>
-						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L10">src/components/Transform.ts:10</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="position.y" class="tsd-anchor"></a>
-						<h3>y</h3>
-						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L10">src/components/Transform.ts:10</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="position.z" class="tsd-anchor"></a>
-						<h3>z</h3>
-						<div class="tsd-signature tsd-kind-icon">z<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L10">src/components/Transform.ts:10</a></li>
-							</ul>
-						</aside>
-					</section>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-					<a name="rotation" class="tsd-anchor"></a>
-					<h3>rotation</h3>
-					<div class="tsd-signature tsd-kind-icon">rotation<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L11">src/components/Transform.ts:11</a></li>
-						</ul>
-					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="rotation.x-1" class="tsd-anchor"></a>
-						<h3>x</h3>
-						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L11">src/components/Transform.ts:11</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="rotation.y-1" class="tsd-anchor"></a>
-						<h3>y</h3>
-						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L11">src/components/Transform.ts:11</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="rotation.z-1" class="tsd-anchor"></a>
-						<h3>z</h3>
-						<div class="tsd-signature tsd-kind-icon">z<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L11">src/components/Transform.ts:11</a></li>
-							</ul>
-						</aside>
-					</section>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-					<a name="scale" class="tsd-anchor"></a>
-					<h3>scale</h3>
-					<div class="tsd-signature tsd-kind-icon">scale<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L12">src/components/Transform.ts:12</a></li>
-						</ul>
-					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="scale.x-2" class="tsd-anchor"></a>
-						<h3>x</h3>
-						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L12">src/components/Transform.ts:12</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="scale.y-2" class="tsd-anchor"></a>
-						<h3>y</h3>
-						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L12">src/components/Transform.ts:12</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="scale.z-2" class="tsd-anchor"></a>
-						<h3>z</h3>
-						<div class="tsd-signature tsd-kind-icon">z<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;1</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Transform.ts#L12">src/components/Transform.ts:12</a></li>
-							</ul>
-						</aside>
-					</section>
+					<div class="tsd-comment tsd-typography">
+						<div class="lead">
+							<p>Update Babylon.js object transformation (if existed) for all components in the entity.</p>
+						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>true</p>
+							</dd>
+						</dl>
+					</div>
 				</section>
 			</section>
 		</div>
@@ -256,16 +189,16 @@
 						<a href="transform.html" class="tsd-kind-icon">Transform</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
-								<a href="transform.html#updateobjects" class="tsd-kind-icon">update<wbr>Objects</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
 								<a href="transform.html#position" class="tsd-kind-icon">position</a>
 							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="transform.html#rotation" class="tsd-kind-icon">rotation</a>
 							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="transform.html#scale" class="tsd-kind-icon">scale</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="transform.html#updateobjects" class="tsd-kind-icon">update<wbr>Objects</a>
 							</li>
 						</ul>
 					</li>

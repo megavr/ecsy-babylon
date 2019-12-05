@@ -1,6 +1,6 @@
 import { System } from "ecsy";
-import { Input, InputTypes, Transform } from "../components/index";
-import { getCamera, getEntityObjectComponents, vector3ToXyz, vector3ToXyzDegree, xyzToVector3 } from "../utils/index";
+import { Input, InputTypes, Transform, Camera } from "../components/index";
+import { getCamera, getObjectComponentsInEntity, vector3ToXyz, vector3ToXyzDegree, xyzToVector3 } from "../utils/index";
 /** @hidden */
 var VRStateButtons;
 (function (VRStateButtons) {
@@ -23,11 +23,21 @@ export class InputSystem extends System {
     /** @hidden */
     execute() {
         this.queries.input.added.forEach((entity) => {
-            let transform = entity.getMutableComponent(Transform);
-            (transform && entity.getComponent(Input).type.startsWith("Vr")) && (transform.updateObjects = false);
+            let input = entity.getComponent(Input);
+            switch (input.type) {
+                case InputTypes.Keyboard:
+                    if (input.onKey) {
+                        window.addEventListener("keydown", event => input.onKey.call(input, event.key, true, false));
+                        window.addEventListener("keyup", event => input.onKey.call(input, event.key, false, true));
+                    }
+                    break;
+                default:
+                    entity.hasComponent(Transform) && (entity.getMutableComponent(Transform).updateObjects = false);
+                    break;
+            }
         });
         this.queries.input.results.forEach((entity) => {
-            let controllers = getCamera(this).object.webVRCamera.controllers;
+            let controllers = getCamera(this).getComponent(Camera).object.webVRCamera.controllers;
             let input = entity.getMutableComponent(Input);
             if (controllers.length > 0) {
                 this._isControllerConntected ?
@@ -47,19 +57,19 @@ export class InputSystem extends System {
         return controllers.find((controller) => { return controller.hand === hand; });
     }
     _bindControllerBehaviours(input) {
-        Object.keys(input).filter(name => { return name in VRStateButtons; }).forEach(name => {
-            input[name] && input.object[`${name}StateChangedObservable`].add(data => {
-                input[name].call(input, data.pressed, data.touched, data.value);
-            });
-        });
-        Object.keys(input).filter(name => { return name in VRValueButtons; }).forEach(name => {
-            input[name] && input.object[`${name}ChangedObservable`].add(data => {
-                input[name].call(input, data.x, data.y);
-            });
-        });
+        for (let prop in input) {
+            if (input[prop]) {
+                prop in VRStateButtons && input.object[`${prop}StateChangedObservable`].add(data => {
+                    input[prop].call(input, data.pressed, data.touched, data.value);
+                });
+                prop in VRValueButtons && input.object[`${prop}ChangedObservable`].add(data => {
+                    input[prop].call(input, data.x, data.y);
+                });
+            }
+        }
     }
     _updateObjectsTransform(entity, controller, transform) {
-        transform && getEntityObjectComponents(entity)
+        transform && getObjectComponentsInEntity(entity)
             .filter(component => { return !(component instanceof Input); })
             .forEach(component => {
             let pos = controller.devicePosition;

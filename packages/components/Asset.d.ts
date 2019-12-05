@@ -4,9 +4,8 @@ export declare enum AssetTypes {
     Babylon = "Babylon"
 }
 /**
- * Usage:
+ * @example
  * ```
- * entity.addComponent(Asset, { url: "PATH_TO_ASSET" });
  * entity.addComponent(Asset, { sceneName: "Scene", url: "PATH_TO_ASSET" });
  * entity.addComponent(Asset, { type: AssetTypes.Babylon, url: "PATH_TO_ASSET" });
  * ```
@@ -14,7 +13,7 @@ export declare enum AssetTypes {
 export declare class Asset implements SceneComponent, ObjectComponent<BABYLON.Mesh> {
     sceneName?: string;
     object: BABYLON.Mesh;
-    /** Default: "Babylon" */
+    /** @default "Babylon" */
     type?: AssetTypes;
     /** Path of an asset file with filename. */
     url?: string;

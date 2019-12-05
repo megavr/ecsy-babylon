@@ -18,4 +18,5 @@ export declare class MaterialSystem extends System {
     /** @hidden */
     execute(): void;
     private _updateMaterial;
+    private _updateColor;
 }

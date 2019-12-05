@@ -1,24 +1,14 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
 import { Light, LightTypes } from "../components/index";
-import { XYZProperties } from "../components/types/index";
-import { getScene, disposeObject, degreeToRadians, xyzToVector3, hexToColor3 } from "../utils/index";
-
-/** @hidden */
-enum LightColorValues {
-  specular = "specular"
-}
-
-/** @hidden */
-enum LightXyzValues {
-  direction = "direction"
-}
+import { getScene, disposeObject, degreeToRadians, xyzToVector3, hexToColor3, updateObjectValue, updateObjectVector3 } from "../utils/index";
+import { LightColorProperties } from "../components/types";
 
 /** System for Light component */
 export class LightSystem extends System {
   /** @hidden */
   static queries = {
-    light: { components: [Light], listen: { added: true, removed: true, changed: true } },
+    light: { components: [Light], listen: { added: true, removed: true, changed: [Light] } },
   };
   /** @hidden */
   queries: any;
@@ -56,15 +46,24 @@ export class LightSystem extends System {
   }
 
   private _updateLight(light: Light) {
-    let lightObject = light.object;
-    Object.keys(light).forEach(name => {
-      if ((LightColorValues as any)[name]) {
-        (lightObject as any)[name] = hexToColor3((light as any)[name]);
-      } else if ((LightXyzValues as any)[name]) {
-        (lightObject as any)[name] = xyzToVector3((light as any)[name] as XYZProperties);
-      } else {
-        (lightObject as any)[name] = (light as any)[name];
+    for (let prop in light) {
+      switch (prop) {
+        case "direction":
+          updateObjectVector3(light, prop);
+          break;
+        case "color":
+          this._updateColor(light, light.color!);
+          break;
+        default:
+          updateObjectValue(light, prop);
+          break;
       }
-    });
+    }
+  }
+
+  private _updateColor(light: Light, color: LightColorProperties) {
+    for (let prop in color) {
+      (light.object as any)[prop] = hexToColor3((color as any)[prop]);
+    }
   }
 }

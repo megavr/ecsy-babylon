@@ -1,14 +1,22 @@
+import { xyz } from "../utils/index";
 /**
- * Usage:
+ * @example
  * ```
  * entity.addComponent(Transform);
  * ```
  */
 export class Transform {
     constructor() {
-        this.position = { x: 0, y: 0, z: 0 };
-        this.rotation = { x: 0, y: 0, z: 0 };
-        this.scale = { x: 1, y: 1, z: 1 };
+        /** @default 0,0,0 */
+        this.position = xyz();
+        /** @default 0,0,0 */
+        this.rotation = xyz();
+        /** @default 1,1,1 */
+        this.scale = xyz(1, 1, 1);
+        /**
+         * Update Babylon.js object transformation (if existed) for all components in the entity.
+         * @default true
+         */
         this.updateObjects = true;
     }
 }

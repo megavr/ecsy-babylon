@@ -1,15 +1,8 @@
 import * as BABYLON from "@babylonjs/core";
 import { System, Entity } from "ecsy";
 import { Material, Mesh } from "../components/index";
-import { getScene, disposeObject, updateTexture, hexToColor3 } from "../utils/index";
-
-/** @hidden */
-enum MaterialColorValues {
-  diffuse = "diffuse",
-  specular = "specular",
-  emissive = "emissive",
-  ambient = "ambient"
-}
+import { getScene, disposeObject, updateTexture, hexToColor3, updateObjectValue, getAssetManager } from "../utils/index";
+import { MaterialColorProperties } from "../components/types";
 
 /** System for Material component */
 export class MaterialSystem extends System {
@@ -19,12 +12,12 @@ export class MaterialSystem extends System {
   };
   /** @hidden */
   queries: any;
-  
+
   /** @hidden */
   execute() {
     this.queries.meshMaterial.added.forEach((entity: Entity) => {
       let material = entity.getComponent(Material);
-      material.object = new BABYLON.StandardMaterial(material.diffuse!, getScene(this, material.sceneName));
+      material.object = new BABYLON.StandardMaterial(material.color!.diffuse!, getScene(this, material.sceneName));
       this._updateMaterial(material);
       entity.getComponent(Mesh).object.material = material.object;
     });
@@ -40,15 +33,24 @@ export class MaterialSystem extends System {
   }
 
   private _updateMaterial(material: Material) {
-    let materialObject = material.object;
-    Object.keys(material).forEach(name => {
-      if ((MaterialColorValues as any)[name]) {
-        (materialObject as any)[`${name}Color`] = hexToColor3((material as any)[name]);
-      } else if (name === "texture") {
-        material.texture && updateTexture(material, material.texture, this);
-      } else {
-        (materialObject as any)[name] = (material as any)[name];
+    for (let prop in material) {
+      switch (prop) {
+        case "color":
+          this._updateColor(material, material.color!);
+          break;
+        case "texture":
+          updateTexture(material, material.texture, getAssetManager(this, material.sceneName));
+          break;
+        default:
+          updateObjectValue(material, prop);
+          break;
       }
-    });
+    }
+  }
+
+  private _updateColor(material: Material, color: MaterialColorProperties) {
+    for (let prop in color) {
+      ((material.object as any)[`${prop}Color`] = hexToColor3((color as any)[prop]));
+    }
   }
 }

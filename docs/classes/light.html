@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Light | ecsy-babylon@0.0.5</title>
+	<title>Light | ecsy-babylon@0.0.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ecsy-babylon@0.0.5</a>
+					<a href="../index.html" class="title">ecsy-babylon@0.0.6</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -68,13 +68,13 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Usage:</p>
-						<pre><code><span class="hljs-string">entity.addComponent(Light);</span>
+					<dl class="tsd-comment-tags">
+						<dt>example</dt>
+						<dd><pre><code><span class="hljs-string">entity.addComponent(Light,</span> <span class="hljs-string">{</span> <span class="hljs-attr">sceneName:</span> <span class="hljs-string">"Scene"</span><span class="hljs-string">,</span> <span class="hljs-attr">color:</span> <span class="hljs-string">{</span> <span class="hljs-attr">diffuse:</span> <span class="hljs-string">"#AAFFAA"</span> <span class="hljs-string">}</span> <span class="hljs-string">});</span>
 <span class="hljs-string">entity.addComponent(Light,</span> <span class="hljs-string">{</span> <span class="hljs-attr">type:</span> <span class="hljs-string">LightTypes.Point,</span> <span class="hljs-attr">intensity:</span> <span class="hljs-number">2</span> <span class="hljs-string">});</span>
 <span class="hljs-string">entity.addComponent(Light,</span> <span class="hljs-string">{</span> <span class="hljs-attr">type:</span> <span class="hljs-string">LightTypes.Directional,</span> <span class="hljs-attr">direction:</span> <span class="hljs-string">{</span> <span class="hljs-attr">x:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">y:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">z:</span> <span class="hljs-number">1</span> <span class="hljs-string">}</span> <span class="hljs-string">});</span>
-<span class="hljs-string">entity.addComponent(Light,</span> <span class="hljs-string">{</span> <span class="hljs-attr">type:</span> <span class="hljs-string">LightTypes.Spot,</span> <span class="hljs-attr">direction:</span> <span class="hljs-string">{</span> <span class="hljs-attr">x:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">y:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">z:</span> <span class="hljs-number">1</span> <span class="hljs-string">},</span> <span class="hljs-attr">angle:</span> <span class="hljs-number">30</span><span class="hljs-string">,</span> <span class="hljs-attr">exponent:</span> <span class="hljs-number">2</span> <span class="hljs-string">});</span></code></pre>
-					</div>
+<span class="hljs-string">entity.addComponent(Light,</span> <span class="hljs-string">{</span> <span class="hljs-attr">type:</span> <span class="hljs-string">LightTypes.Spot,</span> <span class="hljs-attr">direction:</span> <span class="hljs-string">{</span> <span class="hljs-attr">x:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">y:</span> <span class="hljs-number">0</span><span class="hljs-string">,</span> <span class="hljs-attr">z:</span> <span class="hljs-number">1</span> <span class="hljs-string">},</span> <span class="hljs-attr">angle:</span> <span class="hljs-number">30</span><span class="hljs-string">,</span> <span class="hljs-attr">exponent:</span> <span class="hljs-number">2</span> <span class="hljs-string">});</span></code></pre></dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -89,6 +89,7 @@
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
 					<li><a href="../interfaces/scenecomponent.html" class="tsd-signature-type">SceneComponent</a></li>
+					<li><a href="../interfaces/colorcomponent.html" class="tsd-signature-type">ColorComponent</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/lightcolorproperties.html" class="tsd-signature-type">LightColorProperties</a><span class="tsd-signature-symbol">&gt;</span></li>
 					<li><a href="../interfaces/objectcomponent.html" class="tsd-signature-type">ObjectComponent</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">HemisphericLight</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">ShadowLight</span><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
@@ -100,21 +101,15 @@
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#angle" class="tsd-kind-icon">angle</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#diffuse" class="tsd-kind-icon">diffuse</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#color" class="tsd-kind-icon">color</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#direction" class="tsd-kind-icon">direction</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#exponent" class="tsd-kind-icon">exponent</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#intensity" class="tsd-kind-icon">intensity</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#object" class="tsd-kind-icon">object</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#radius" class="tsd-kind-icon">radius</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#range" class="tsd-kind-icon">range</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#scenename" class="tsd-kind-icon">scene<wbr>Name</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#specular" class="tsd-kind-icon">specular</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="light.html#type" class="tsd-kind-icon">type</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-external">
-							<h3>Object literals</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-external"><a href="light.html#direction" class="tsd-kind-icon">direction</a></li>
 							</ul>
 						</section>
 					</div>
@@ -128,30 +123,49 @@
 					<div class="tsd-signature tsd-kind-icon">angle<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L49">src/components/Light.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Light.ts#L42">src/components/Light.ts:42</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Spot</p>
-						</div>
-						<p><a href="https://doc.babylonjs.com/api/classes/babylon.spotlight#angle">https://doc.babylonjs.com/api/classes/babylon.spotlight#angle</a></p>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.spotlight#angle">https://doc.babylonjs.com/api/classes/babylon.spotlight#angle</a></p>
+							</dd>
+							<dt>memberof</dt>
+							<dd><p>Spot</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
-					<a name="diffuse" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> diffuse</h3>
-					<div class="tsd-signature tsd-kind-icon">diffuse<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="color" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> color</h3>
+					<div class="tsd-signature tsd-kind-icon">color<span class="tsd-signature-symbol">:</span> <a href="../interfaces/lightcolorproperties.html" class="tsd-signature-type">LightColorProperties</a></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/colorcomponent.html">ColorComponent</a>.<a href="../interfaces/colorcomponent.html#color">color</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Light.ts#L26">src/components/Light.ts:26</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="direction" class="tsd-anchor"></a>
+					<h3>direction</h3>
+					<div class="tsd-signature tsd-kind-icon">direction<span class="tsd-signature-symbol">:</span> <a href="../interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a><span class="tsd-signature-symbol"> =&nbsp;xyz()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L37">src/components/Light.ts:37</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Light.ts#L31">src/components/Light.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>hex for Color3 value, e.g., #123abc</p>
-						</div>
-						<p><a href="https://doc.babylonjs.com/api/classes/babylon.light#diffuse">https://doc.babylonjs.com/api/classes/babylon.light#diffuse</a></p>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.shadowlight#direction">https://doc.babylonjs.com/api/classes/babylon.shadowlight#direction</a></p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>0,0,0</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -160,14 +174,18 @@
 					<div class="tsd-signature tsd-kind-icon">exponent<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L55">src/components/Light.ts:55</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Light.ts#L47">src/components/Light.ts:47</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Spot</p>
-						</div>
-						<p><a href="https://doc.babylonjs.com/api/classes/babylon.spotlight#exponent">https://doc.babylonjs.com/api/classes/babylon.spotlight#exponent</a></p>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.spotlight#exponent">https://doc.babylonjs.com/api/classes/babylon.spotlight#exponent</a></p>
+							</dd>
+							<dt>memberof</dt>
+							<dd><p>Spot</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -176,13 +194,15 @@
 					<div class="tsd-signature tsd-kind-icon">intensity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L27">src/components/Light.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Light.ts#L33">src/components/Light.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p><a href="https://doc.babylonjs.com/api/classes/babylon.light#intensity">https://doc.babylonjs.com/api/classes/babylon.light#intensity</a></p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.light#intensity">https://doc.babylonjs.com/api/classes/babylon.light#intensity</a></p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -192,7 +212,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/objectcomponent.html">ObjectComponent</a>.<a href="../interfaces/objectcomponent.html#object">object</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L22">src/components/Light.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Light.ts#L23">src/components/Light.ts:23</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -202,13 +222,15 @@
 					<div class="tsd-signature tsd-kind-icon">radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L29">src/components/Light.ts:29</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Light.ts#L35">src/components/Light.ts:35</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p><a href="https://doc.babylonjs.com/api/classes/babylon.light#radius">https://doc.babylonjs.com/api/classes/babylon.light#radius</a></p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.light#radius">https://doc.babylonjs.com/api/classes/babylon.light#radius</a></p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -217,13 +239,15 @@
 					<div class="tsd-signature tsd-kind-icon">range<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L31">src/components/Light.ts:31</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Light.ts#L37">src/components/Light.ts:37</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p><a href="https://doc.babylonjs.com/api/classes/babylon.light#range">https://doc.babylonjs.com/api/classes/babylon.light#range</a></p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.light#range">https://doc.babylonjs.com/api/classes/babylon.light#range</a></p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -231,27 +255,11 @@
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scene<wbr>Name</h3>
 					<div class="tsd-signature tsd-kind-icon">scene<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/scenecomponent.html">SceneComponent</a>.<a href="../interfaces/scenecomponent.html#scenename">sceneName</a></p>
+						<p>Implementation of <a href="../interfaces/colorcomponent.html">ColorComponent</a>.<a href="../interfaces/colorcomponent.html#scenename">sceneName</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L21">src/components/Light.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Light.ts#L22">src/components/Light.ts:22</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
-					<a name="specular" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> specular</h3>
-					<div class="tsd-signature tsd-kind-icon">specular<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L43">src/components/Light.ts:43</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>hex for Color3 value, e.g., #123abc</p>
-						</div>
-						<p><a href="https://doc.babylonjs.com/api/classes/babylon.light#specularS">https://doc.babylonjs.com/api/classes/babylon.light#specularS</a></p>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="type" class="tsd-anchor"></a>
@@ -259,57 +267,16 @@
 					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/lighttypes.html" class="tsd-signature-type">LightTypes</a><span class="tsd-signature-symbol"> =&nbsp;LightTypes.Hemispheric</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L24">src/components/Light.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Light.ts#L25">src/components/Light.ts:25</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Default: &quot;Hemispheric&quot;</p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>&quot;Hemispheric&quot;</p>
+							</dd>
+						</dl>
 					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-external">
-				<h2>Object literals</h2>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-					<a name="direction" class="tsd-anchor"></a>
-					<h3>direction</h3>
-					<div class="tsd-signature tsd-kind-icon">direction<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L25">src/components/Light.ts:25</a></li>
-						</ul>
-					</aside>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="direction.x" class="tsd-anchor"></a>
-						<h3>x</h3>
-						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L25">src/components/Light.ts:25</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="direction.y" class="tsd-anchor"></a>
-						<h3>y</h3>
-						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L25">src/components/Light.ts:25</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="direction.z" class="tsd-anchor"></a>
-						<h3>z</h3>
-						<div class="tsd-signature tsd-kind-icon">z<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Light.ts#L25">src/components/Light.ts:25</a></li>
-							</ul>
-						</aside>
-					</section>
 				</section>
 			</section>
 		</div>
@@ -332,7 +299,10 @@
 								<a href="light.html#angle" class="tsd-kind-icon">angle</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
-								<a href="light.html#diffuse" class="tsd-kind-icon">diffuse</a>
+								<a href="light.html#color" class="tsd-kind-icon">color</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="light.html#direction" class="tsd-kind-icon">direction</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="light.html#exponent" class="tsd-kind-icon">exponent</a>
@@ -353,13 +323,7 @@
 								<a href="light.html#scenename" class="tsd-kind-icon">scene<wbr>Name</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
-								<a href="light.html#specular" class="tsd-kind-icon">specular</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="light.html#type" class="tsd-kind-icon">type</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-								<a href="light.html#direction" class="tsd-kind-icon">direction</a>
 							</li>
 						</ul>
 					</li>

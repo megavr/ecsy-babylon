@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Particle | ecsy-babylon@0.0.5</title>
+	<title>Particle | ecsy-babylon@0.0.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ecsy-babylon@0.0.5</a>
+					<a href="../index.html" class="title">ecsy-babylon@0.0.6</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -68,15 +68,16 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Usage:</p>
-						<pre><code><span class="hljs-selector-tag">entity</span><span class="hljs-selector-class">.addComponent</span>(<span class="hljs-selector-tag">Particle</span>, {
-  <span class="hljs-attribute">emitter</span>: { x: <span class="hljs-number">0</span>, y: <span class="hljs-number">0</span>, z: <span class="hljs-number">1</span> },
-  <span class="hljs-selector-tag">texture</span>: {
-    <span class="hljs-attribute">diffuse</span>: { url: <span class="hljs-string">"PATH_TO_PARTICLE_TEXTURE"</span> }
-  }
-});</code></pre>
-					</div>
+					<dl class="tsd-comment-tags">
+						<dt>example</dt>
+						<dd><pre><code><span class="hljs-selector-tag">entity</span><span class="hljs-selector-class">.addComponent</span>(Particle, {
+   <span class="hljs-attribute">sceneName</span>: <span class="hljs-string">"Scene"</span>,
+   <span class="hljs-attribute">emitter</span>: { <span class="hljs-attribute">x</span>: <span class="hljs-number">0</span>, <span class="hljs-attribute">y</span>: <span class="hljs-number">0</span>, <span class="hljs-attribute">z</span>: <span class="hljs-number">1</span> },
+   <span class="hljs-attribute">texture</span>: {
+     <span class="hljs-attribute">diffuse</span>: { <span class="hljs-attribute">url</span>: <span class="hljs-string">"PATH_TO_PARTICLE_TEXTURE"</span> }
+   }
+});</code></pre></dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -90,7 +91,8 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
-					<li><a href="../interfaces/texturecomponent.html" class="tsd-signature-type">TextureComponent</a></li>
+					<li><a href="../interfaces/colorcomponent.html" class="tsd-signature-type">ColorComponent</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/particlecolorproperties.html" class="tsd-signature-type">ParticleColorProperties</a><span class="tsd-signature-symbol">&gt;</span></li>
+					<li><a href="../interfaces/texturecomponent.html" class="tsd-signature-type">TextureComponent</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/particletextureproperties.html" class="tsd-signature-type">ParticleTextureProperties</a><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -102,24 +104,20 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#angle" class="tsd-kind-icon">angle</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#capacity" class="tsd-kind-icon">capacity</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#color" class="tsd-kind-icon">color</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#direction1" class="tsd-kind-icon">direction1</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#direction2" class="tsd-kind-icon">direction2</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#emitrate" class="tsd-kind-icon">emit<wbr>Rate</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#emitter" class="tsd-kind-icon">emitter</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#height" class="tsd-kind-icon">height</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#maxemitbox" class="tsd-kind-icon">max<wbr>Emit<wbr>Box</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#minemitbox" class="tsd-kind-icon">min<wbr>Emit<wbr>Box</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#object" class="tsd-kind-icon">object</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#radius" class="tsd-kind-icon">radius</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#radiusrange" class="tsd-kind-icon">radius<wbr>Range</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#scenename" class="tsd-kind-icon">scene<wbr>Name</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#texture" class="tsd-kind-icon">texture</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#texturemask" class="tsd-kind-icon">texture<wbr>Mask</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="particle.html#type" class="tsd-kind-icon">type</a></li>
-							</ul>
-						</section>
-						<section class="tsd-index-section tsd-is-external">
-							<h3>Object literals</h3>
-							<ul class="tsd-index-list">
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-external"><a href="particle.html#direction1" class="tsd-kind-icon">direction1</a></li>
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-external"><a href="particle.html#direction2" class="tsd-kind-icon">direction2</a></li>
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-external"><a href="particle.html#emitter" class="tsd-kind-icon">emitter</a></li>
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-external"><a href="particle.html#maxemitbox" class="tsd-kind-icon">max<wbr>Emit<wbr>Box</a></li>
-								<li class="tsd-kind-object-literal tsd-parent-kind-class tsd-is-external"><a href="particle.html#minemitbox" class="tsd-kind-icon">min<wbr>Emit<wbr>Box</a></li>
 							</ul>
 						</section>
 					</div>
@@ -133,13 +131,15 @@
 					<div class="tsd-signature tsd-kind-icon">angle<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L53">src/components/Particle.ts:53</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L74">src/components/Particle.ts:74</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Cone</p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>memberof</dt>
+							<dd><p>Cone</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -148,13 +148,106 @@
 					<div class="tsd-signature tsd-kind-icon">capacity<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;100</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L32">src/components/Particle.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L39">src/components/Particle.ts:39</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>default: 100</p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.particlesystem#constructor">https://doc.babylonjs.com/api/classes/babylon.particlesystem#constructor</a></p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>100</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="color" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> color</h3>
+					<div class="tsd-signature tsd-kind-icon">color<span class="tsd-signature-symbol">:</span> <a href="../interfaces/particlecolorproperties.html" class="tsd-signature-type">ParticleColorProperties</a></div>
+					<aside class="tsd-sources">
+						<p>Implementation of <a href="../interfaces/colorcomponent.html">ColorComponent</a>.<a href="../interfaces/colorcomponent.html#color">color</a></p>
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L34">src/components/Particle.ts:34</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="direction1" class="tsd-anchor"></a>
+					<h3>direction1</h3>
+					<div class="tsd-signature tsd-kind-icon">direction1<span class="tsd-signature-symbol">:</span> <a href="../interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a><span class="tsd-signature-symbol"> =&nbsp;xyz()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L51">src/components/Particle.ts:51</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>memberof</dt>
+							<dd><p>Point, Box, DirectedSphere, Cylinder</p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>0,0,0</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="direction2" class="tsd-anchor"></a>
+					<h3>direction2</h3>
+					<div class="tsd-signature tsd-kind-icon">direction2<span class="tsd-signature-symbol">:</span> <a href="../interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a><span class="tsd-signature-symbol"> =&nbsp;xyz(10, 10, 10)</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L56">src/components/Particle.ts:56</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>memberof</dt>
+							<dd><p>Point, Box, DirectedSphere, Cylinder</p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>10,10,10</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="emitrate" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> emit<wbr>Rate</h3>
+					<div class="tsd-signature tsd-kind-icon">emit<wbr>Rate<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L41">src/components/Particle.ts:41</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitrate">https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitrate</a></p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="emitter" class="tsd-anchor"></a>
+					<h3>emitter</h3>
+					<div class="tsd-signature tsd-kind-icon">emitter<span class="tsd-signature-symbol">:</span> <a href="../interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a><span class="tsd-signature-symbol"> =&nbsp;xyz()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L46">src/components/Particle.ts:46</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter">https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter</a></p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>0,0,0</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -163,13 +256,55 @@
 					<div class="tsd-signature tsd-kind-icon">height<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L51">src/components/Particle.ts:51</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L72">src/components/Particle.ts:72</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Cylinder</p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>memberof</dt>
+							<dd><p>Cylinder</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="maxemitbox" class="tsd-anchor"></a>
+					<h3>max<wbr>Emit<wbr>Box</h3>
+					<div class="tsd-signature tsd-kind-icon">max<wbr>Emit<wbr>Box<span class="tsd-signature-symbol">:</span> <a href="../interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a><span class="tsd-signature-symbol"> =&nbsp;xyz()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L66">src/components/Particle.ts:66</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>memberof</dt>
+							<dd><p>Box</p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>0,0,0</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="minemitbox" class="tsd-anchor"></a>
+					<h3>min<wbr>Emit<wbr>Box</h3>
+					<div class="tsd-signature tsd-kind-icon">min<wbr>Emit<wbr>Box<span class="tsd-signature-symbol">:</span> <a href="../interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a><span class="tsd-signature-symbol"> =&nbsp;xyz()</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L61">src/components/Particle.ts:61</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>memberof</dt>
+							<dd><p>Box</p>
+							</dd>
+							<dt>default</dt>
+							<dd><p>0,0,0</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -179,7 +314,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/texturecomponent.html">TextureComponent</a>.<a href="../interfaces/texturecomponent.html#object">object</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L28">src/components/Particle.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L30">src/components/Particle.ts:30</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -189,13 +324,15 @@
 					<div class="tsd-signature tsd-kind-icon">radius<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L47">src/components/Particle.ts:47</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L68">src/components/Particle.ts:68</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Sphere, DirectedSphere, Hemispheric, Cylinder, Cone</p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>memberof</dt>
+							<dd><p>Sphere, DirectedSphere, Hemispheric, Cylinder, Cone</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -204,13 +341,15 @@
 					<div class="tsd-signature tsd-kind-icon">radius<wbr>Range<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L49">src/components/Particle.ts:49</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L70">src/components/Particle.ts:70</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Hemispheric, Cylinder</p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>memberof</dt>
+							<dd><p>Hemispheric, Cylinder</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -220,7 +359,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/texturecomponent.html">TextureComponent</a>.<a href="../interfaces/texturecomponent.html#scenename">sceneName</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L27">src/components/Particle.ts:27</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L29">src/components/Particle.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -231,24 +370,9 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/texturecomponent.html">TextureComponent</a>.<a href="../interfaces/texturecomponent.html#texture">texture</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L35">src/components/Particle.ts:35</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L33">src/components/Particle.ts:33</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
-					<a name="texturemask" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> texture<wbr>Mask</h3>
-					<div class="tsd-signature tsd-kind-icon">texture<wbr>Mask<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L37">src/components/Particle.ts:37</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>hex for Color4 value, e.g., #123abc00</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="type" class="tsd-anchor"></a>
@@ -256,242 +380,16 @@
 					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/particletypes.html" class="tsd-signature-type">ParticleTypes</a><span class="tsd-signature-symbol"> =&nbsp;ParticleTypes.Point</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L30">src/components/Particle.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Particle.ts#L32">src/components/Particle.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>default: &quot;Point&quot;</p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>&quot;Point&quot;</p>
+							</dd>
+						</dl>
 					</div>
-				</section>
-			</section>
-			<section class="tsd-panel-group tsd-member-group tsd-is-external">
-				<h2>Object literals</h2>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-					<a name="direction1" class="tsd-anchor"></a>
-					<h3>direction1</h3>
-					<div class="tsd-signature tsd-kind-icon">direction1<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L39">src/components/Particle.ts:39</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Point, Box, DirectedSphere, Cylinder</p>
-						</div>
-					</div>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="direction1.x" class="tsd-anchor"></a>
-						<h3>x</h3>
-						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L39">src/components/Particle.ts:39</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="direction1.y" class="tsd-anchor"></a>
-						<h3>y</h3>
-						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L39">src/components/Particle.ts:39</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="direction1.z" class="tsd-anchor"></a>
-						<h3>z</h3>
-						<div class="tsd-signature tsd-kind-icon">z<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L39">src/components/Particle.ts:39</a></li>
-							</ul>
-						</aside>
-					</section>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-					<a name="direction2" class="tsd-anchor"></a>
-					<h3>direction2</h3>
-					<div class="tsd-signature tsd-kind-icon">direction2<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L41">src/components/Particle.ts:41</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Point, Box, DirectedSphere, Cylinder; Default to emit at right-up-front 10 units.</p>
-						</div>
-					</div>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="direction2.x-1" class="tsd-anchor"></a>
-						<h3>x</h3>
-						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;10</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L41">src/components/Particle.ts:41</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="direction2.y-1" class="tsd-anchor"></a>
-						<h3>y</h3>
-						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;10</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L41">src/components/Particle.ts:41</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="direction2.z-1" class="tsd-anchor"></a>
-						<h3>z</h3>
-						<div class="tsd-signature tsd-kind-icon">z<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;10</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L41">src/components/Particle.ts:41</a></li>
-							</ul>
-						</aside>
-					</section>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-					<a name="emitter" class="tsd-anchor"></a>
-					<h3>emitter</h3>
-					<div class="tsd-signature tsd-kind-icon">emitter<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L34">src/components/Particle.ts:34</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p><a href="https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter">https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter</a></p>
-						</div>
-					</div>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="emitter.x-2" class="tsd-anchor"></a>
-						<h3>x</h3>
-						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L34">src/components/Particle.ts:34</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="emitter.y-2" class="tsd-anchor"></a>
-						<h3>y</h3>
-						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L34">src/components/Particle.ts:34</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="emitter.z-2" class="tsd-anchor"></a>
-						<h3>z</h3>
-						<div class="tsd-signature tsd-kind-icon">z<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L34">src/components/Particle.ts:34</a></li>
-							</ul>
-						</aside>
-					</section>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-					<a name="maxemitbox" class="tsd-anchor"></a>
-					<h3>max<wbr>Emit<wbr>Box</h3>
-					<div class="tsd-signature tsd-kind-icon">max<wbr>Emit<wbr>Box<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L45">src/components/Particle.ts:45</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Box</p>
-						</div>
-					</div>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="maxemitbox.x-3" class="tsd-anchor"></a>
-						<h3>x</h3>
-						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L45">src/components/Particle.ts:45</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="maxemitbox.y-3" class="tsd-anchor"></a>
-						<h3>y</h3>
-						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L45">src/components/Particle.ts:45</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="maxemitbox.z-3" class="tsd-anchor"></a>
-						<h3>z</h3>
-						<div class="tsd-signature tsd-kind-icon">z<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L45">src/components/Particle.ts:45</a></li>
-							</ul>
-						</aside>
-					</section>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-					<a name="minemitbox" class="tsd-anchor"></a>
-					<h3>min<wbr>Emit<wbr>Box</h3>
-					<div class="tsd-signature tsd-kind-icon">min<wbr>Emit<wbr>Box<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">object</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L43">src/components/Particle.ts:43</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Box</p>
-						</div>
-					</div>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="minemitbox.x-4" class="tsd-anchor"></a>
-						<h3>x</h3>
-						<div class="tsd-signature tsd-kind-icon">x<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L43">src/components/Particle.ts:43</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="minemitbox.y-4" class="tsd-anchor"></a>
-						<h3>y</h3>
-						<div class="tsd-signature tsd-kind-icon">y<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L43">src/components/Particle.ts:43</a></li>
-							</ul>
-						</aside>
-					</section>
-					<section class="tsd-panel tsd-member tsd-kind-variable tsd-parent-kind-object-literal tsd-is-external">
-						<a name="minemitbox.z-4" class="tsd-anchor"></a>
-						<h3>z</h3>
-						<div class="tsd-signature tsd-kind-icon">z<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">number</span><span class="tsd-signature-symbol"> =&nbsp;0</span></div>
-						<aside class="tsd-sources">
-							<ul>
-								<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/c91f40e/src/components/Particle.ts#L43">src/components/Particle.ts:43</a></li>
-							</ul>
-						</aside>
-					</section>
 				</section>
 			</section>
 		</div>
@@ -517,7 +415,28 @@
 								<a href="particle.html#capacity" class="tsd-kind-icon">capacity</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="particle.html#color" class="tsd-kind-icon">color</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="particle.html#direction1" class="tsd-kind-icon">direction1</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="particle.html#direction2" class="tsd-kind-icon">direction2</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="particle.html#emitrate" class="tsd-kind-icon">emit<wbr>Rate</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="particle.html#emitter" class="tsd-kind-icon">emitter</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="particle.html#height" class="tsd-kind-icon">height</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="particle.html#maxemitbox" class="tsd-kind-icon">max<wbr>Emit<wbr>Box</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="particle.html#minemitbox" class="tsd-kind-icon">min<wbr>Emit<wbr>Box</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="particle.html#object" class="tsd-kind-icon">object</a>
@@ -535,25 +454,7 @@
 								<a href="particle.html#texture" class="tsd-kind-icon">texture</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
-								<a href="particle.html#texturemask" class="tsd-kind-icon">texture<wbr>Mask</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="particle.html#type" class="tsd-kind-icon">type</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-								<a href="particle.html#direction1" class="tsd-kind-icon">direction1</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-								<a href="particle.html#direction2" class="tsd-kind-icon">direction2</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-								<a href="particle.html#emitter" class="tsd-kind-icon">emitter</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-								<a href="particle.html#maxemitbox" class="tsd-kind-icon">max<wbr>Emit<wbr>Box</a>
-							</li>
-							<li class=" tsd-kind-object-literal tsd-parent-kind-class tsd-is-external">
-								<a href="particle.html#minemitbox" class="tsd-kind-icon">min<wbr>Emit<wbr>Box</a>
 							</li>
 						</ul>
 					</li>

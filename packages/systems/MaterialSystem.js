@@ -1,22 +1,14 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Material, Mesh } from "../components/index";
-import { getScene, disposeObject, updateTexture, hexToColor3 } from "../utils/index";
-/** @hidden */
-var MaterialColorValues;
-(function (MaterialColorValues) {
-    MaterialColorValues["diffuse"] = "diffuse";
-    MaterialColorValues["specular"] = "specular";
-    MaterialColorValues["emissive"] = "emissive";
-    MaterialColorValues["ambient"] = "ambient";
-})(MaterialColorValues || (MaterialColorValues = {}));
+import { getScene, disposeObject, updateTexture, hexToColor3, updateObjectValue, getAssetManager } from "../utils/index";
 /** System for Material component */
 export class MaterialSystem extends System {
     /** @hidden */
     execute() {
         this.queries.meshMaterial.added.forEach((entity) => {
             let material = entity.getComponent(Material);
-            material.object = new BABYLON.StandardMaterial(material.diffuse, getScene(this, material.sceneName));
+            material.object = new BABYLON.StandardMaterial(material.color.diffuse, getScene(this, material.sceneName));
             this._updateMaterial(material);
             entity.getComponent(Mesh).object.material = material.object;
         });
@@ -29,18 +21,24 @@ export class MaterialSystem extends System {
         });
     }
     _updateMaterial(material) {
-        let materialObject = material.object;
-        Object.keys(material).forEach(name => {
-            if (MaterialColorValues[name]) {
-                materialObject[`${name}Color`] = hexToColor3(material[name]);
+        for (let prop in material) {
+            switch (prop) {
+                case "color":
+                    this._updateColor(material, material.color);
+                    break;
+                case "texture":
+                    updateTexture(material, material.texture, getAssetManager(this, material.sceneName));
+                    break;
+                default:
+                    updateObjectValue(material, prop);
+                    break;
             }
-            else if (name === "texture") {
-                material.texture && updateTexture(material, material.texture, this);
-            }
-            else {
-                materialObject[name] = material[name];
-            }
-        });
+        }
+    }
+    _updateColor(material, color) {
+        for (let prop in color) {
+            (material.object[`${prop}Color`] = hexToColor3(color[prop]));
+        }
     }
 }
 /** @hidden */

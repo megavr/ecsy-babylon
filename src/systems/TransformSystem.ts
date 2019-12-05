@@ -1,6 +1,6 @@
 import { Entity, System } from "ecsy";
 import { Transform } from "../components/index";
-import { updateObjectsTransform, getEntityObjectComponents } from "../utils/index";
+import { updateObjectsTransform, getObjectComponentsInEntity } from "../utils/index";
 
 /** System for Transform component */
 export class TransformSystem extends System {
@@ -15,7 +15,7 @@ export class TransformSystem extends System {
   init() {
     window.addEventListener("load", () => {
       this.queries.object.results.forEach((entity: Entity) => {
-        entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity.getComponent(Transform), getEntityObjectComponents(entity));
+        entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity.getComponent(Transform), getObjectComponentsInEntity(entity));
       });
     });
   }
@@ -23,7 +23,7 @@ export class TransformSystem extends System {
   /** @hidden */
   execute() {
     this.queries.object.changed.forEach((entity: Entity) => {
-      entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity.getComponent(Transform), getEntityObjectComponents(entity));
+      entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity.getComponent(Transform), getObjectComponentsInEntity(entity));
     });
   }
 }

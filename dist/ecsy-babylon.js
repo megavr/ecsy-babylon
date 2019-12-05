@@ -2,33 +2,259 @@
     'use strict';
 
     /**
-     * Usage:
+     * Translate degree to radians.
+     * @param degree Degree
+     * @returns Radians
+     */
+    function degreeToRadians(degree) {
+        return BABYLON.Angle.FromDegrees(degree).radians();
+    }
+    /**
+     * Translate radians to degree.
+     * @param radians Radians
+     * @returns Degree
+     */
+    function radiansToDegree(radians) {
+        return BABYLON.Angle.FromRadians(radians).degrees();
+    }
+    /**
+     * Hack on ecsy 0.1.4 to get World instance from system itself.
+     * @param system A registered ecsy System class
+     * @returns ecsy world
+     */
+    /** @hidden */
+    function getWorld(system) {
+        return system["world"];
+    }
+    /**
+     * Dispose Babylon.js object in the component.
+     * @param object Component contains Babylon.js object
+     */
+    /** @hidden */
+    function disposeObject(component) {
+        component.object && component.object.dispose();
+    }
+    /**
+     * Get runtime GameSystem instance.
+     * @param system A registered ecsy System class
+     * @returns ecsy-babylon GameSystem
+     */
+    /** @hidden */
+    function getGameSystem(system) {
+        return getWorld(system).getSystems().find(system => { return system.engine; });
+    }
+    /**
+     * Get a scene found or active scene if not available.
+     * @param system A registered ecsy System class
+     * @param sceneName Name of the scene
+     * @returns Babylon.js Scene
+     */
+    function getScene(system, sceneName) {
+        return getGameSystem(system).getScene(sceneName);
+    }
+    /**
+     * Get an AssetManager found or an AssetManager in active scene.
+     * @param system A registered ecsy System class
+     * @param sceneName Name of the scene
+     * @returns Babylon.js AssetManager
+     */
+    function getAssetManager(system, sceneName) {
+        return getGameSystem(system).getAssetManager(sceneName);
+    }
+    /**
+     * Get active Camera entity in the scene.
+     * @param system A registered ecsy System class
+     * @returns Entity with ecsy-babylon Camera
+     */
+    function getCamera(system) {
+        return getGameSystem(system).activeCameraEntity;
+    }
+    /**
+     * Convert XYZProperties value to Vector3.
+     * @param properties XYZProperties value
+     * @returns Babylon.js Vector3
+     */
+    function xyzToVector3(properties) {
+        return new BABYLON.Vector3(properties.x, properties.y, properties.z);
+    }
+    /**
+     * Convert XYZProperties degree value to Vector3 in radians.
+     * @param properties XYZProperties value in degrees
+     * @returns Babylon.js Vector3
+     */
+    function xyzToVector3Radians(properties) {
+        return new BABYLON.Vector3(degreeToRadians(properties.x), degreeToRadians(properties.y), degreeToRadians(properties.z));
+    }
+    /**
+     * Convert Vector3 value to XYZProperties.
+     * @param vector3 Vector3 value
+     * @returns Object matches XYZProperties
+     */
+    function vector3ToXyz(vector3) {
+        let x = vector3.x, y = vector3.y, z = vector3.z;
+        return { x, y, z };
+    }
+    /**
+     * Convert Vector3 value to XYZProperties in degrees.
+     * @param vector3 Vector3 degree value
+     * @returns Object matches XYZProperties
+     */
+    function vector3ToXyzDegree(vector3) {
+        let x = vector3.x, y = vector3.y, z = vector3.z;
+        return { x, y, z };
+    }
+    /**
+     * Convert hex color value to Color3.
+     * @param hexString Text of hex color value(e.g., #123ABC)
+     * @returns Babylon.js Color3
+     */
+    function hexToColor3(hexString) {
+        return BABYLON.Color3.FromHexString(hexString);
+    }
+    /**
+     * Convert hex color value to Color4 (has alpha).
+     * @param hexString Text of hex color value(e.g., #123ABCFF)
+     * @returns Babylon.js Color4
+     */
+    function hexToColor4(hexString) {
+        return BABYLON.Color4.FromHexString(hexString);
+    }
+    /**
+     * Update texture object to a component for its texture properties.
+     * @param component TextureComponent in the entity
+     * @param textureProperties Texture properties to be update
+     * @param assetManager AssetManager to process textures
+     */
+    /** @hidden */
+    function updateTexture(component, textureProperties, assetManager) {
+        for (let prop in textureProperties) {
+            let textureAttributes = textureProperties[prop];
+            let task = assetManager.addTextureTask(prop, textureAttributes.url);
+            task.onSuccess = (task) => {
+                let textureObject = task.texture;
+                for (let attr in textureAttributes) {
+                    attr !== "url" && (textureObject[attr] = textureAttributes[attr]);
+                }
+                let textureName = `${prop}Texture`;
+                let componentObject = component.object;
+                componentObject[textureName] && disposeObject(componentObject[textureName]);
+                componentObject[textureName] = textureObject;
+            };
+        }
+        assetManager.load();
+        assetManager.reset();
+    }
+    /**
+     * Get ObjectComponents in an Entity.
+     * @param entity Entity to filter ObjectComponents
+     * @returns Array of ObjectComponents
+     */
+    /** @hidden */
+    function getObjectComponentsInEntity(entity) {
+        let components = entity.getComponents();
+        let objectComponents = [];
+        for (let prop in components) {
+            components[prop].object && objectComponents.push(components[prop]);
+        }
+        return objectComponents;
+    }
+    /**
+     * Update transformation to ObjectComponents.
+     * @param transform Transfrom component in the entity
+     * @param components Array of components with Babylon.js object
+     */
+    /** @hidden */
+    function updateObjectsTransform(transform, components) {
+        components.forEach(component => {
+            let object = component.object;
+            object.position && (object.position = xyzToVector3(transform.position));
+            object.rotation && (object.rotation = xyzToVector3Radians(transform.rotation));
+            object.scaling && (object.scaling = xyzToVector3(transform.scale));
+        });
+    }
+    /**
+     * Update value of Babylon.js object's property from a property in component with same name.
+     * @param component Component contains Babylon.js object
+     * @param name Name of property in the component
+     */
+    /** @hidden */
+    function updateObjectValue(component, name) {
+        component.object[name] = component[name];
+    }
+    /**
+     * Update Vector3 of Babylon.js object's property from property in component with same name.
+     * @param component Component contains Babylon.js object
+     * @param name Name of property in the component, value of property should matches XYZProperties
+     */
+    /** @hidden */
+    function updateObjectVector3(component, name) {
+        component.object[name] = xyzToVector3(component[name]);
+    }
+    /**
+     * Create object by XYZ values or create all zero object.
+     * @param x value
+     * @param y value
+     * @param z value
+     * @returns Object matches XYZProperties
+     */
+    /** @hidden */
+    function xyz(x, y, z) {
+        if (x && y && z) {
+            return { x: x, y: y, z: z };
+        }
+        else {
+            return { x: 0, y: 0, z: 0 };
+        }
+    }
+    /**
+     * Create object of material color values or create a material color object with white diffuse.
+     * @param diffuse Diffuse color in hex string. e.g., #123ABC
+     * @returns Object matches MaterialColorProperties
+     */
+    /** @hidden */
+    function materialColorHex(diffuse) {
+        if (diffuse) {
+            return { diffuse: diffuse };
+        }
+        else {
+            return { diffuse: "#ffffff" };
+        }
+    }
+
+    /**
+     * @example
      * ```
      * entity.addComponent(Transform);
      * ```
      */
     class Transform {
         constructor() {
-            this.position = { x: 0, y: 0, z: 0 };
-            this.rotation = { x: 0, y: 0, z: 0 };
-            this.scale = { x: 1, y: 1, z: 1 };
+            /** @default 0,0,0 */
+            this.position = xyz();
+            /** @default 0,0,0 */
+            this.rotation = xyz();
+            /** @default 1,1,1 */
+            this.scale = xyz(1, 1, 1);
+            /**
+             * Update Babylon.js object transformation (if existed) for all components in the entity.
+             * @default true
+             */
             this.updateObjects = true;
         }
     }
 
     /**
-     * Usage:
+     * @example
      * ```
-     * entity.addComponent(Camera);
+     * entity.addComponent(Camera, { sceneName: "Scene" });
      * entity.addComponent(Camera, { options: { controllerMeshes: false } });
      * ```
      */
     class Camera {
         constructor() {
             /**
-             * Default: {}
-             *
-             * https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions
+             * @see https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions
+             * @default {}
              */
             this.options = {};
         }
@@ -42,17 +268,18 @@
         MeshTypes["Ground"] = "Ground";
     })(MeshTypes || (MeshTypes = {}));
     /**
-     * Usage:
+     * @example
      * ```
-     * entity.addComponent(Mesh);
+     * entity.addComponent(Mesh, { sceneName: "Scene" });
      * entity.addComponent(Mesh, { type: MeshTypes.Ground, options: { width: 2, height: 2 } });
      * entity.addComponent(Mesh, { type: MeshTypes.Sphere, options: { diameter: 2 } });
      * ```
      */
     class Mesh {
         constructor() {
-            /** Default: "Box" */
+            /** @default "Box" */
             this.type = MeshTypes.Box;
+            /** @default {} */
             this.options = {};
         }
     }
@@ -65,9 +292,9 @@
         LightTypes["Hemispheric"] = "Hemispheric";
     })(LightTypes || (LightTypes = {}));
     /**
-     * Usage:
+     * @example
      * ```
-     * entity.addComponent(Light);
+     * entity.addComponent(Light, { sceneName: "Scene", color: { diffuse: "#AAFFAA" } });
      * entity.addComponent(Light, { type: LightTypes.Point, intensity: 2 });
      * entity.addComponent(Light, { type: LightTypes.Directional, direction: { x: 0, y: 0, z: 1 } });
      * entity.addComponent(Light, { type: LightTypes.Spot, direction: { x: 0, y: 0, z: 1 }, angle: 30, exponent: 2 });
@@ -75,30 +302,35 @@
      */
     class Light {
         constructor() {
-            /** Default: "Hemispheric" */
+            /** @default "Hemispheric" */
             this.type = LightTypes.Hemispheric;
-            this.direction = { x: 0, y: 0, z: 0 };
+            /**
+             * @see https://doc.babylonjs.com/api/classes/babylon.shadowlight#direction
+             * @default 0,0,0
+             */
+            this.direction = xyz();
         }
     }
 
     /**
-     * Usage:
+     * @example
      * ```
-     * entity.addComponent(Material);
-     * entity.addComponent(Material, { diffuse: "#E74C3C" });
-     * entity.addComponent(Material, { texture: {
-     *   diffuse: { url: "PATH_TO_TEXTURE", uScale: 4, vScale: 4 },
+     * entity.addComponent(Material, {
+     *    sceneName: "Scene",
+     *    alpha: 0.7,
+     *    color: { diffuse: "#E74C3C" }
+     * });
+     * entity.addComponent(Material, {
+     *    texture: {
+     *      diffuse: { url: "PATH_TO_TEXTURE", uScale: 4, vScale: 4 }
+     *    }
      * });
      * ```
      */
     class Material {
         constructor() {
-            /**
-             * Default: "#ffffff"
-             *
-             * https://doc.babylonjs.com/api/classes/babylon.standardmaterial#diffusecolor
-             */
-            this.diffuse = "#ffffff";
+            /** @default { diffuse: "#ffffff" } */
+            this.color = materialColorHex();
         }
     }
 
@@ -114,32 +346,51 @@
         ParticleTypes["Cone"] = "Cone";
     })(ParticleTypes || (ParticleTypes = {}));
     /**
-     * Usage:
+     * @example
      * ```
      * entity.addComponent(Particle, {
-     *   emitter: { x: 0, y: 0, z: 1 },
-     *   texture: {
-     *     diffuse: { url: "PATH_TO_PARTICLE_TEXTURE" }
-     *   }
+     *    sceneName: "Scene",
+     *    emitter: { x: 0, y: 0, z: 1 },
+     *    texture: {
+     *      diffuse: { url: "PATH_TO_PARTICLE_TEXTURE" }
+     *    }
      * });
      * ```
      */
     class Particle {
         constructor() {
-            /** default: "Point" */
+            /** @default "Point" */
             this.type = ParticleTypes.Point;
-            /** default: 100 */
+            /**
+             * @see https://doc.babylonjs.com/api/classes/babylon.particlesystem#constructor
+             * @default 100
+             */
             this.capacity = 100;
-            /** https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter */
-            this.emitter = { x: 0, y: 0, z: 0 };
-            /** Point, Box, DirectedSphere, Cylinder */
-            this.direction1 = { x: 0, y: 0, z: 0 };
-            /** Point, Box, DirectedSphere, Cylinder; Default to emit at right-up-front 10 units. */
-            this.direction2 = { x: 10, y: 10, z: 10 };
-            /** Box */
-            this.minEmitBox = { x: 0, y: 0, z: 0 };
-            /** Box */
-            this.maxEmitBox = { x: 0, y: 0, z: 0 };
+            /**
+             * @see https://doc.babylonjs.com/api/classes/babylon.particlesystem#emitter
+             * @default 0,0,0
+             */
+            this.emitter = xyz();
+            /**
+             * @memberof Point, Box, DirectedSphere, Cylinder
+             * @default 0,0,0
+             */
+            this.direction1 = xyz();
+            /**
+             * @memberof Point, Box, DirectedSphere, Cylinder
+             * @default 10,10,10
+             */
+            this.direction2 = xyz(10, 10, 10);
+            /**
+             * @memberof Box
+             * @default 0,0,0
+             */
+            this.minEmitBox = xyz();
+            /**
+             * @memberof Box
+             * @default 0,0,0
+             */
+            this.maxEmitBox = xyz();
         }
     }
 
@@ -148,30 +399,30 @@
         AssetTypes["Babylon"] = "Babylon";
     })(AssetTypes || (AssetTypes = {}));
     /**
-     * Usage:
+     * @example
      * ```
-     * entity.addComponent(Asset, { url: "PATH_TO_ASSET" });
      * entity.addComponent(Asset, { sceneName: "Scene", url: "PATH_TO_ASSET" });
      * entity.addComponent(Asset, { type: AssetTypes.Babylon, url: "PATH_TO_ASSET" });
      * ```
      */
     class Asset {
         constructor() {
-            /** Default: "Babylon" */
+            /** @default "Babylon" */
             this.type = AssetTypes.Babylon;
         }
     }
 
     var InputTypes;
     (function (InputTypes) {
+        InputTypes["Keyboard"] = "Keyboard";
         InputTypes["VrRight"] = "VrRight";
         InputTypes["VrLeft"] = "VrLeft";
     })(InputTypes || (InputTypes = {}));
     /**
-     * Usage:
+     * @example VR
      * ```
-     * entity.addComponent(Input, { type:InputTypes.VrLeft, onPad: onPad, onPadValues: onPadValues });
-     * function onPad(pressed, touched) {
+     * entity.addComponent(Input, { type: InputTypes.VrLeft, onPad: onPad, onPadValues: onPadValues });
+     * function onPad(pressed, touched, value) {
      *   if (pressed) console.log("Pad is pressed.");
      *   if (touched) console.log("Pad is touched.");
      * }
@@ -179,161 +430,33 @@
      *   console.log("Pad is touched on: " + x + ", " + y);
      * }
      * ```
+     * @example Keyboard
+     * ```
+     * entity.addComponent(Input, { type: InputTypes.Keyboard, onKey: onKey });
+     * function onKey(key, down, up) {
+     *   if (down) console.log(key + " is pressing.");
+     * }
+     * ```
      */
     class Input {
         constructor() {
-            /** Default: "VrRight" */
+            /** @default "VrRight" */
             this.type = InputTypes.VrRight;
         }
-    }
-
-    /**
-     * Translate degree to radians.
-     * @param degree Degree
-     */
-    function degreeToRadians(degree) {
-        return BABYLON.Angle.FromDegrees(degree).radians();
-    }
-    /**
-     * Translate radians to degree.
-     * @param degree Radians
-     */
-    function radiansToDegree(radians) {
-        return BABYLON.Angle.FromRadians(radians).degrees();
-    }
-    /**
-     * Hack on ecsy 0.1.4 to get World instance from system itself.
-     * @param system A registered ecsy System class
-     */
-    function getWorld(system) {
-        return system["world"];
-    }
-    /**
-     * Dispose Babylon.js object in the component.
-     * @param object Component contains Babylon.js object
-     */
-    function disposeObject(component) {
-        component.object && component.object.dispose();
-    }
-    /** @hidden */
-    function getGameSystem(system) {
-        return getWorld(system).getSystems().find(system => { return system.engine !== undefined; });
-    }
-    /**
-     * Get scene by name or return active scene.
-     * @param system A registered ecsy System class
-     * @param sceneName Name to get specific scene in system
-     */
-    function getScene(system, sceneName) {
-        return getGameSystem(system).getScene(sceneName);
-    }
-    /**
-     * Get current Camera entity in the scene.
-     * @param system A registered ecsy System class
-     */
-    function getCamera(system) {
-        return getGameSystem(system).currentCamera;
-    }
-    /**
-     * Convert XYZProperties value to Vector3.
-     * @param properties XYZProperties value
-     */
-    function xyzToVector3(properties) {
-        return new BABYLON.Vector3(properties.x, properties.y, properties.z);
-    }
-    /**
-     * Convert XYZProperties degree value to Vector3 in radians.
-     * @param properties XYZProperties value in degrees
-     */
-    function xyzToVector3Radians(properties) {
-        return new BABYLON.Vector3(degreeToRadians(properties.x), degreeToRadians(properties.y), degreeToRadians(properties.z));
-    }
-    /**
-     * Convert Vector3 value to XYZProperties.
-     * @param vector3 Vector3 value
-     */
-    function vector3ToXyz(vector3) {
-        let x = vector3.x, y = vector3.y, z = vector3.z;
-        return { x, y, z };
-    }
-    /**
-     * Convert Vector3 value to XYZProperties in degrees.
-     * @param vector3 Vector3 degree value
-     */
-    function vector3ToXyzDegree(vector3) {
-        let x = vector3.x, y = vector3.y, z = vector3.z;
-        return { x, y, z };
-    }
-    /**
-     * Convert hex color value to Color3.
-     * @param hexString Text of hex color value(e.g., #123def)
-     */
-    function hexToColor3(hexString) {
-        return BABYLON.Color3.FromHexString(hexString);
-    }
-    /**
-     * Convert hex color value to Color4 (has alpha).
-     * @param hexString Text of hex color value(e.g., #123def1f)
-     */
-    function hexToColor4(hexString) {
-        return BABYLON.Color4.FromHexString(hexString);
-    }
-    /**
-     * Update texture object to a component for its texture properties.
-     * @param component TextureComponent in the entity
-     * @param properties Properties to be update
-     * @param system A registered ecsy System class
-     */
-    function updateTexture(component, properties, system) {
-        Object.keys(properties).forEach(name => {
-            let textureAttributes = properties[name];
-            let textureObject = new BABYLON.Texture(textureAttributes.url, getScene(system, component.sceneName));
-            Object.keys(textureAttributes)
-                .filter(prop => { return prop !== "url"; })
-                .forEach(prop => textureObject[prop] = textureAttributes[prop]);
-            component.object[`${name}Texture`] && disposeObject(component.object[`${name}Texture`]);
-            component.object[`${name}Texture`] = textureObject;
-        });
-    }
-    /**
-     * Get ObjectComponents in an Entity.
-     * @param entity Entity to filter ObjectComponents
-     */
-    function getEntityObjectComponents(entity) {
-        let components = entity.getComponents();
-        let objectComponents = [];
-        Object.keys(components)
-            .filter(name => { return "object" in components[name]; })
-            .forEach(name => objectComponents.push(components[name]));
-        return objectComponents;
-    }
-    /**
-     * Update transformation to ObjectComponents.
-     * @param transform Transfrom component in the entity
-     * @param components Components with object
-     */
-    function updateObjectsTransform(transform, components) {
-        components.forEach(component => {
-            let object = component.object;
-            object.position && (object.position = xyzToVector3(transform.position));
-            object.rotation && (object.rotation = xyzToVector3Radians(transform.rotation));
-            object.scaling && (object.scaling = xyzToVector3(transform.scale));
-        });
     }
 
     /** Core system of ecsy-babylon. */
     class GameSystem extends ecsy.System {
         constructor() {
             super(...arguments);
-            /** A map holds created scene(s) instance and its name. */
-            this.scenes = new Map();
-            this._lastTime = 0;
+            this._scenes = new Map();
+            this._assetManagers = new Map();
             this._isRendering = false;
         }
-        /** Get current scene instance. */
-        get activeScene() { return this._activeScene; }
-        /** Get current Camera Entity. */
-        get currentCamera() { return this._currentCamera; }
+        /** Get name of active scene */
+        get activeSceneName() { return this._activeSceneName; }
+        /** Get active Camera Entity. */
+        get activeCameraEntity() { return this._activeCameraEntity; }
         /** @hidden */
         init() { this._render = this._render.bind(this); }
         /** @hidden */
@@ -343,7 +466,7 @@
                 let scene = this.getScene(camera.sceneName);
                 camera.object = new BABYLON.VRExperienceHelper(scene, camera.options);
                 if (scene === this._activeScene) {
-                    this._currentCamera = camera;
+                    this._activeCameraEntity = entity;
                     this._isRendering = true;
                 }
             });
@@ -356,47 +479,82 @@
         }
         /**
          * Start game system in the world can be used by other systems & components.
-         * https://doc.babylonjs.com/api/classes/babylon.engine#constructor
+         * @see https://doc.babylonjs.com/api/classes/babylon.engine#constructor
          * @param canvas WebGL context to be used for rendering
          * @param antialias defines enable antialiasing (default: false)
-         * @param options https://doc.babylonjs.com/api/interfaces/babylon.engineoptions
+         * @param options @see https://doc.babylonjs.com/api/interfaces/babylon.engineoptions
          * @param adaptToDeviceRatio defines whether to adapt to the device's viewport characteristics (default: false)
+         * @returns This GameSystem
          */
         start(canvas, antialias, options, adaptToDeviceRatio) {
             this.engine = new BABYLON.Engine(canvas, antialias, options, adaptToDeviceRatio);
-            this._lastTime = performance.now();
             this.engine.runRenderLoop(this._render);
             return this;
         }
         /**
-         * Get a scene by provided name or return current scene if not available.
-         * @param name Name of the scene
+         * Add a new scene with a name.
+         * @see https://doc.babylonjs.com/api/classes/babylon.scene#constructor
+         * @param sceneName Readable name to be used to switch or remove scene in the system
+         * @param options @see https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions
+         * @returns This GameSystem
          */
-        getScene(name) {
-            if (name) {
-                return this.scenes.get(name);
+        addScene(sceneName, options) {
+            let scene = new BABYLON.Scene(this.engine, options);
+            let assetManager = new BABYLON.AssetsManager(scene);
+            assetManager.useDefaultLoadingScreen = false;
+            this._scenes.set(sceneName, scene);
+            this._assetManagers.set(sceneName, assetManager);
+            if (this.engine.scenes.length === 1) {
+                this._activeScene = scene;
+                this._activeSceneName = sceneName;
+            }
+            return this;
+        }
+        /** Remove an inactive scene by given name */
+        removeScene(sceneName) {
+            sceneName !== this.activeSceneName && this.getScene(sceneName).dispose();
+            return this;
+        }
+        /**
+         * Switch to a scene by given scene name.
+         * @param sceneName Name of scene
+         * @param cameraEntity Default camera for the new scene
+         * @returns This GameSystem
+         */
+        switchScene(sceneName, cameraEntity) {
+            if (this.getScene(sceneName)) {
+                this._activeScene = this.getScene(sceneName);
+                this._activeSceneName = sceneName;
+                this._activeCameraEntity = cameraEntity;
+            }
+            return this;
+        }
+        /**
+         * Get a scene by provided name.
+         * @param sceneName Name of the scene
+         * @returns Scene found in system or active scene if not available
+         */
+        getScene(sceneName) {
+            if (sceneName) {
+                return this._scenes.get(sceneName);
             }
             else {
                 return this._activeScene;
             }
         }
         /**
-         * Add a new scene with a name.
-         * https://doc.babylonjs.com/api/classes/babylon.scene#constructor
-         * @param name Readable name to be used to switch or remove scene in the system
-         * @param options https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions
+         * Get a asset manager by provided scene name.
+         * @param sceneName Name of the scene
+         * @returns Asset manager found or asset manager in active scene
          */
-        addScene(name, options) {
-            let scene = new BABYLON.Scene(this.engine, options);
-            this.scenes.set(name, scene);
-            this.engine.scenes.length === 1 && (this._activeScene = scene);
-            return this;
+        getAssetManager(sceneName) {
+            let name = this.activeSceneName;
+            sceneName && (name = sceneName);
+            return this._assetManagers.get(name);
         }
         _render() {
-            let time = performance.now();
-            getWorld(this).execute(time - this._lastTime, time);
+            getWorld(this).execute(this.engine.getDeltaTime(), performance.now());
             (this._isRendering && getWorld(this).enabled) && this._activeScene.render();
-            this._lastTime = time;
         }
     }
     /** @hidden */
@@ -410,14 +568,14 @@
         init() {
             window.addEventListener("load", () => {
                 this.queries.object.results.forEach((entity) => {
-                    entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity.getComponent(Transform), getEntityObjectComponents(entity));
+                    entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity.getComponent(Transform), getObjectComponentsInEntity(entity));
                 });
             });
         }
         /** @hidden */
         execute() {
             this.queries.object.changed.forEach((entity) => {
-                entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity.getComponent(Transform), getEntityObjectComponents(entity));
+                entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity.getComponent(Transform), getObjectComponentsInEntity(entity));
             });
         }
     }
@@ -432,7 +590,13 @@
         execute() {
             this.queries.mesh.added.forEach((entity) => {
                 let mesh = entity.getComponent(Mesh);
-                mesh.object = BABYLON.MeshBuilder[`Create${mesh.type}`].call(null, mesh.type, mesh.options, getScene(this, mesh.sceneName));
+                mesh.object = BABYLON.MeshBuilder[`Create${mesh.type}`].call(this, mesh.type, mesh.options, getScene(this, mesh.sceneName));
+            });
+            this.queries.mesh.changed.forEach((entity) => {
+                let mesh = entity.getMutableComponent(Mesh);
+                for (let prop in mesh) {
+                    updateObjectValue(mesh, prop);
+                }
             });
             this.queries.mesh.removed.forEach((entity) => {
                 disposeObject(entity.getComponent(Mesh));
@@ -441,19 +605,9 @@
     }
     /** @hidden */
     MeshSystem.queries = {
-        mesh: { components: [Mesh], listen: { added: true, removed: true } },
+        mesh: { components: [Mesh], listen: { added: true, removed: true, changed: [Mesh] } },
     };
 
-    /** @hidden */
-    var LightColorValues;
-    (function (LightColorValues) {
-        LightColorValues["specular"] = "specular";
-    })(LightColorValues || (LightColorValues = {}));
-    /** @hidden */
-    var LightXyzValues;
-    (function (LightXyzValues) {
-        LightXyzValues["direction"] = "direction";
-    })(LightXyzValues || (LightXyzValues = {}));
     /** System for Light component */
     class LightSystem extends ecsy.System {
         /** @hidden */
@@ -486,40 +640,38 @@
             });
         }
         _updateLight(light) {
-            let lightObject = light.object;
-            Object.keys(light).forEach(name => {
-                if (LightColorValues[name]) {
-                    lightObject[name] = hexToColor3(light[name]);
+            for (let prop in light) {
+                switch (prop) {
+                    case "direction":
+                        updateObjectVector3(light, prop);
+                        break;
+                    case "color":
+                        this._updateColor(light, light.color);
+                        break;
+                    default:
+                        updateObjectValue(light, prop);
+                        break;
                 }
-                else if (LightXyzValues[name]) {
-                    lightObject[name] = xyzToVector3(light[name]);
-                }
-                else {
-                    lightObject[name] = light[name];
-                }
-            });
+            }
+        }
+        _updateColor(light, color) {
+            for (let prop in color) {
+                light.object[prop] = hexToColor3(color[prop]);
+            }
         }
     }
     /** @hidden */
     LightSystem.queries = {
-        light: { components: [Light], listen: { added: true, removed: true, changed: true } },
+        light: { components: [Light], listen: { added: true, removed: true, changed: [Light] } },
     };
 
-    /** @hidden */
-    var MaterialColorValues;
-    (function (MaterialColorValues) {
-        MaterialColorValues["diffuse"] = "diffuse";
-        MaterialColorValues["specular"] = "specular";
-        MaterialColorValues["emissive"] = "emissive";
-        MaterialColorValues["ambient"] = "ambient";
-    })(MaterialColorValues || (MaterialColorValues = {}));
     /** System for Material component */
     class MaterialSystem extends ecsy.System {
         /** @hidden */
         execute() {
             this.queries.meshMaterial.added.forEach((entity) => {
                 let material = entity.getComponent(Material);
-                material.object = new BABYLON.StandardMaterial(material.diffuse, getScene(this, material.sceneName));
+                material.object = new BABYLON.StandardMaterial(material.color.diffuse, getScene(this, material.sceneName));
                 this._updateMaterial(material);
                 entity.getComponent(Mesh).object.material = material.object;
             });
@@ -532,18 +684,24 @@
             });
         }
         _updateMaterial(material) {
-            let materialObject = material.object;
-            Object.keys(material).forEach(name => {
-                if (MaterialColorValues[name]) {
-                    materialObject[`${name}Color`] = hexToColor3(material[name]);
+            for (let prop in material) {
+                switch (prop) {
+                    case "color":
+                        this._updateColor(material, material.color);
+                        break;
+                    case "texture":
+                        updateTexture(material, material.texture, getAssetManager(this, material.sceneName));
+                        break;
+                    default:
+                        updateObjectValue(material, prop);
+                        break;
                 }
-                else if (name === "texture") {
-                    material.texture && updateTexture(material, material.texture, this);
-                }
-                else {
-                    materialObject[name] = material[name];
-                }
-            });
+            }
+        }
+        _updateColor(material, color) {
+            for (let prop in color) {
+                (material.object[`${prop}Color`] = hexToColor3(color[prop]));
+            }
         }
     }
     /** @hidden */
@@ -551,18 +709,6 @@
         meshMaterial: { components: [Mesh, Material], listen: { added: true, removed: true, changed: [Material] } },
     };
 
-    /** @hidden */
-    var ParticleColorValues;
-    (function (ParticleColorValues) {
-        ParticleColorValues["textureMask"] = "textureMask";
-    })(ParticleColorValues || (ParticleColorValues = {}));
-    /** @hidden */
-    var ParticleXyzValues;
-    (function (ParticleXyzValues) {
-        ParticleXyzValues["emitter"] = "emitter";
-        ParticleXyzValues["direction1"] = "direction1";
-        ParticleXyzValues["direction2"] = "direction2";
-    })(ParticleXyzValues || (ParticleXyzValues = {}));
     /** System for Particle component */
     class ParticleSystem extends ecsy.System {
         /** @hidden */
@@ -610,26 +756,36 @@
             });
         }
         _updateParticle(particle) {
-            let particleObject = particle.object;
-            Object.keys(particle).forEach(name => {
-                if (ParticleXyzValues[name]) {
-                    particleObject[name] = xyzToVector3(particle[name]);
+            for (let prop in particle) {
+                switch (prop) {
+                    case "emitter":
+                    case "direction1":
+                    case "direction2":
+                    case "minEmitBox":
+                    case "maxEmitBox":
+                        updateObjectVector3(particle, prop);
+                        break;
+                    case "texture":
+                        updateTexture(particle, particle.texture, getAssetManager(this, particle.sceneName));
+                        break;
+                    case "color":
+                        this._updateColor(particle, particle.color);
+                        break;
+                    default:
+                        updateObjectValue(particle, prop);
+                        break;
                 }
-                else if (ParticleColorValues[name]) {
-                    particleObject[name] = hexToColor4(particle[name]);
-                }
-                else if (name === "texture") {
-                    particle.texture && updateTexture(particle, particle.texture, this);
-                }
-                else {
-                    particleObject[name] = particle[name];
-                }
-            });
+            }
+        }
+        _updateColor(particle, color) {
+            for (let prop in color) {
+                particle.object[prop] = hexToColor4(color[prop]);
+            }
         }
     }
     /** @hidden */
     ParticleSystem.queries = {
-        particle: { components: [Particle], listen: { added: true, changed: true, removed: true } },
+        particle: { components: [Particle], listen: { added: true, removed: true, changed: [Particle] } },
     };
 
     /** System for Asset component */
@@ -638,32 +794,32 @@
         execute() {
             this.queries.asset.added.forEach((entity) => {
                 let asset = entity.getComponent(Asset);
-                this._assetManager || (this._assetManager = new BABYLON.AssetsManager(getScene(this, asset.sceneName)));
-                this._assetManager.useDefaultLoadingScreen = false;
+                let assetManager = getAssetManager(this, asset.sceneName);
                 switch (asset.type) {
                     default: {
-                        this._loadBabylon(entity.getComponent(Transform), asset);
+                        this._loadBabylon(entity.getComponent(Transform), asset, assetManager);
                         break;
                     }
                 }
-                this._assetManager.load();
+                assetManager.load();
+                assetManager.reset();
             });
             this.queries.asset.removed.forEach((entity) => {
                 disposeObject(entity.getComponent(Asset));
             });
         }
-        _loadBabylon(transform, asset) {
+        _loadBabylon(transform, asset, assetManager) {
             let filenameIndex = asset.url.lastIndexOf("/") + 1;
-            let task = this._assetManager.addMeshTask(AssetTypes.Babylon, "", asset.url.substring(0, filenameIndex), asset.url.substring(filenameIndex, asset.url.length));
+            let task = assetManager.addMeshTask(AssetTypes.Babylon, "", asset.url.substring(0, filenameIndex), asset.url.substring(filenameIndex, asset.url.length));
             task.onSuccess = (task) => {
                 asset.object = task.loadedMeshes[0];
-                updateObjectsTransform(transform, [asset]);
+                transform && updateObjectsTransform(transform, [asset]);
             };
         }
     }
     /** @hidden */
     AssetSystem.queries = {
-        asset: { components: [Transform, Asset], listen: { added: true, removed: true } },
+        asset: { components: [Asset], listen: { added: true, removed: true } },
     };
 
     /** @hidden */
@@ -688,11 +844,21 @@
         /** @hidden */
         execute() {
             this.queries.input.added.forEach((entity) => {
-                let transform = entity.getMutableComponent(Transform);
-                (transform && entity.getComponent(Input).type.startsWith("Vr")) && (transform.updateObjects = false);
+                let input = entity.getComponent(Input);
+                switch (input.type) {
+                    case InputTypes.Keyboard:
+                        if (input.onKey) {
+                            window.addEventListener("keydown", event => input.onKey.call(input, event.key, true, false));
+                            window.addEventListener("keyup", event => input.onKey.call(input, event.key, false, true));
+                        }
+                        break;
+                    default:
+                        entity.hasComponent(Transform) && (entity.getMutableComponent(Transform).updateObjects = false);
+                        break;
+                }
             });
             this.queries.input.results.forEach((entity) => {
-                let controllers = getCamera(this).object.webVRCamera.controllers;
+                let controllers = getCamera(this).getComponent(Camera).object.webVRCamera.controllers;
                 let input = entity.getMutableComponent(Input);
                 if (controllers.length > 0) {
                     this._isControllerConntected ?
@@ -712,19 +878,19 @@
             return controllers.find((controller) => { return controller.hand === hand; });
         }
         _bindControllerBehaviours(input) {
-            Object.keys(input).filter(name => { return name in VRStateButtons; }).forEach(name => {
-                input[name] && input.object[`${name}StateChangedObservable`].add(data => {
-                    input[name].call(input, data.pressed, data.touched, data.value);
-                });
-            });
-            Object.keys(input).filter(name => { return name in VRValueButtons; }).forEach(name => {
-                input[name] && input.object[`${name}ChangedObservable`].add(data => {
-                    input[name].call(input, data.x, data.y);
-                });
-            });
+            for (let prop in input) {
+                if (input[prop]) {
+                    prop in VRStateButtons && input.object[`${prop}StateChangedObservable`].add(data => {
+                        input[prop].call(input, data.pressed, data.touched, data.value);
+                    });
+                    prop in VRValueButtons && input.object[`${prop}ChangedObservable`].add(data => {
+                        input[prop].call(input, data.x, data.y);
+                    });
+                }
+            }
         }
         _updateObjectsTransform(entity, controller, transform) {
-            transform && getEntityObjectComponents(entity)
+            transform && getObjectComponentsInEntity(entity)
                 .filter(component => { return !(component instanceof Input); })
                 .forEach(component => {
                 let pos = controller.devicePosition;
@@ -747,6 +913,17 @@
 
     var EB = /*#__PURE__*/Object.freeze({
         __proto__: null,
+        degreeToRadians: degreeToRadians,
+        getAssetManager: getAssetManager,
+        getCamera: getCamera,
+        getScene: getScene,
+        hexToColor3: hexToColor3,
+        hexToColor4: hexToColor4,
+        radiansToDegree: radiansToDegree,
+        vector3ToXyz: vector3ToXyz,
+        vector3ToXyzDegree: vector3ToXyzDegree,
+        xyzToVector3: xyzToVector3,
+        xyzToVector3Radians: xyzToVector3Radians,
         GameSystem: GameSystem,
         TransformSystem: TransformSystem,
         MeshSystem: MeshSystem,
@@ -767,22 +944,7 @@
         get AssetTypes () { return AssetTypes; },
         Asset: Asset,
         get InputTypes () { return InputTypes; },
-        Input: Input,
-        degreeToRadians: degreeToRadians,
-        radiansToDegree: radiansToDegree,
-        getWorld: getWorld,
-        disposeObject: disposeObject,
-        getScene: getScene,
-        getCamera: getCamera,
-        xyzToVector3: xyzToVector3,
-        xyzToVector3Radians: xyzToVector3Radians,
-        vector3ToXyz: vector3ToXyz,
-        vector3ToXyzDegree: vector3ToXyzDegree,
-        hexToColor3: hexToColor3,
-        hexToColor4: hexToColor4,
-        updateTexture: updateTexture,
-        getEntityObjectComponents: getEntityObjectComponents,
-        updateObjectsTransform: updateObjectsTransform
+        Input: Input
     });
 
     window.EB = EB;

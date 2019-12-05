@@ -1,7 +1,7 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
-import { Input, InputTypes, Transform } from "../components/index";
-import { getCamera, getEntityObjectComponents, vector3ToXyz, vector3ToXyzDegree, xyzToVector3 } from "../utils/index";
+import { Input, InputTypes, Transform, Camera } from "../components/index";
+import { getCamera, getObjectComponentsInEntity, vector3ToXyz, vector3ToXyzDegree, xyzToVector3 } from "../utils/index";
 
 /** @hidden */
 enum VRStateButtons {
@@ -26,16 +26,25 @@ export class InputSystem extends System {
   queries: any;
   private _isControllerConntected: boolean = false;
 
-
   /** @hidden */
   execute() {
     this.queries.input.added.forEach((entity: Entity) => {
-      let transform = entity.getMutableComponent(Transform);
-      (transform && (entity.getComponent(Input).type as string).startsWith("Vr")) && (transform.updateObjects = false);
+      let input = entity.getComponent(Input);
+      switch (input.type) {
+        case InputTypes.Keyboard:
+          if (input.onKey) {
+            window.addEventListener("keydown", event => (input.onKey as any).call(input, event.key, true, false));
+            window.addEventListener("keyup", event => (input.onKey as any).call(input, event.key, false, true));
+          }
+          break;
+        default:
+          entity.hasComponent(Transform) && (entity.getMutableComponent(Transform).updateObjects = false);
+          break;
+      }
     });
 
     this.queries.input.results.forEach((entity: Entity) => {
-      let controllers = getCamera(this).object.webVRCamera.controllers;
+      let controllers = getCamera(this).getComponent(Camera).object.webVRCamera.controllers;
       let input = entity.getMutableComponent(Input);
       if (controllers.length > 0) {
         this._isControllerConntected ?
@@ -58,20 +67,20 @@ export class InputSystem extends System {
   }
 
   private _bindControllerBehaviours(input: Input) {
-    Object.keys(input).filter(name => { return name in VRStateButtons; }).forEach(name => {
-      (input as any)[name] && ((input.object as any)[`${name}StateChangedObservable`] as BABYLON.Observable<BABYLON.ExtendedGamepadButton>).add(data => {
-        (input as any)[name].call(input, data.pressed, data.touched, data.value);
-      });
-    });
-    Object.keys(input).filter(name => { return name in VRValueButtons; }).forEach(name => {
-      (input as any)[name] && ((input.object as any)[`${name}ChangedObservable`] as BABYLON.Observable<BABYLON.StickValues>).add(data => {
-        (input as any)[name].call(input, data.x, data.y);
-      })
-    });
+    for (let prop in input) {
+      if ((input as any)[prop]) {
+        prop in VRStateButtons && ((input.object as any)[`${prop}StateChangedObservable`] as BABYLON.Observable<BABYLON.ExtendedGamepadButton>).add(data => {
+          (input as any)[prop].call(input, data.pressed, data.touched, data.value);
+        });
+        prop in VRValueButtons && ((input.object as any)[`${prop}ChangedObservable`] as BABYLON.Observable<BABYLON.StickValues>).add(data => {
+          (input as any)[prop].call(input, data.x, data.y);
+        });
+      }
+    }
   }
 
   private _updateObjectsTransform(entity: Entity, controller: BABYLON.WebVRController, transform: Transform) {
-    transform && getEntityObjectComponents(entity)
+    transform && getObjectComponentsInEntity(entity)
       .filter(component => { return !(component instanceof Input) })
       .forEach(component => {
         let pos = controller.devicePosition;

@@ -9,7 +9,7 @@ export declare class LightSystem extends System {
             listen: {
                 added: boolean;
                 removed: boolean;
-                changed: boolean;
+                changed: (typeof Light)[];
             };
         };
     };
@@ -18,4 +18,5 @@ export declare class LightSystem extends System {
     /** @hidden */
     execute(): void;
     private _updateLight;
+    private _updateColor;
 }

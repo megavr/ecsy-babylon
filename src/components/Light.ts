@@ -1,5 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
-import { SceneComponent, ObjectComponent, XYZProperties } from "./types/index";
+import { SceneComponent, ObjectComponent, XYZProperties, ColorComponent, LightColorProperties } from "./types/index";
+import { xyz } from "../utils/index";
 
 export enum LightTypes {
   Point = "Point",
@@ -9,48 +10,39 @@ export enum LightTypes {
 }
 
 /**
- * Usage:
+ * @example
  * ```
- * entity.addComponent(Light);
+ * entity.addComponent(Light, { sceneName: "Scene", color: { diffuse: "#AAFFAA" } });
  * entity.addComponent(Light, { type: LightTypes.Point, intensity: 2 });
  * entity.addComponent(Light, { type: LightTypes.Directional, direction: { x: 0, y: 0, z: 1 } });
  * entity.addComponent(Light, { type: LightTypes.Spot, direction: { x: 0, y: 0, z: 1 }, angle: 30, exponent: 2 });
  * ```
  */
-export class Light implements SceneComponent, ObjectComponent<BABYLON.HemisphericLight | BABYLON.ShadowLight> {
+export class Light implements SceneComponent, ColorComponent<LightColorProperties>, ObjectComponent<BABYLON.HemisphericLight | BABYLON.ShadowLight> {
   sceneName?: string;
-  object!: BABYLON.HemisphericLight | BABYLON.ShadowLight;
-  /** Default: "Hemispheric" */
+  object: BABYLON.HemisphericLight | BABYLON.ShadowLight;
+  /** @default "Hemispheric" */
   type?: LightTypes = LightTypes.Hemispheric;
-  direction: XYZProperties = { x: 0, y: 0, z: 0 };
-  /** https://doc.babylonjs.com/api/classes/babylon.light#intensity */
-  intensity?: number;
-  /** https://doc.babylonjs.com/api/classes/babylon.light#radius */
-  radius?: number;
-  /** https://doc.babylonjs.com/api/classes/babylon.light#range */
-  range?: number;
-  /**
-   * hex for Color3 value, e.g., #123abc
-   * 
-   * https://doc.babylonjs.com/api/classes/babylon.light#diffuse
-   */
-  diffuse?: string;
-  /**
-   * hex for Color3 value, e.g., #123abc
-   * 
-   * https://doc.babylonjs.com/api/classes/babylon.light#specularS
-   */
-  specular?: string;
+  color?: LightColorProperties;
   /** 
-   * Spot
-   * 
-   * https://doc.babylonjs.com/api/classes/babylon.spotlight#angle 
+   * @see https://doc.babylonjs.com/api/classes/babylon.shadowlight#direction
+   * @default 0,0,0 
+   */
+  direction: XYZProperties = xyz();
+  /** @see https://doc.babylonjs.com/api/classes/babylon.light#intensity */
+  intensity?: number;
+  /** @see https://doc.babylonjs.com/api/classes/babylon.light#radius */
+  radius?: number;
+  /** @see https://doc.babylonjs.com/api/classes/babylon.light#range */
+  range?: number;
+  /** 
+   * @see https://doc.babylonjs.com/api/classes/babylon.spotlight#angle
+   * @memberof Spot
    */
   angle?: number;
   /** 
-   * Spot
-   * 
-   * https://doc.babylonjs.com/api/classes/babylon.spotlight#exponent 
+   * @see https://doc.babylonjs.com/api/classes/babylon.spotlight#exponent 
+   * @memberof Spot
    */
   exponent?: number;
 }

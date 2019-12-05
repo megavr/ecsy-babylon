@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Input | ecsy-babylon@0.0.5</title>
+	<title>Input | ecsy-babylon@0.0.6</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ecsy-babylon@0.0.5</a>
+					<a href="../index.html" class="title">ecsy-babylon@0.0.6</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -68,17 +68,24 @@
 		<div class="col-8 col-content">
 			<section class="tsd-panel tsd-comment">
 				<div class="tsd-comment tsd-typography">
-					<div class="lead">
-						<p>Usage:</p>
-						<pre><code>entity.add<span class="hljs-constructor">Component(Input, { <span class="hljs-params">type</span>:InputTypes.VrLeft, <span class="hljs-params">onPad</span>: <span class="hljs-params">onPad</span>, <span class="hljs-params">onPadValues</span>: <span class="hljs-params">onPadValues</span> })</span>;
-<span class="hljs-keyword">function</span> on<span class="hljs-constructor">Pad(<span class="hljs-params">pressed</span>, <span class="hljs-params">touched</span>)</span> {
+					<dl class="tsd-comment-tags">
+						<dt>example</dt>
+						<dd><p>VR</p>
+							<pre><code>entity.add<span class="hljs-constructor">Component(Input, { <span class="hljs-params">type</span>: InputTypes.VrLeft, <span class="hljs-params">onPad</span>: <span class="hljs-params">onPad</span>, <span class="hljs-params">onPadValues</span>: <span class="hljs-params">onPadValues</span> })</span>;
+<span class="hljs-keyword">function</span> on<span class="hljs-constructor">Pad(<span class="hljs-params">pressed</span>, <span class="hljs-params">touched</span>, <span class="hljs-params">value</span>)</span> {
   <span class="hljs-keyword">if</span> (pressed) console.log(<span class="hljs-string">"Pad is pressed."</span>);
   <span class="hljs-keyword">if</span> (touched) console.log(<span class="hljs-string">"Pad is touched."</span>);
 }
 <span class="hljs-keyword">function</span> on<span class="hljs-constructor">PadValues(<span class="hljs-params">x</span>, <span class="hljs-params">y</span>)</span> {
   console.log(<span class="hljs-string">"Pad is touched on: "</span> + x + <span class="hljs-string">", "</span> + y);
-}</code></pre>
-					</div>
+}</code></pre></dd>
+						<dt>example</dt>
+						<dd><p>Keyboard</p>
+							<pre><code>entity.add<span class="hljs-constructor">Component(Input, { <span class="hljs-params">type</span>: InputTypes.Keyboard, <span class="hljs-params">onKey</span>: <span class="hljs-params">onKey</span> })</span>;
+<span class="hljs-keyword">function</span> on<span class="hljs-constructor">Key(<span class="hljs-params">key</span>, <span class="hljs-params">down</span>, <span class="hljs-params">up</span>)</span> {
+  <span class="hljs-keyword">if</span> (down) console.log(key + <span class="hljs-string">" is pressing."</span>);
+}</code></pre></dd>
+					</dl>
 				</div>
 			</section>
 			<section class="tsd-panel tsd-hierarchy">
@@ -94,9 +101,18 @@
 				<section class="tsd-panel tsd-index-panel">
 					<div class="tsd-index-content">
 						<section class="tsd-index-section tsd-is-external">
+							<h3>Interfaces</h3>
+							<ul class="tsd-index-list">
+								<li class="tsd-kind-interface tsd-parent-kind-class tsd-is-external"><a href="../interfaces/input.keydownupinput.html" class="tsd-kind-icon">Key<wbr>Down<wbr>UpInput</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class tsd-is-external"><a href="../interfaces/input.presstouchvalueinput.html" class="tsd-kind-icon">Press<wbr>Touch<wbr>Value<wbr>Input</a></li>
+								<li class="tsd-kind-interface tsd-parent-kind-class tsd-is-external"><a href="../interfaces/input.valueinput.html" class="tsd-kind-icon">Value<wbr>Input</a></li>
+							</ul>
+						</section>
+						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="input.html#object" class="tsd-kind-icon">object</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="input.html#onkey" class="tsd-kind-icon">on<wbr>Key</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="input.html#onmainbutton" class="tsd-kind-icon">on<wbr>Main<wbr>Button</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="input.html#onpad" class="tsd-kind-icon">on<wbr>Pad</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="input.html#onpadvalues" class="tsd-kind-icon">on<wbr>Pad<wbr>Values</a></li>
@@ -116,83 +132,128 @@
 					<div class="tsd-signature tsd-kind-icon">object<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">WebVRController</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/components/Input.ts:21</li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Input.ts#L29">src/components/Input.ts:29</a></li>
 						</ul>
 					</aside>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
-					<a name="onmainbutton" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Main<wbr>Button</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Main<wbr>Button<span class="tsd-signature-symbol">:</span> <a href="../interfaces/presstouchvalueinput.html" class="tsd-signature-type">PressTouchValueInput</a></div>
+					<a name="onkey" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Key</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Key<span class="tsd-signature-symbol">:</span> <a href="../interfaces/input.keydownupinput.html" class="tsd-signature-type">KeyDownUpInput</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/components/Input.ts:25</li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Input.ts#L61">src/components/Input.ts:61</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p><a href="https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onmainbuttonstatechangedobservable">https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onmainbuttonstatechangedobservable</a></p>
+							<p>Return key value when detect keydown or keyup behaviuor.</p>
 						</div>
+						<dl class="tsd-comment-tags">
+							<dt>memberof</dt>
+							<dd><p>Keyboard</p>
+							</dd>
+						</dl>
+					</div>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
+					<a name="onmainbutton" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Main<wbr>Button</h3>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Main<wbr>Button<span class="tsd-signature-symbol">:</span> <a href="../interfaces/input.presstouchvalueinput.html" class="tsd-signature-type">PressTouchValueInput</a></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Input.ts#L36">src/components/Input.ts:36</a></li>
+						</ul>
+					</aside>
+					<div class="tsd-comment tsd-typography">
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onmainbuttonstatechangedobservable">https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onmainbuttonstatechangedobservable</a></p>
+							</dd>
+							<dt>memberof</dt>
+							<dd><p>VrRight, VrLeft</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="onpad" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pad</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Pad<span class="tsd-signature-symbol">:</span> <a href="../interfaces/presstouchvalueinput.html" class="tsd-signature-type">PressTouchValueInput</a></div>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Pad<span class="tsd-signature-symbol">:</span> <a href="../interfaces/input.presstouchvalueinput.html" class="tsd-signature-type">PressTouchValueInput</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/components/Input.ts:27</li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Input.ts#L41">src/components/Input.ts:41</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p><a href="https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onpadstatechangedobservable">https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onpadstatechangedobservable</a></p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onpadstatechangedobservable">https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onpadstatechangedobservable</a></p>
+							</dd>
+							<dt>memberof</dt>
+							<dd><p>VrRight, VrLeft</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="onpadvalues" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Pad<wbr>Values</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Pad<wbr>Values<span class="tsd-signature-symbol">:</span> <a href="../interfaces/valueinput.html" class="tsd-signature-type">ValueInput</a></div>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Pad<wbr>Values<span class="tsd-signature-symbol">:</span> <a href="../interfaces/input.valueinput.html" class="tsd-signature-type">ValueInput</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/components/Input.ts:29</li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Input.ts#L46">src/components/Input.ts:46</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p><a href="https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onpadvalueschangedobservable">https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onpadvalueschangedobservable</a></p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onpadvalueschangedobservable">https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onpadvalueschangedobservable</a></p>
+							</dd>
+							<dt>memberof</dt>
+							<dd><p>VrRight, VrLeft</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="onsecondarybutton" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Secondary<wbr>Button</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Secondary<wbr>Button<span class="tsd-signature-symbol">:</span> <a href="../interfaces/presstouchvalueinput.html" class="tsd-signature-type">PressTouchValueInput</a></div>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Secondary<wbr>Button<span class="tsd-signature-symbol">:</span> <a href="../interfaces/input.presstouchvalueinput.html" class="tsd-signature-type">PressTouchValueInput</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/components/Input.ts:31</li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Input.ts#L51">src/components/Input.ts:51</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p><a href="https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onsecondarybuttonstatechangedobservable">https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onsecondarybuttonstatechangedobservable</a></p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onsecondarybuttonstatechangedobservable">https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#onsecondarybuttonstatechangedobservable</a></p>
+							</dd>
+							<dt>memberof</dt>
+							<dd><p>VrRight, VrLeft</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
 					<a name="ontrigger" class="tsd-anchor"></a>
 					<h3><span class="tsd-flag ts-flagOptional">Optional</span> on<wbr>Trigger</h3>
-					<div class="tsd-signature tsd-kind-icon">on<wbr>Trigger<span class="tsd-signature-symbol">:</span> <a href="../interfaces/presstouchvalueinput.html" class="tsd-signature-type">PressTouchValueInput</a></div>
+					<div class="tsd-signature tsd-kind-icon">on<wbr>Trigger<span class="tsd-signature-symbol">:</span> <a href="../interfaces/input.presstouchvalueinput.html" class="tsd-signature-type">PressTouchValueInput</a></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/components/Input.ts:33</li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Input.ts#L56">src/components/Input.ts:56</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p><a href="https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#ontriggerstatechangedobservable">https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#ontriggerstatechangedobservable</a></p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>see</dt>
+							<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#ontriggerstatechangedobservable">https://doc.babylonjs.com/api/classes/babylon.webvrcontroller#ontriggerstatechangedobservable</a></p>
+							</dd>
+							<dt>memberof</dt>
+							<dd><p>VrRight, VrLeft</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
@@ -201,13 +262,15 @@
 					<div class="tsd-signature tsd-kind-icon">type<span class="tsd-signature-symbol">:</span> <a href="../enums/inputtypes.html" class="tsd-signature-type">InputTypes</a><span class="tsd-signature-symbol"> =&nbsp;InputTypes.VrRight</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in src/components/Input.ts:23</li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/5049772/src/components/Input.ts#L31">src/components/Input.ts:31</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>Default: &quot;VrRight&quot;</p>
-						</div>
+						<dl class="tsd-comment-tags">
+							<dt>default</dt>
+							<dd><p>&quot;VrRight&quot;</p>
+							</dd>
+						</dl>
 					</div>
 				</section>
 			</section>
@@ -227,8 +290,20 @@
 					<li class="current tsd-kind-class tsd-is-external">
 						<a href="input.html" class="tsd-kind-icon">Input</a>
 						<ul>
+							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-is-external">
+								<a href="../interfaces/input.keydownupinput.html" class="tsd-kind-icon">Key<wbr>Down<wbr>UpInput</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-is-external">
+								<a href="../interfaces/input.presstouchvalueinput.html" class="tsd-kind-icon">Press<wbr>Touch<wbr>Value<wbr>Input</a>
+							</li>
+							<li class=" tsd-kind-interface tsd-parent-kind-class tsd-is-external">
+								<a href="../interfaces/input.valueinput.html" class="tsd-kind-icon">Value<wbr>Input</a>
+							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="input.html#object" class="tsd-kind-icon">object</a>
+							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
+								<a href="input.html#onkey" class="tsd-kind-icon">on<wbr>Key</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="input.html#onmainbutton" class="tsd-kind-icon">on<wbr>Main<wbr>Button</a>

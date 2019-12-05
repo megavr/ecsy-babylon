@@ -1,17 +1,7 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Light, LightTypes } from "../components/index";
-import { getScene, disposeObject, degreeToRadians, xyzToVector3, hexToColor3 } from "../utils/index";
-/** @hidden */
-var LightColorValues;
-(function (LightColorValues) {
-    LightColorValues["specular"] = "specular";
-})(LightColorValues || (LightColorValues = {}));
-/** @hidden */
-var LightXyzValues;
-(function (LightXyzValues) {
-    LightXyzValues["direction"] = "direction";
-})(LightXyzValues || (LightXyzValues = {}));
+import { getScene, disposeObject, degreeToRadians, xyzToVector3, hexToColor3, updateObjectValue, updateObjectVector3 } from "../utils/index";
 /** System for Light component */
 export class LightSystem extends System {
     /** @hidden */
@@ -44,21 +34,27 @@ export class LightSystem extends System {
         });
     }
     _updateLight(light) {
-        let lightObject = light.object;
-        Object.keys(light).forEach(name => {
-            if (LightColorValues[name]) {
-                lightObject[name] = hexToColor3(light[name]);
+        for (let prop in light) {
+            switch (prop) {
+                case "direction":
+                    updateObjectVector3(light, prop);
+                    break;
+                case "color":
+                    this._updateColor(light, light.color);
+                    break;
+                default:
+                    updateObjectValue(light, prop);
+                    break;
             }
-            else if (LightXyzValues[name]) {
-                lightObject[name] = xyzToVector3(light[name]);
-            }
-            else {
-                lightObject[name] = light[name];
-            }
-        });
+        }
+    }
+    _updateColor(light, color) {
+        for (let prop in color) {
+            light.object[prop] = hexToColor3(color[prop]);
+        }
     }
 }
 /** @hidden */
 LightSystem.queries = {
-    light: { components: [Light], listen: { added: true, removed: true, changed: true } },
+    light: { components: [Light], listen: { added: true, removed: true, changed: [Light] } },
 };
