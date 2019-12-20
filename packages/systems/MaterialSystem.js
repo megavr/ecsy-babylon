@@ -1,7 +1,10 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Material, Mesh } from "../components/index";
-import { getScene, disposeObject, updateTexture, hexToColor3, updateObjectValue, getAssetManager } from "../utils/index";
+import { hexToColor3 } from "../utils/index";
+import { getScene, getAssetManager } from "../utils/gameUtils";
+import { updateObjectValue, disposeObject } from "../utils/objectUtils";
+import { updateTexture } from "../utils/materialUtils";
 /** System for Material component */
 export class MaterialSystem extends System {
     /** @hidden */

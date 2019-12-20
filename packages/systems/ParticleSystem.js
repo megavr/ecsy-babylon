@@ -1,7 +1,10 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Particle, ParticleTypes } from "../components/index";
-import { getScene, disposeObject, xyzToVector3, updateTexture, hexToColor4, updateObjectValue, updateObjectVector3, getAssetManager } from "../utils/index";
+import { xyzToVector3, hexToColor4 } from "../utils/index";
+import { getScene, getAssetManager } from "../utils/gameUtils";
+import { updateObjectValue, updateObjectVector3, updateObjectsTransform, disposeObject } from "../utils/objectUtils";
+import { updateTexture } from "../utils/materialUtils";
 /** System for Particle component */
 export class ParticleSystem extends System {
     /** @hidden */
@@ -37,6 +40,7 @@ export class ParticleSystem extends System {
                     break;
             }
             this._updateParticle(particle);
+            updateObjectsTransform(entity);
             particleObject.start();
         });
         this.queries.particle.changed.forEach((entity) => {

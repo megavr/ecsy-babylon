@@ -1,7 +1,9 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
 import { Mesh } from "../components/index";
-import { getScene, disposeObject, updateObjectValue } from "../utils/index";
+import { getScene} from "../utils/gameUtils";
+import { updateObjectsTransform } from "../utils/objectUtils";
+import { updateObjectValue, disposeObject } from "../utils/objectUtils";
 
 /** System for Mesh component */
 export class MeshSystem extends System {
@@ -17,6 +19,7 @@ export class MeshSystem extends System {
     this.queries.mesh.added.forEach((entity: Entity) => {
       let mesh = entity.getComponent(Mesh);
       mesh.object = (BABYLON.MeshBuilder as any)[`Create${mesh.type!}`].call(this, mesh.type!, mesh.options!, getScene(this, mesh.sceneName));
+      updateObjectsTransform(entity);
     });
 
     this.queries.mesh.changed.forEach((entity: Entity) => {

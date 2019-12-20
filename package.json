@@ -1,12 +1,12 @@
 {
   "name": "@megavr/ecsy-babylon",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "babylon.js ecsy binding and helpers",
-  "main": "dist/ecsy-babylon.js",
+  "main": "packages/index.js",
   "types": "packages/index.d.ts",
   "scripts": {
     "build": "eslint ./src/**/*.ts && tsc -p ./src && rollup -c",
-    "doc": "typedoc --name ecsy-babylon@0.0.6 --mode file --tsconfig src/tsconfig.json --out docs/ src/index.ts"
+    "doc": "typedoc --name ecsy-babylon@0.0.7 --mode file --tsconfig src/tsconfig.json --out docs/ src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -23,16 +23,16 @@
   },
   "homepage": "https://github.com/megavr/ecsy-babylon#readme",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.10.0",
-    "@typescript-eslint/parser": "^2.10.0",
+    "@typescript-eslint/eslint-plugin": "^2.12.0",
+    "@typescript-eslint/parser": "^2.12.0",
     "eslint": "^6.7.2",
-    "rollup": "^1.27.8",
-    "rollup-plugin-terser": "^5.1.2",
-    "typedoc": "^0.15.3",
+    "rollup": "^1.27.13",
+    "rollup-plugin-terser": "^5.1.3",
+    "typedoc": "^0.15.5",
     "typescript": "^3.7.3"
   },
   "dependencies": {
-    "@babylonjs/core": "^4.1.0-beta.5",
-    "ecsy": "^0.1.4"
+    "@babylonjs/core": "^4.1.0-beta.17",
+    "ecsy": "^0.2.1"
   }
 }

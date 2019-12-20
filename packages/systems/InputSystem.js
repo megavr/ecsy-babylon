@@ -1,6 +1,8 @@
 import { System } from "ecsy";
 import { Input, InputTypes, Transform, Camera } from "../components/index";
-import { getCamera, getObjectComponentsInEntity, vector3ToXyz, vector3ToXyzDegree, xyzToVector3 } from "../utils/index";
+import { vector3ToXyz, vector3ToXyzDegree, xyzToVector3 } from "../utils/index";
+import { getCamera } from "../utils/gameUtils";
+import { getObjectComponents } from "../utils/objectUtils";
 /** @hidden */
 var VRStateButtons;
 (function (VRStateButtons) {
@@ -69,7 +71,7 @@ export class InputSystem extends System {
         }
     }
     _updateObjectsTransform(entity, controller, transform) {
-        transform && getObjectComponentsInEntity(entity)
+        transform && getObjectComponents(entity)
             .filter(component => { return !(component instanceof Input); })
             .forEach(component => {
             let pos = controller.devicePosition;

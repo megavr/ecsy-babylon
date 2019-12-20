@@ -1,4 +1,4 @@
-import { materialColorHex } from "../utils/index";
+import { materialColorHex } from "../utils/materialUtils";
 /**
  * @example
  * ```

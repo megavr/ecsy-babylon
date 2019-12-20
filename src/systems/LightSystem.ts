@@ -1,8 +1,10 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
 import { Light, LightTypes } from "../components/index";
-import { getScene, disposeObject, degreeToRadians, xyzToVector3, hexToColor3, updateObjectValue, updateObjectVector3 } from "../utils/index";
+import { degreeToRadians, xyzToVector3, hexToColor3 } from "../utils/index";
 import { LightColorProperties } from "../components/types";
+import { getScene } from "../utils/gameUtils";
+import { updateObjectValue, updateObjectVector3, updateObjectsTransform, disposeObject } from "../utils/objectUtils";
 
 /** System for Light component */
 export class LightSystem extends System {
@@ -34,6 +36,7 @@ export class LightSystem extends System {
           break;
       }
       this._updateLight(light);
+      updateObjectsTransform(entity);
     });
 
     this.queries.light.changed.forEach((entity: Entity) => {

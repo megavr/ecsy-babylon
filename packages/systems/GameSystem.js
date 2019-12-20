@@ -1,7 +1,8 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Camera } from "../components/index";
-import { disposeObject, getWorld } from "../utils/index";
+import { getWorld } from "../utils/gameUtils";
+import { updateObjectsTransform, disposeObject } from "../utils/objectUtils";
 /** Core system of ecsy-babylon. */
 export class GameSystem extends System {
     constructor() {
@@ -26,6 +27,7 @@ export class GameSystem extends System {
                 this._activeCameraEntity = entity;
                 this._isRendering = true;
             }
+            updateObjectsTransform(entity);
         });
         this.queries.camera.removed.forEach((entity) => {
             let camera = entity.getComponent(Camera);

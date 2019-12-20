@@ -4,17 +4,16 @@ import { Transform } from "../components/index";
 export declare class TransformSystem extends System {
     /** @hidden */
     static queries: {
-        object: {
+        transforms: {
             components: (typeof Transform)[];
             listen: {
+                added: boolean;
                 changed: (typeof Transform)[];
             };
         };
     };
     /** @hidden */
     queries: any;
-    /** @hidden */
-    init(): void;
     /** @hidden */
     execute(): void;
 }

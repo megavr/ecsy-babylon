@@ -16,5 +16,4 @@ export declare class AssetSystem extends System {
     queries: any;
     /** @hidden */
     execute(): void;
-    private _loadBabylon;
 }

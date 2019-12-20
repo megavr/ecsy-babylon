@@ -1,6 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
 import { ColorComponent, TextureComponent, MaterialColorProperties, MaterialTextureProperties } from "./types/index";
-import { materialColorHex } from "../utils/index";
+import { materialColorHex } from "../utils/materialUtils";
 
 /**
  * @example

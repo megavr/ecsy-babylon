@@ -1,7 +1,9 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
 import { Input, InputTypes, Transform, Camera } from "../components/index";
-import { getCamera, getObjectComponentsInEntity, vector3ToXyz, vector3ToXyzDegree, xyzToVector3 } from "../utils/index";
+import { vector3ToXyz, vector3ToXyzDegree, xyzToVector3 } from "../utils/index";
+import { getCamera } from "../utils/gameUtils";
+import { getObjectComponents } from "../utils/objectUtils";
 
 /** @hidden */
 enum VRStateButtons {
@@ -80,12 +82,12 @@ export class InputSystem extends System {
   }
 
   private _updateObjectsTransform(entity: Entity, controller: BABYLON.WebVRController, transform: Transform) {
-    transform && getObjectComponentsInEntity(entity)
+    transform && getObjectComponents(entity)
       .filter(component => { return !(component instanceof Input) })
       .forEach(component => {
         let pos = controller.devicePosition;
         let rot = controller.deviceRotationQuaternion.toEulerAngles();
-        let object = component.object;
+        let object = (component.object as BABYLON.TransformNode);
         object.position && (object.position = pos);
         object.rotation && (object.rotation = rot);
         object.scaling && (object.scaling = xyzToVector3(transform.scale));
