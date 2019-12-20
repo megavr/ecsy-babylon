@@ -58,4 +58,4 @@ babylon.js ecsy binding and helpers
 ```
 
 ### Examples
-https://megavr.github.io/ecsy-babylon-examples/index.html
+https://megavr.github.io/ecsy-babylon-examples/
