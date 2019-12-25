@@ -7,7 +7,6 @@ export declare class TransformSystem extends System {
         transforms: {
             components: (typeof Transform)[];
             listen: {
-                added: boolean;
                 changed: (typeof Transform)[];
             };
         };

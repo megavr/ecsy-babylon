@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ecsy-babylon@0.0.7</title>
+	<title>ecsy-babylon@0.0.8</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">ecsy-babylon@0.0.7</a>
+					<a href="index.html" class="title">ecsy-babylon@0.0.8</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,7 +56,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> ecsy-babylon@0.0.7</h1>
+			<h1> ecsy-babylon@0.0.8</h1>
 		</div>
 	</div>
 </header>
@@ -83,6 +83,7 @@
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/asset.html" class="tsd-kind-icon">Asset</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/assetsystem.html" class="tsd-kind-icon">Asset<wbr>System</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/camera.html" class="tsd-kind-icon">Camera</a></li>
+								<li class="tsd-kind-class tsd-is-external"><a href="classes/camerasystem.html" class="tsd-kind-icon">Camera<wbr>System</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/gamesystem.html" class="tsd-kind-icon">Game<wbr>System</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/input.html" class="tsd-kind-icon">Input</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/inputsystem.html" class="tsd-kind-icon">Input<wbr>System</a></li>
@@ -119,8 +120,8 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#degreetoradians" class="tsd-kind-icon">degree<wbr>ToRadians</a></li>
+								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#getactivescenename" class="tsd-kind-icon">get<wbr>Active<wbr>Scene<wbr>Name</a></li>
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#getassetmanager" class="tsd-kind-icon">get<wbr>Asset<wbr>Manager</a></li>
-								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#getcamera" class="tsd-kind-icon">get<wbr>Camera</a></li>
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#getscene" class="tsd-kind-icon">get<wbr>Scene</a></li>
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#hextocolor3" class="tsd-kind-icon">hex<wbr>ToColor3</a></li>
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#hextocolor4" class="tsd-kind-icon">hex<wbr>ToColor4</a></li>
@@ -146,7 +147,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/9ecd560/src/utils/index.ts#L10">src/utils/index.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L9">src/utils/index.ts:9</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -164,7 +165,37 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-							<p>Radians</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-external">
+					<a name="getactivescenename" class="tsd-anchor"></a>
+					<h3>get<wbr>Active<wbr>Scene<wbr>Name</h3>
+					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Active<wbr>Scene<wbr>Name<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">System</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/gameUtils.ts#L46">src/utils/gameUtils.ts:46</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get name of active scene.</p>
+								</div>
+							</div>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>system: <span class="tsd-signature-type">System</span></h5>
+									<div class="tsd-comment tsd-typography">
+										<p>A registered ecsy System class</p>
+									</div>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">String</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -178,12 +209,12 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/utils/gameUtils.ts:41</li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/gameUtils.ts#L38">src/utils/gameUtils.ts:38</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get an AssetManager found or an AssetManager in active scene.</p>
+									<p>Get an AssetManager found or AssetManager in active scene if not found.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -202,39 +233,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AssetsManager</span></h4>
-							<p>Babylon.js AssetManager</p>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-external">
-					<a name="getcamera" class="tsd-anchor"></a>
-					<h3>get<wbr>Camera</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Camera<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">System</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Entity</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in src/utils/gameUtils.ts:50</li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get active Camera entity in the scene.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>system: <span class="tsd-signature-type">System</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A registered ecsy System class</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Entity</span></h4>
-							<p>Entity with ecsy-babylon Camera</p>
 						</li>
 					</ul>
 				</section>
@@ -242,18 +240,18 @@
 					<a name="getscene" class="tsd-anchor"></a>
 					<h3>get<wbr>Scene</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Scene<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">System</span>, sceneName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Scene</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Scene<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">System</span>, sceneName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Scene</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in src/utils/gameUtils.ts:31</li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/gameUtils.ts#L29">src/utils/gameUtils.ts:29</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get a scene found or active scene if not available.</p>
+									<p>Get a scene found or active scene if not found.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -265,14 +263,13 @@
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sceneName: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sceneName: <span class="tsd-signature-type">String</span></h5>
 									<div class="tsd-comment tsd-typography">
 										<p>Name of the scene</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Scene</span></h4>
-							<p>Babylon.js Scene</p>
 						</li>
 					</ul>
 				</section>
@@ -286,7 +283,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/9ecd560/src/utils/index.ts#L66">src/utils/index.ts:66</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L59">src/utils/index.ts:59</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -304,7 +301,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Color3</span></h4>
-							<p>Babylon.js Color3</p>
 						</li>
 					</ul>
 				</section>
@@ -318,7 +314,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/9ecd560/src/utils/index.ts#L75">src/utils/index.ts:75</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L67">src/utils/index.ts:67</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -336,7 +332,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Color4</span></h4>
-							<p>Babylon.js Color4</p>
 						</li>
 					</ul>
 				</section>
@@ -350,7 +345,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/9ecd560/src/utils/index.ts#L19">src/utils/index.ts:19</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L17">src/utils/index.ts:17</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -368,7 +363,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-							<p>Degree</p>
 						</li>
 					</ul>
 				</section>
@@ -382,7 +376,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/9ecd560/src/utils/index.ts#L46">src/utils/index.ts:46</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L41">src/utils/index.ts:41</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -400,7 +394,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a></h4>
-							<p>Object matches XYZProperties</p>
 						</li>
 					</ul>
 				</section>
@@ -414,7 +407,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/9ecd560/src/utils/index.ts#L56">src/utils/index.ts:56</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L50">src/utils/index.ts:50</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -432,7 +425,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <a href="interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a></h4>
-							<p>Object matches XYZProperties</p>
 						</li>
 					</ul>
 				</section>
@@ -446,7 +438,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/9ecd560/src/utils/index.ts#L28">src/utils/index.ts:28</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L25">src/utils/index.ts:25</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -464,7 +456,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Vector3</span></h4>
-							<p>Babylon.js Vector3</p>
 						</li>
 					</ul>
 				</section>
@@ -478,7 +469,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/9ecd560/src/utils/index.ts#L37">src/utils/index.ts:37</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L33">src/utils/index.ts:33</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -496,7 +487,6 @@
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Vector3</span></h4>
-							<p>Babylon.js Vector3</p>
 						</li>
 					</ul>
 				</section>
@@ -535,6 +525,9 @@
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/camera.html" class="tsd-kind-icon">Camera</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/camerasystem.html" class="tsd-kind-icon">Camera<wbr>System</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/gamesystem.html" class="tsd-kind-icon">Game<wbr>System</a>
@@ -615,10 +608,10 @@
 						<a href="globals.html#degreetoradians" class="tsd-kind-icon">degree<wbr>ToRadians</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
-						<a href="globals.html#getassetmanager" class="tsd-kind-icon">get<wbr>Asset<wbr>Manager</a>
+						<a href="globals.html#getactivescenename" class="tsd-kind-icon">get<wbr>Active<wbr>Scene<wbr>Name</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
-						<a href="globals.html#getcamera" class="tsd-kind-icon">get<wbr>Camera</a>
+						<a href="globals.html#getassetmanager" class="tsd-kind-icon">get<wbr>Asset<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
 						<a href="globals.html#getscene" class="tsd-kind-icon">get<wbr>Scene</a>

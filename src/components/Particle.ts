@@ -1,6 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
 import { XYZProperties, ParticleTextureProperties, TextureComponent, ColorComponent, ParticleColorProperties } from "./types/index";
-import { xyz } from "../utils/index";
+import { xyz } from "../utils/mathUtils";
 
 export enum ParticleTypes {
   Point = "Point",

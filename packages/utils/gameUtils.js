@@ -1,44 +1,41 @@
+import { getWorld } from "./worldUtils";
+import { GameSystem } from "../systems/GameSystem";
 /**
- * Hack on ecsy to get World instance from system itself.
- * @param system A registered ecsy System class
- * @returns ecsy world
- */
-/** @hidden */
-export function getWorld(system) {
-    return system["world"];
-}
-/**
+ * @hidden
  * Get runtime GameSystem instance.
  * @param system A registered ecsy System class
- * @returns ecsy-babylon GameSystem
  */
-/** @hidden */
 export function getGameSystem(system) {
-    return getWorld(system).getSystems().find(system => { return system.engine; });
+    return getWorld(system).getSystem(GameSystem);
 }
 /**
- * Get a scene found or active scene if not available.
+ * @hidden
+ * Get canvas used for rendering.
+ * @param system A registered ecsy System class
+ */
+export function getRenderingCanvas(system) {
+    return getGameSystem(system).renderingCanvas;
+}
+/**
+ * Get a scene found or active scene if not found.
  * @param system A registered ecsy System class
  * @param sceneName Name of the scene
- * @returns Babylon.js Scene
  */
 export function getScene(system, sceneName) {
     return getGameSystem(system).getScene(sceneName);
 }
 /**
- * Get an AssetManager found or an AssetManager in active scene.
+ * Get an AssetManager found or AssetManager in active scene if not found.
  * @param system A registered ecsy System class
  * @param sceneName Name of the scene
- * @returns Babylon.js AssetManager
  */
 export function getAssetManager(system, sceneName) {
     return getGameSystem(system).getAssetManager(sceneName);
 }
 /**
- * Get active Camera entity in the scene.
+ * Get name of active scene.
  * @param system A registered ecsy System class
- * @returns Entity with ecsy-babylon Camera
  */
-export function getCamera(system) {
-    return getGameSystem(system).activeCameraEntity;
+export function getActiveSceneName(system) {
+    return getGameSystem(system).activeSceneName;
 }

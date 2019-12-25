@@ -5,15 +5,16 @@ import { SceneComponent, ObjectComponent } from "./types/index";
  * @example
  * ```
  * entity.addComponent(Camera, { sceneName: "Scene" });
- * entity.addComponent(Camera, { options: { controllerMeshes: false } });
+ * entity.addComponent(Camera, { pointerLock: true });
  * ```
  */
-export class Camera implements SceneComponent, ObjectComponent<BABYLON.VRExperienceHelper> {
+export class Camera implements SceneComponent, ObjectComponent<BABYLON.FreeCamera> {
   sceneName?: string;
-  object: BABYLON.VRExperienceHelper;
+  object: BABYLON.FreeCamera;
   /**
-   * @see https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions 
-   * @default {}
+   * Lock pointer when using the camera.
+   * @see https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API
+   * @default false 
    */
-  options?: BABYLON.VRExperienceHelperOptions = {};
+  pointerLock?: boolean = false;
 }

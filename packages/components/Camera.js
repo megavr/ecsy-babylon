@@ -2,15 +2,16 @@
  * @example
  * ```
  * entity.addComponent(Camera, { sceneName: "Scene" });
- * entity.addComponent(Camera, { options: { controllerMeshes: false } });
+ * entity.addComponent(Camera, { pointerLock: true });
  * ```
  */
 export class Camera {
     constructor() {
         /**
-         * @see https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions
-         * @default {}
+         * Lock pointer when using the camera.
+         * @see https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API
+         * @default false
          */
-        this.options = {};
+        this.pointerLock = false;
     }
 }

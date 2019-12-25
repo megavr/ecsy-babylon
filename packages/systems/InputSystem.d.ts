@@ -8,16 +8,12 @@ export declare class InputSystem extends System {
             components: (typeof Input)[];
             listen: {
                 added: boolean;
+                removed: boolean;
             };
         };
     };
     /** @hidden */
     queries: any;
-    private _isControllerConntected;
     /** @hidden */
     execute(): void;
-    private _initVRController;
-    private _getVRController;
-    private _bindControllerBehaviours;
-    private _updateObjectsTransform;
 }

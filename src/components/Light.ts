@@ -1,6 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
 import { SceneComponent, ObjectComponent, XYZProperties, ColorComponent, LightColorProperties } from "./types/index";
-import { xyz } from "../utils/index";
+import { xyz } from "../utils/mathUtils";
 
 export enum LightTypes {
   Point = "Point",

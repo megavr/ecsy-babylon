@@ -2,124 +2,119 @@
     'use strict';
 
     /**
+     * @hidden
      * Hack on ecsy to get World instance from system itself.
      * @param system A registered ecsy System class
      * @returns ecsy world
      */
-    /** @hidden */
     function getWorld(system) {
         return system["world"];
     }
-    /**
-     * Get runtime GameSystem instance.
-     * @param system A registered ecsy System class
-     * @returns ecsy-babylon GameSystem
-     */
-    /** @hidden */
-    function getGameSystem(system) {
-        return getWorld(system).getSystems().find(system => { return system.engine; });
-    }
-    /**
-     * Get a scene found or active scene if not available.
-     * @param system A registered ecsy System class
-     * @param sceneName Name of the scene
-     * @returns Babylon.js Scene
-     */
-    function getScene(system, sceneName) {
-        return getGameSystem(system).getScene(sceneName);
-    }
-    /**
-     * Get an AssetManager found or an AssetManager in active scene.
-     * @param system A registered ecsy System class
-     * @param sceneName Name of the scene
-     * @returns Babylon.js AssetManager
-     */
-    function getAssetManager(system, sceneName) {
-        return getGameSystem(system).getAssetManager(sceneName);
-    }
-    /**
-     * Get active Camera entity in the scene.
-     * @param system A registered ecsy System class
-     * @returns Entity with ecsy-babylon Camera
-     */
-    function getCamera(system) {
-        return getGameSystem(system).activeCameraEntity;
+
+    /** Core system of ecsy-babylon. */
+    class GameSystem extends ecsy.System {
+        constructor() {
+            super(...arguments);
+            /** <Scene Name, BABYLON.Scene> */
+            this._scenes = new Map();
+            /** <Scene Name, BABYLON.AssetsManager> */
+            this._assetManagers = new Map();
+            /** Observable event when active scene is switched. */
+            this.onSceneSwitched = new BABYLON.Observable();
+        }
+        /** Get canvas used for rendering. */
+        get renderingCanvas() { return this._engine.getRenderingCanvas(); }
+        /** Get name of active scene. */
+        get activeSceneName() { return this._activeSceneName; }
+        /** @hidden */
+        init() {
+            this._render = this._render.bind(this);
+        }
+        /**
+         * Start game system in the world can be used by other systems & components.
+         * @see https://doc.babylonjs.com/api/classes/babylon.engine#constructor
+         * @param canvas WebGL context to be used for rendering
+         * @param antialias defines enable antialiasing (default: false)
+         * @param options @see https://doc.babylonjs.com/api/interfaces/babylon.engineoptions
+         * @param adaptToDeviceRatio defines whether to adapt to the device's viewport characteristics (default: false)
+         */
+        start(canvas, antialias, options, adaptToDeviceRatio) {
+            this._engine = new BABYLON.Engine(canvas, antialias, options, adaptToDeviceRatio);
+            this._engine.runRenderLoop(this._render);
+            return this;
+        }
+        /**
+         * Add a new scene with a name.
+         * @see https://doc.babylonjs.com/api/classes/babylon.scene#constructor
+         * @param sceneName Readable name to be used to switch or remove scene in the system
+         * @param options @see https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions
+         */
+        addScene(sceneName, options) {
+            // create a new scene
+            let scene = new BABYLON.Scene(this._engine, options);
+            this._scenes.set(sceneName, scene);
+            // create a new assetsManager with scene
+            let assetManager = new BABYLON.AssetsManager(scene);
+            assetManager.useDefaultLoadingScreen = false;
+            this._assetManagers.set(sceneName, assetManager);
+            // set scene as active when no scene in engine
+            this._engine.scenes.length === 1 && (this._activeSceneName = sceneName);
+            return this;
+        }
+        /** Remove an inactive scene by given name */
+        removeScene(sceneName) {
+            sceneName !== this.activeSceneName && this.getScene(sceneName).dispose();
+            return this;
+        }
+        /**
+         * Switch to a scene by given scene name.
+         * @param sceneName Name of scene
+         */
+        switchScene(sceneName) {
+            if (this.getScene(sceneName)) {
+                this._activeSceneName = sceneName;
+                this.onSceneSwitched.notifyObservers(this.getScene(sceneName));
+            }
+            return this;
+        }
+        /**
+         * Get a scene by provided name or active scene if not found.
+         * @param sceneName Name of the scene
+         */
+        getScene(sceneName) {
+            if (sceneName) {
+                return this._scenes.get(sceneName);
+            }
+            else {
+                return this._scenes.get(this._activeSceneName);
+            }
+        }
+        /**
+         * Get an asset manager by provided scene name or asset manager in active scene if not found.
+         * @param sceneName Name of the scene
+         */
+        getAssetManager(sceneName) {
+            if (sceneName) {
+                return this._assetManagers.get(sceneName);
+            }
+            else {
+                return this._assetManagers.get(this._activeSceneName);
+            }
+        }
+        _render() {
+            getWorld(this).execute(this._engine.getDeltaTime(), performance.now());
+            getWorld(this).enabled && this.getScene().render();
+        }
     }
 
     /**
-     * Translate degree to radians.
-     * @param degree Degree
-     * @returns Radians
-     */
-    function degreeToRadians(degree) {
-        return BABYLON.Angle.FromDegrees(degree).radians();
-    }
-    /**
-     * Translate radians to degree.
-     * @param radians Radians
-     * @returns Degree
-     */
-    function radiansToDegree(radians) {
-        return BABYLON.Angle.FromRadians(radians).degrees();
-    }
-    /**
-     * Convert XYZProperties value to Vector3.
-     * @param properties XYZProperties value
-     * @returns Babylon.js Vector3
-     */
-    function xyzToVector3(properties) {
-        return new BABYLON.Vector3(properties.x, properties.y, properties.z);
-    }
-    /**
-     * Convert XYZProperties degree value to Vector3 in radians.
-     * @param properties XYZProperties value in degrees
-     * @returns Babylon.js Vector3
-     */
-    function xyzToVector3Radians(properties) {
-        return new BABYLON.Vector3(degreeToRadians(properties.x), degreeToRadians(properties.y), degreeToRadians(properties.z));
-    }
-    /**
-     * Convert Vector3 value to XYZProperties.
-     * @param vector3 Vector3 value
-     * @returns Object matches XYZProperties
-     */
-    function vector3ToXyz(vector3) {
-        let x = vector3.x, y = vector3.y, z = vector3.z;
-        return { x, y, z };
-    }
-    /**
-     * Convert Vector3 value to XYZProperties in degrees.
-     * @param vector3 Vector3 degree value
-     * @returns Object matches XYZProperties
-     */
-    function vector3ToXyzDegree(vector3) {
-        let x = vector3.x, y = vector3.y, z = vector3.z;
-        return { x, y, z };
-    }
-    /**
-     * Convert hex color value to Color3.
-     * @param hexString Text of hex color value(e.g., #123ABC)
-     * @returns Babylon.js Color3
-     */
-    function hexToColor3(hexString) {
-        return BABYLON.Color3.FromHexString(hexString);
-    }
-    /**
-     * Convert hex color value to Color4 (has alpha).
-     * @param hexString Text of hex color value(e.g., #123ABCFF)
-     * @returns Babylon.js Color4
-     */
-    function hexToColor4(hexString) {
-        return BABYLON.Color4.FromHexString(hexString);
-    }
-    /**
+     * @hidden
      * Create object by XYZ values or create all zero object.
      * @param x value
      * @param y value
      * @param z value
      * @returns Object matches XYZProperties
      */
-    /** @hidden */
     function xyz(x, y, z) {
         if (x && y && z) {
             return { x: x, y: y, z: z };
@@ -143,11 +138,6 @@
             this.rotation = xyz();
             /** @default 1,1,1 */
             this.scale = xyz(1, 1, 1);
-            /**
-             * Update Babylon.js object transformation (if existed) for all components in the entity.
-             * @default true
-             */
-            this.updateObjects = true;
         }
     }
 
@@ -155,16 +145,17 @@
      * @example
      * ```
      * entity.addComponent(Camera, { sceneName: "Scene" });
-     * entity.addComponent(Camera, { options: { controllerMeshes: false } });
+     * entity.addComponent(Camera, { pointerLock: true });
      * ```
      */
     class Camera {
         constructor() {
             /**
-             * @see https://doc.babylonjs.com/api/interfaces/babylon.vrexperiencehelperoptions
-             * @default {}
+             * Lock pointer when using the camera.
+             * @see https://developer.mozilla.org/en-US/docs/Web/API/Pointer_Lock_API
+             * @default false
              */
-            this.options = {};
+            this.pointerLock = false;
         }
     }
 
@@ -221,43 +212,127 @@
     }
 
     /**
+     * @hidden
+     * Get runtime GameSystem instance.
+     * @param system A registered ecsy System class
+     */
+    function getGameSystem(system) {
+        return getWorld(system).getSystem(GameSystem);
+    }
+    /**
+     * @hidden
+     * Get canvas used for rendering.
+     * @param system A registered ecsy System class
+     */
+    function getRenderingCanvas(system) {
+        return getGameSystem(system).renderingCanvas;
+    }
+    /**
+     * Get a scene found or active scene if not found.
+     * @param system A registered ecsy System class
+     * @param sceneName Name of the scene
+     */
+    function getScene(system, sceneName) {
+        return getGameSystem(system).getScene(sceneName);
+    }
+    /**
+     * Get an AssetManager found or AssetManager in active scene if not found.
+     * @param system A registered ecsy System class
+     * @param sceneName Name of the scene
+     */
+    function getAssetManager(system, sceneName) {
+        return getGameSystem(system).getAssetManager(sceneName);
+    }
+    /**
+     * Get name of active scene.
+     * @param system A registered ecsy System class
+     */
+    function getActiveSceneName(system) {
+        return getGameSystem(system).activeSceneName;
+    }
+
+    /**
+     * Translate degree to radians.
+     * @param degree Degree
+     */
+    function degreeToRadians(degree) {
+        return BABYLON.Angle.FromDegrees(degree).radians();
+    }
+    /**
+     * Translate radians to degree.
+     * @param radians Radians
+     */
+    function radiansToDegree(radians) {
+        return BABYLON.Angle.FromRadians(radians).degrees();
+    }
+    /**
+     * Convert XYZProperties value to Vector3.
+     * @param properties XYZProperties value
+     */
+    function xyzToVector3(properties) {
+        return new BABYLON.Vector3(properties.x, properties.y, properties.z);
+    }
+    /**
+     * Convert XYZProperties degree value to Vector3 in radians.
+     * @param properties XYZProperties value in degrees
+     */
+    function xyzToVector3Radians(properties) {
+        return new BABYLON.Vector3(degreeToRadians(properties.x), degreeToRadians(properties.y), degreeToRadians(properties.z));
+    }
+    /**
+     * Convert Vector3 value to XYZProperties.
+     * @param vector3 Vector3 value
+     */
+    function vector3ToXyz(vector3) {
+        let x = vector3.x, y = vector3.y, z = vector3.z;
+        return { x, y, z };
+    }
+    /**
+     * Convert Vector3 value to XYZProperties in degrees.
+     * @param vector3 Vector3 degree value
+     */
+    function vector3ToXyzDegree(vector3) {
+        let x = vector3.x, y = vector3.y, z = vector3.z;
+        return { x, y, z };
+    }
+    /**
+     * Convert hex color value to Color3.
+     * @param hexString Text of hex color value(e.g., #123ABC)
+     */
+    function hexToColor3(hexString) {
+        return BABYLON.Color3.FromHexString(hexString);
+    }
+    /**
+     * Convert hex color value to Color4 (has alpha).
+     * @param hexString Text of hex color value(e.g., #123ABCFF)
+     */
+    function hexToColor4(hexString) {
+        return BABYLON.Color4.FromHexString(hexString);
+    }
+
+    /**
+     * @hidden
      * Update value of Babylon.js object's property from a property in component with same name.
      * @param component Component contains Babylon.js object
      * @param name Name of property in the component
      */
-    /** @hidden */
     function updateObjectValue(component, name) {
         component.object[name] = component[name];
     }
     /**
+     * @hidden
      * Update Vector3 of Babylon.js object's property from property in component with same name.
      * @param component Component contains Babylon.js object
      * @param name Name of property in the component, value of property should matches XYZProperties
      */
-    /** @hidden */
     function updateObjectVector3(component, name) {
         component.object[name] = xyzToVector3(component[name]);
     }
     /**
-     * Get ObjectComponents in an Entity.
-     * @param entity Entity to filter ObjectComponents
-     * @returns Array of ObjectComponents
-     */
-    /** @hidden */
-    function getObjectComponents(entity) {
-        let components = entity.getComponents();
-        let objectComponents = [];
-        for (let prop in components) {
-            let component = components[prop];
-            component.object && objectComponents.push(component);
-        }
-        return objectComponents;
-    }
-    /**
+     * @hidden
      * Update transformation of ObjectComponents in entity.
      * @param entity Entity to be updated
      */
-    /** @hidden */
     function updateObjectsTransform(entity) {
         let components = entity.getComponents();
         for (let prop in components) {
@@ -266,11 +341,11 @@
         }
     }
     /**
+     * @hidden
      * Update transformation to an ObjectComponent.
      * @param transform Transfrom component in the entity
      * @param component A component has Babylon.js object
      */
-    /** @hidden */
     function updateObjectTransform(transform, component) {
         let object = component.object;
         object.position && (object.position = xyzToVector3(transform.position));
@@ -278,21 +353,21 @@
         object.scaling && (object.scaling = xyzToVector3(transform.scale));
     }
     /**
+     * @hidden
      * Dispose Babylon.js object in the component.
      * @param object Component contains Babylon.js object
      */
-    /** @hidden */
     function disposeObject(component) {
         component.object && component.object.dispose();
     }
 
     /**
+     * @hidden
      * Update texture object to a component for its texture properties.
      * @param component TextureComponent in the entity
      * @param textureProperties Texture properties to be update
      * @param assetManager AssetManager to process textures
      */
-    /** @hidden */
     function updateTexture(component, textureProperties, assetManager) {
         for (let prop in textureProperties) {
             let textureAttributes = textureProperties[prop];
@@ -312,11 +387,11 @@
         assetManager.reset();
     }
     /**
+     * @hidden
      * Create object of material color values or create a material color object with white diffuse.
      * @param diffuse Diffuse color in hex string. e.g., #123ABC
      * @returns Object matches MaterialColorProperties
      */
-    /** @hidden */
     function materialColorHex(diffuse) {
         if (diffuse) {
             return { diffuse: diffuse };
@@ -429,24 +504,11 @@
     var InputTypes;
     (function (InputTypes) {
         InputTypes["Keyboard"] = "Keyboard";
-        InputTypes["VrRight"] = "VrRight";
-        InputTypes["VrLeft"] = "VrLeft";
     })(InputTypes || (InputTypes = {}));
     /**
-     * @example VR
-     * ```
-     * entity.addComponent(Input, { type: InputTypes.VrLeft, onPad: onPad, onPadValues: onPadValues });
-     * function onPad(pressed, touched, value) {
-     *   if (pressed) console.log("Pad is pressed.");
-     *   if (touched) console.log("Pad is touched.");
-     * }
-     * function onPadValues(x, y) {
-     *   console.log("Pad is touched on: " + x + ", " + y);
-     * }
-     * ```
      * @example Keyboard
      * ```
-     * entity.addComponent(Input, { type: InputTypes.Keyboard, onKey: onKey });
+     * entity.addComponent(Input, { onKey: onKey });
      * function onKey(key, down, up) {
      *   if (down) console.log(key + " is pressing.");
      * }
@@ -454,141 +516,64 @@
      */
     class Input {
         constructor() {
-            /** @default "VrRight" */
-            this.type = InputTypes.VrRight;
+            /** @default "Keyboard" */
+            this.type = InputTypes.Keyboard;
         }
     }
-
-    /** Core system of ecsy-babylon. */
-    class GameSystem extends ecsy.System {
-        constructor() {
-            super(...arguments);
-            this._scenes = new Map();
-            this._assetManagers = new Map();
-            this._isRendering = false;
-        }
-        /** Get name of active scene */
-        get activeSceneName() { return this._activeSceneName; }
-        /** Get active Camera Entity. */
-        get activeCameraEntity() { return this._activeCameraEntity; }
-        /** @hidden */
-        init() { this._render = this._render.bind(this); }
-        /** @hidden */
-        execute() {
-            this.queries.camera.added.forEach((entity) => {
-                let camera = entity.getComponent(Camera);
-                let scene = this.getScene(camera.sceneName);
-                camera.object = new BABYLON.VRExperienceHelper(scene, camera.options);
-                if (scene === this._activeScene) {
-                    this._activeCameraEntity = entity;
-                    this._isRendering = true;
-                }
-                updateObjectsTransform(entity);
-            });
-            this.queries.camera.removed.forEach((entity) => {
-                let camera = entity.getComponent(Camera);
-                disposeObject(camera);
-                let scene = this.getScene(camera.sceneName);
-                scene === this._activeScene && (this._isRendering = false);
-            });
-        }
-        /**
-         * Start game system in the world can be used by other systems & components.
-         * @see https://doc.babylonjs.com/api/classes/babylon.engine#constructor
-         * @param canvas WebGL context to be used for rendering
-         * @param antialias defines enable antialiasing (default: false)
-         * @param options @see https://doc.babylonjs.com/api/interfaces/babylon.engineoptions
-         * @param adaptToDeviceRatio defines whether to adapt to the device's viewport characteristics (default: false)
-         * @returns This GameSystem
-         */
-        start(canvas, antialias, options, adaptToDeviceRatio) {
-            this.engine = new BABYLON.Engine(canvas, antialias, options, adaptToDeviceRatio);
-            this.engine.runRenderLoop(this._render);
-            return this;
-        }
-        /**
-         * Add a new scene with a name.
-         * @see https://doc.babylonjs.com/api/classes/babylon.scene#constructor
-         * @param sceneName Readable name to be used to switch or remove scene in the system
-         * @param options @see https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions
-         * @returns This GameSystem
-         */
-        addScene(sceneName, options) {
-            let scene = new BABYLON.Scene(this.engine, options);
-            let assetManager = new BABYLON.AssetsManager(scene);
-            assetManager.useDefaultLoadingScreen = false;
-            this._scenes.set(sceneName, scene);
-            this._assetManagers.set(sceneName, assetManager);
-            if (this.engine.scenes.length === 1) {
-                this._activeScene = scene;
-                this._activeSceneName = sceneName;
-            }
-            return this;
-        }
-        /** Remove an inactive scene by given name */
-        removeScene(sceneName) {
-            sceneName !== this.activeSceneName && this.getScene(sceneName).dispose();
-            return this;
-        }
-        /**
-         * Switch to a scene by given scene name.
-         * @param sceneName Name of scene
-         * @param cameraEntity Default camera for the new scene
-         * @returns This GameSystem
-         */
-        switchScene(sceneName, cameraEntity) {
-            if (this.getScene(sceneName)) {
-                this._activeScene = this.getScene(sceneName);
-                this._activeSceneName = sceneName;
-                this._activeCameraEntity = cameraEntity;
-            }
-            return this;
-        }
-        /**
-         * Get a scene by provided name.
-         * @param sceneName Name of the scene
-         * @returns Scene found in system or active scene if not available
-         */
-        getScene(sceneName) {
-            if (sceneName) {
-                return this._scenes.get(sceneName);
-            }
-            else {
-                return this._activeScene;
-            }
-        }
-        /**
-         * Get a asset manager by provided scene name.
-         * @param sceneName Name of the scene
-         * @returns Asset manager found or asset manager in active scene
-         */
-        getAssetManager(sceneName) {
-            let name = this.activeSceneName;
-            sceneName && (name = sceneName);
-            return this._assetManagers.get(name);
-        }
-        _render() {
-            getWorld(this).execute(this.engine.getDeltaTime(), performance.now());
-            (this._isRendering && getWorld(this).enabled) && this._activeScene.render();
-        }
-    }
-    /** @hidden */
-    GameSystem.queries = {
-        camera: { components: [Camera], listen: { added: true, removed: true } }
-    };
 
     /** System for Transform component */
     class TransformSystem extends ecsy.System {
         /** @hidden */
         execute() {
             this.queries.transforms.changed.forEach((entity) => {
-                entity.getComponent(Transform).updateObjects && updateObjectsTransform(entity);
+                updateObjectsTransform(entity);
             });
         }
     }
     /** @hidden */
     TransformSystem.queries = {
-        transforms: { components: [Transform], listen: { added: true, changed: [Transform] } },
+        transforms: { components: [Transform], listen: { changed: [Transform] } },
+    };
+
+    /** System for Camera component */
+    class CameraSystem extends ecsy.System {
+        constructor() {
+            super(...arguments);
+            /** <BABYLON.Scene.uid, Camera component> */
+            this._cameraOfScenes = new Map();
+        }
+        /** @hidden */
+        init() {
+            getGameSystem(this).onSceneSwitched.add(scene => this._updateControl(scene.uid));
+        }
+        /** @hidden */
+        execute() {
+            this.queries.camera.added.forEach((entity) => {
+                let camera = entity.getComponent(Camera);
+                let scene = getScene(this, camera.sceneName);
+                this._cameraOfScenes.set(scene.uid, camera);
+                camera.object = new BABYLON.FreeCamera("", BABYLON.Vector3.Zero(), scene);
+                updateObjectsTransform(entity);
+                this._updateControl(scene.uid);
+            });
+            this.queries.camera.removed.forEach((entity) => {
+                let camera = entity.getComponent(Camera);
+                disposeObject(camera);
+            });
+        }
+        _updateControl(sceneUID) {
+            let activeScene = getScene(this, getActiveSceneName(this));
+            if (activeScene.uid === sceneUID) {
+                let camera = this._cameraOfScenes.get(sceneUID);
+                let canvas = getRenderingCanvas(this);
+                camera.object.attachControl(canvas, true);
+                camera.pointerLock && (activeScene.onPointerDown = () => { document.pointerLockElement || canvas.requestPointerLock(); });
+            }
+        }
+    }
+    /** @hidden */
+    CameraSystem.queries = {
+        camera: { components: [Camera], listen: { added: true, removed: true } },
     };
 
     /** System for Mesh component */
@@ -829,25 +814,8 @@
         asset: { components: [Asset], listen: { added: true, removed: true } },
     };
 
-    /** @hidden */
-    var VRStateButtons;
-    (function (VRStateButtons) {
-        VRStateButtons["onMainButton"] = "onMainButton";
-        VRStateButtons["onPad"] = "onPad";
-        VRStateButtons["onSecondaryButton"] = "onSecondaryButton";
-        VRStateButtons["onTrigger"] = "onTrigger";
-    })(VRStateButtons || (VRStateButtons = {}));
-    /** @hidden */
-    var VRValueButtons;
-    (function (VRValueButtons) {
-        VRValueButtons["onPadValues"] = "onPadValues";
-    })(VRValueButtons || (VRValueButtons = {}));
     /** System for Input component */
     class InputSystem extends ecsy.System {
-        constructor() {
-            super(...arguments);
-            this._isControllerConntected = false;
-        }
         /** @hidden */
         execute() {
             this.queries.input.added.forEach((entity) => {
@@ -855,65 +823,25 @@
                 switch (input.type) {
                     case InputTypes.Keyboard:
                         if (input.onKey) {
-                            window.addEventListener("keydown", event => input.onKey.call(input, event.key, true, false));
-                            window.addEventListener("keyup", event => input.onKey.call(input, event.key, false, true));
+                            // BABYLON.KeyboardEventTypes.KEYDOWN = 1, BABYLON.KeyboardEventTypes.KEYUP = 2 
+                            getScene(this, input.sceneName).onKeyboardObservable.add(keyInfo => input.onKey.call(input, keyInfo.event.key, keyInfo.type === 1, keyInfo.type === 2));
                         }
                         break;
-                    default:
-                        entity.hasComponent(Transform) && (entity.getMutableComponent(Transform).updateObjects = false);
+                }
+            });
+            this.queries.input.removed.forEach((entity) => {
+                let input = entity.getComponent(Input);
+                switch (input.type) {
+                    case InputTypes.Keyboard:
+                        getScene(this, input.sceneName).onKeyboardObservable.clear();
                         break;
                 }
-            });
-            this.queries.input.results.forEach((entity) => {
-                let controllers = getCamera(this).getComponent(Camera).object.webVRCamera.controllers;
-                let input = entity.getMutableComponent(Input);
-                if (controllers.length > 0) {
-                    this._isControllerConntected ?
-                        this._updateObjectsTransform(entity, input.object, entity.getMutableComponent(Transform)) :
-                        this._initVRController(input, controllers);
-                }
-            });
-        }
-        _initVRController(input, controllers) {
-            input.type === InputTypes.VrLeft ?
-                input.object = this._getVRController(controllers, "left") :
-                input.object = this._getVRController(controllers, "right");
-            this._bindControllerBehaviours(input);
-            this._isControllerConntected = true;
-        }
-        _getVRController(controllers, hand) {
-            return controllers.find((controller) => { return controller.hand === hand; });
-        }
-        _bindControllerBehaviours(input) {
-            for (let prop in input) {
-                if (input[prop]) {
-                    prop in VRStateButtons && input.object[`${prop}StateChangedObservable`].add(data => {
-                        input[prop].call(input, data.pressed, data.touched, data.value);
-                    });
-                    prop in VRValueButtons && input.object[`${prop}ChangedObservable`].add(data => {
-                        input[prop].call(input, data.x, data.y);
-                    });
-                }
-            }
-        }
-        _updateObjectsTransform(entity, controller, transform) {
-            transform && getObjectComponents(entity)
-                .filter(component => { return !(component instanceof Input); })
-                .forEach(component => {
-                let pos = controller.devicePosition;
-                let rot = controller.deviceRotationQuaternion.toEulerAngles();
-                let object = component.object;
-                object.position && (object.position = pos);
-                object.rotation && (object.rotation = rot);
-                object.scaling && (object.scaling = xyzToVector3(transform.scale));
-                transform.position = vector3ToXyz(pos);
-                transform.rotation = vector3ToXyzDegree(rot);
             });
         }
     }
     /** @hidden */
     InputSystem.queries = {
-        input: { components: [Input], listen: { added: true } },
+        input: { components: [Input], listen: { added: true, removed: true } },
     };
 
 
@@ -922,6 +850,7 @@
         __proto__: null,
         GameSystem: GameSystem,
         TransformSystem: TransformSystem,
+        CameraSystem: CameraSystem,
         MeshSystem: MeshSystem,
         LightSystem: LightSystem,
         MaterialSystem: MaterialSystem,
@@ -949,10 +878,9 @@
         vector3ToXyzDegree: vector3ToXyzDegree,
         hexToColor3: hexToColor3,
         hexToColor4: hexToColor4,
-        xyz: xyz,
-        getAssetManager: getAssetManager,
-        getCamera: getCamera,
-        getScene: getScene
+        getScene: getScene,
+        getActiveSceneName: getActiveSceneName,
+        getAssetManager: getAssetManager
     });
 
     window.EB = EB;

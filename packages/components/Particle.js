@@ -1,4 +1,4 @@
-import { xyz } from "../utils/index";
+import { xyz } from "../utils/mathUtils";
 export var ParticleTypes;
 (function (ParticleTypes) {
     ParticleTypes["Point"] = "Point";

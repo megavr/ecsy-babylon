@@ -12,9 +12,4 @@ export declare class Transform {
     rotation: XYZProperties;
     /** @default 1,1,1 */
     scale: XYZProperties;
-    /**
-     * Update Babylon.js object transformation (if existed) for all components in the entity.
-     * @default true
-     */
-    updateObjects: boolean;
 }
