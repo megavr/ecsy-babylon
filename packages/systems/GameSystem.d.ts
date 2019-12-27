@@ -1,21 +1,39 @@
 import * as BABYLON from "@babylonjs/core";
-import { System } from "ecsy";
+import { Entity, System } from "ecsy";
+import { Scene } from "../components/index";
 /** Core system of ecsy-babylon. */
 export declare class GameSystem extends System {
+    /** @hidden */
+    static queries: {
+        scene: {
+            components: (typeof Scene)[];
+            listen: {
+                added: boolean;
+                removed: boolean;
+                changed: (typeof Scene)[];
+            };
+        };
+    };
+    /** @hidden */
+    queries: any;
     private _engine;
     /** Get canvas used for rendering. */
     get renderingCanvas(): HTMLCanvasElement | null;
-    /** <Scene Name, BABYLON.Scene> */
-    private _scenes;
-    /** <Scene Name, BABYLON.AssetsManager> */
+    /** Get all scenes in engine. */
+    get scenes(): BABYLON.Scene[];
+    private _activeScene;
+    /** Get active scene. */
+    get activeScene(): BABYLON.Scene;
+    /** <Scene UID, BABYLON.AssetsManager> */
     private _assetManagers;
     /** Observable event when active scene is switched. */
     onSceneSwitched: BABYLON.Observable<BABYLON.Scene>;
-    private _activeSceneName;
-    /** Get name of active scene. */
-    get activeSceneName(): String;
     /** @hidden */
     init(): void;
+    /** @hidden */
+    execute(): void;
+    private _updateScene;
+    private _updateColor;
     /**
      * Start game system in the world can be used by other systems & components.
      * @see https://doc.babylonjs.com/api/classes/babylon.engine#constructor
@@ -26,28 +44,14 @@ export declare class GameSystem extends System {
      */
     start(canvas: HTMLCanvasElement, antialias?: boolean, options?: BABYLON.EngineOptions, adaptToDeviceRatio?: boolean): GameSystem;
     /**
-     * Add a new scene with a name.
-     * @see https://doc.babylonjs.com/api/classes/babylon.scene#constructor
-     * @param sceneName Readable name to be used to switch or remove scene in the system
-     * @param options @see https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions
+     * Switch to a scene by given scene entity.
+     * @param scene Scene entity
      */
-    addScene(sceneName: String, options?: BABYLON.SceneOptions): GameSystem;
-    /** Remove an inactive scene by given name */
-    removeScene(sceneName: String): GameSystem;
+    switchScene(scene: Entity): GameSystem;
     /**
-     * Switch to a scene by given scene name.
-     * @param sceneName Name of scene
+     * Get scene AssetManager or return AssetManager in active scene.
+     * @param scene Scene entity
      */
-    switchScene(sceneName: String): GameSystem;
-    /**
-     * Get a scene by provided name or active scene if not found.
-     * @param sceneName Name of the scene
-     */
-    getScene(sceneName?: String): BABYLON.Scene;
-    /**
-     * Get an asset manager by provided scene name or asset manager in active scene if not found.
-     * @param sceneName Name of the scene
-     */
-    getAssetManager(sceneName?: String): BABYLON.AssetsManager;
+    getAssetManager(scene?: Entity): BABYLON.AssetsManager;
     private _render;
 }

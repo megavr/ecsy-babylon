@@ -11,7 +11,7 @@ babylon.js ecsy binding and helpers
   <head>
     <script src="https://unpkg.com/ecsy@0.2.1/build/ecsy.min.js"></script>
     <script src="https://unpkg.com/babylonjs@4.1.0-beta.18/babylon.js"></script>
-    <script src="https://unpkg.com/@megavr/ecsy-babylon@0.0.8/dist/ecsy-babylon.min.js"></script>
+    <script src="https://unpkg.com/@megavr/ecsy-babylon@0.0.9/dist/ecsy-babylon.min.js"></script>
   </head>
   <body>
     <canvas id="renderCanvas" style="width: 100%; height: 100%"></canvas>
@@ -32,10 +32,12 @@ babylon.js ecsy binding and helpers
       const canvas = document.getElementById("renderCanvas");
       // get GameSystem object
       const game = world.getSystem(EB.GameSystem);
-      // start GameSystem by providing canvas object and add an empty scene
-      game.start(canvas).addScene("Scene01");
+      // start GameSystem by providing canvas object
+      game.start(canvas);
       
       /** Step 3 - Start to build your scene */
+      // add a scene
+      const scene = world.createEntity().addComponent(EB.Scene);
       // add a camera
       const camera = world.createEntity()
         .addComponent(EB.Transform)

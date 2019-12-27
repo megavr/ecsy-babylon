@@ -1,17 +1,16 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Material, Mesh } from "../components/index";
-import { hexToColor3 } from "../utils/index";
 import { getScene, getAssetManager } from "../utils/gameUtils";
 import { updateObjectValue, disposeObject } from "../utils/objectUtils";
-import { updateTexture } from "../utils/materialUtils";
+import { updateTexture, hexToColor3 } from "../utils/materialUtils";
 /** System for Material component */
 export class MaterialSystem extends System {
     /** @hidden */
     execute() {
         this.queries.meshMaterial.added.forEach((entity) => {
             let material = entity.getComponent(Material);
-            material.object = new BABYLON.StandardMaterial(material.color.diffuse, getScene(this, material.sceneName));
+            material.object = new BABYLON.StandardMaterial(material.color.diffuse, getScene(this, material.scene));
             this._updateMaterial(material);
             entity.getComponent(Mesh).object.material = material.object;
         });
@@ -30,7 +29,7 @@ export class MaterialSystem extends System {
                     this._updateColor(material, material.color);
                     break;
                 case "texture":
-                    updateTexture(material, material.texture, getAssetManager(this, material.sceneName));
+                    updateTexture(material, material.texture, getAssetManager(this, material.scene));
                     break;
                 default:
                     updateObjectValue(material, prop);

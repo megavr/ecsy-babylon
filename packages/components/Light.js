@@ -9,7 +9,7 @@ export var LightTypes;
 /**
  * @example
  * ```
- * entity.addComponent(Light, { sceneName: "Scene", color: { diffuse: "#AAFFAA" } });
+ * entity.addComponent(Light, { color: { diffuse: "#AAFFAA" } });
  * entity.addComponent(Light, { type: LightTypes.Point, intensity: 2 });
  * entity.addComponent(Light, { type: LightTypes.Directional, direction: { x: 0, y: 0, z: 1 } });
  * entity.addComponent(Light, { type: LightTypes.Spot, direction: { x: 0, y: 0, z: 1 }, angle: 30, exponent: 2 });

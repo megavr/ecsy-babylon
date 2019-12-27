@@ -1,3 +1,4 @@
+export * from "./Scene";
 export * from "./Transform";
 export * from "./Camera";
 export * from "./Mesh";

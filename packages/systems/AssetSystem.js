@@ -8,7 +8,7 @@ export class AssetSystem extends System {
     execute() {
         this.queries.asset.added.forEach((entity) => {
             let asset = entity.getComponent(Asset);
-            let assetManager = getAssetManager(this, asset.sceneName);
+            let assetManager = getAssetManager(this, asset.scene);
             switch (asset.type) {
                 default: {
                     let filenameIndex = asset.url.lastIndexOf("/") + 1;

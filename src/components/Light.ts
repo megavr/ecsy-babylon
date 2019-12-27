@@ -1,5 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
-import { SceneComponent, ObjectComponent, XYZProperties, ColorComponent, LightColorProperties } from "./types/index";
+import { Entity } from "ecsy";
+import { SceneComponent, XYZProperties, ColorComponent, LightColorProperties } from "./types/index";
 import { xyz } from "../utils/mathUtils";
 
 export enum LightTypes {
@@ -12,14 +13,14 @@ export enum LightTypes {
 /**
  * @example
  * ```
- * entity.addComponent(Light, { sceneName: "Scene", color: { diffuse: "#AAFFAA" } });
+ * entity.addComponent(Light, { color: { diffuse: "#AAFFAA" } });
  * entity.addComponent(Light, { type: LightTypes.Point, intensity: 2 });
  * entity.addComponent(Light, { type: LightTypes.Directional, direction: { x: 0, y: 0, z: 1 } });
  * entity.addComponent(Light, { type: LightTypes.Spot, direction: { x: 0, y: 0, z: 1 }, angle: 30, exponent: 2 });
  * ```
  */
-export class Light implements SceneComponent, ColorComponent<LightColorProperties>, ObjectComponent<BABYLON.HemisphericLight | BABYLON.ShadowLight> {
-  sceneName?: string;
+export class Light implements SceneComponent, ColorComponent<LightColorProperties> {
+  scene?: Entity;
   object: BABYLON.HemisphericLight | BABYLON.ShadowLight;
   /** @default "Hemispheric" */
   type?: LightTypes = LightTypes.Hemispheric;

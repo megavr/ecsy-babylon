@@ -8,7 +8,7 @@ export var MeshTypes;
 /**
  * @example
  * ```
- * entity.addComponent(Mesh, { sceneName: "Scene" });
+ * entity.addComponent(Mesh);
  * entity.addComponent(Mesh, { type: MeshTypes.Ground, options: { width: 2, height: 2 } });
  * entity.addComponent(Mesh, { type: MeshTypes.Sphere, options: { diameter: 2 } });
  * ```

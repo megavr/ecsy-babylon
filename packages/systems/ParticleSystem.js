@@ -1,17 +1,17 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Particle, ParticleTypes } from "../components/index";
-import { xyzToVector3, hexToColor4 } from "../utils/index";
 import { getScene, getAssetManager } from "../utils/gameUtils";
+import { xyzToVector3 } from "../utils/mathUtils";
 import { updateObjectValue, updateObjectVector3, updateObjectsTransform, disposeObject } from "../utils/objectUtils";
-import { updateTexture } from "../utils/materialUtils";
+import { updateTexture, hexToColor4 } from "../utils/materialUtils";
 /** System for Particle component */
 export class ParticleSystem extends System {
     /** @hidden */
     execute() {
         this.queries.particle.added.forEach((entity) => {
             let particle = entity.getComponent(Particle);
-            particle.object = new BABYLON.ParticleSystem(particle.type, particle.capacity, getScene(this, particle.sceneName));
+            particle.object = new BABYLON.ParticleSystem(particle.type, particle.capacity, getScene(this, particle.scene));
             let particleObject = particle.object;
             switch (particle.type) {
                 case ParticleTypes.Point:
@@ -63,7 +63,7 @@ export class ParticleSystem extends System {
                     updateObjectVector3(particle, prop);
                     break;
                 case "texture":
-                    updateTexture(particle, particle.texture, getAssetManager(this, particle.sceneName));
+                    updateTexture(particle, particle.texture, getAssetManager(this, particle.scene));
                     break;
                 case "color":
                     this._updateColor(particle, particle.color);

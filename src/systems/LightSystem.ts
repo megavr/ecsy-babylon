@@ -1,9 +1,10 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
 import { Light, LightTypes } from "../components/index";
-import { degreeToRadians, xyzToVector3, hexToColor3 } from "../utils/index";
-import { LightColorProperties } from "../components/types";
+import { LightColorProperties } from "../components/types/index";
 import { getScene } from "../utils/gameUtils";
+import { hexToColor3 } from "../utils/materialUtils";
+import { degreeToRadians, xyzToVector3 } from "../utils/mathUtils";
 import { updateObjectValue, updateObjectVector3, updateObjectsTransform, disposeObject } from "../utils/objectUtils";
 
 /** System for Light component */
@@ -20,7 +21,7 @@ export class LightSystem extends System {
     this.queries.light.added.forEach((entity: Entity) => {
       let light = entity.getComponent(Light);
       let direction = xyzToVector3(light.direction);
-      let scene = getScene(this, light.sceneName);
+      let scene = getScene(this, light.scene);
       switch (light.type) {
         case LightTypes.Point:
           light.object = new BABYLON.PointLight(light.type, BABYLON.Vector3.Zero(), scene);

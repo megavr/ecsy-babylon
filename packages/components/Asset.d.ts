@@ -1,4 +1,5 @@
 import * as BABYLON from "@babylonjs/core";
+import { Entity } from "ecsy";
 import { SceneComponent, ObjectComponent } from "./types/index";
 export declare enum AssetTypes {
     Babylon = "Babylon"
@@ -6,12 +7,11 @@ export declare enum AssetTypes {
 /**
  * @example
  * ```
- * entity.addComponent(Asset, { sceneName: "Scene", url: "PATH_TO_ASSET" });
- * entity.addComponent(Asset, { type: AssetTypes.Babylon, url: "PATH_TO_ASSET" });
+ * entity.addComponent(Asset, { url: "PATH_TO_ASSET" });
  * ```
  */
 export declare class Asset implements SceneComponent, ObjectComponent<BABYLON.Mesh> {
-    sceneName?: string;
+    scene?: Entity;
     object: BABYLON.Mesh;
     /** @default "Babylon" */
     type?: AssetTypes;

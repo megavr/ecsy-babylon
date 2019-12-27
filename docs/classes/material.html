@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Material | ecsy-babylon@0.0.8</title>
+	<title>Material | ecsy-babylon@0.0.9</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ecsy-babylon@0.0.8</a>
+					<a href="../index.html" class="title">ecsy-babylon@0.0.9</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -70,12 +70,11 @@
 				<div class="tsd-comment tsd-typography">
 					<dl class="tsd-comment-tags">
 						<dt>example</dt>
-						<dd><pre><code><span class="hljs-selector-tag">entity</span><span class="hljs-selector-class">.addComponent</span>(Material, {
-   <span class="hljs-attribute">sceneName</span>: <span class="hljs-string">"Scene"</span>,
+						<dd><pre><code><span class="hljs-selector-tag">entity</span><span class="hljs-selector-class">.addComponent</span>(Mesh)<span class="hljs-selector-class">.addComponent</span>(Material, {
    <span class="hljs-attribute">alpha</span>: <span class="hljs-number">0.7</span>,
    <span class="hljs-attribute">color</span>: { <span class="hljs-attribute">diffuse</span>: <span class="hljs-string">"#E74C3C"</span> }
 });
-<span class="hljs-selector-tag">entity</span><span class="hljs-selector-class">.addComponent</span>(Material, {
+<span class="hljs-selector-tag">entity</span><span class="hljs-selector-class">.addComponent</span>(Mesh)<span class="hljs-selector-class">.addComponent</span>(Material, {
    <span class="hljs-attribute">texture</span>: {
      <span class="hljs-attribute">diffuse</span>: { <span class="hljs-attribute">url</span>: <span class="hljs-string">"PATH_TO_TEXTURE"</span>, <span class="hljs-attribute">uScale</span>: <span class="hljs-number">4</span>, <span class="hljs-attribute">vScale</span>: <span class="hljs-number">4</span> }
    }
@@ -94,6 +93,7 @@
 			<section class="tsd-panel">
 				<h3>Implements</h3>
 				<ul class="tsd-hierarchy">
+					<li><a href="../interfaces/scenecomponent.html" class="tsd-signature-type">SceneComponent</a></li>
 					<li><a href="../interfaces/colorcomponent.html" class="tsd-signature-type">ColorComponent</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/materialcolorproperties.html" class="tsd-signature-type">MaterialColorProperties</a><span class="tsd-signature-symbol">&gt;</span></li>
 					<li><a href="../interfaces/texturecomponent.html" class="tsd-signature-type">TextureComponent</a><span class="tsd-signature-symbol">&lt;</span><a href="../interfaces/materialtextureproperties.html" class="tsd-signature-type">MaterialTextureProperties</a><span class="tsd-signature-symbol">&gt;</span></li>
 				</ul>
@@ -109,7 +109,7 @@
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="material.html#color" class="tsd-kind-icon">color</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="material.html#object" class="tsd-kind-icon">object</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="material.html#parallaxscalebias" class="tsd-kind-icon">parallax<wbr>Scale<wbr>Bias</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="material.html#scenename" class="tsd-kind-icon">scene<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="material.html#scene" class="tsd-kind-icon">scene</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="material.html#texture" class="tsd-kind-icon">texture</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="material.html#useparallax" class="tsd-kind-icon">use<wbr>Parallax</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="material.html#useparallaxocclusion" class="tsd-kind-icon">use<wbr>Parallax<wbr>Occlusion</a></li>
@@ -126,7 +126,7 @@
 					<div class="tsd-signature tsd-kind-icon">alpha<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/components/Material.ts#L24">src/components/Material.ts:24</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/components/Material.ts#L24">src/components/Material.ts:24</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -144,7 +144,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/colorcomponent.html">ColorComponent</a>.<a href="../interfaces/colorcomponent.html#color">color</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/components/Material.ts#L32">src/components/Material.ts:32</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/components/Material.ts#L32">src/components/Material.ts:32</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -162,7 +162,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/texturecomponent.html">TextureComponent</a>.<a href="../interfaces/texturecomponent.html#object">object</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/components/Material.ts#L22">src/components/Material.ts:22</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/components/Material.ts#L22">src/components/Material.ts:22</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -172,7 +172,7 @@
 					<div class="tsd-signature tsd-kind-icon">parallax<wbr>Scale<wbr>Bias<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">number</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/components/Material.ts#L30">src/components/Material.ts:30</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/components/Material.ts#L30">src/components/Material.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -184,13 +184,13 @@
 					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-external">
-					<a name="scenename" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scene<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">scene<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="scene" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scene</h3>
+					<div class="tsd-signature tsd-kind-icon">scene<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Entity</span></div>
 					<aside class="tsd-sources">
-						<p>Implementation of <a href="../interfaces/texturecomponent.html">TextureComponent</a>.<a href="../interfaces/texturecomponent.html#scenename">sceneName</a></p>
+						<p>Implementation of <a href="../interfaces/scenecomponent.html">SceneComponent</a>.<a href="../interfaces/scenecomponent.html#scene">scene</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/components/Material.ts#L21">src/components/Material.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/components/Material.ts#L21">src/components/Material.ts:21</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -201,7 +201,7 @@
 					<aside class="tsd-sources">
 						<p>Implementation of <a href="../interfaces/texturecomponent.html">TextureComponent</a>.<a href="../interfaces/texturecomponent.html#texture">texture</a></p>
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/components/Material.ts#L33">src/components/Material.ts:33</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/components/Material.ts#L33">src/components/Material.ts:33</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -211,7 +211,7 @@
 					<div class="tsd-signature tsd-kind-icon">use<wbr>Parallax<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/components/Material.ts#L26">src/components/Material.ts:26</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/components/Material.ts#L26">src/components/Material.ts:26</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -228,7 +228,7 @@
 					<div class="tsd-signature tsd-kind-icon">use<wbr>Parallax<wbr>Occlusion<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">false</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">true</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/components/Material.ts#L28">src/components/Material.ts:28</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/components/Material.ts#L28">src/components/Material.ts:28</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -269,7 +269,7 @@
 								<a href="material.html#parallaxscalebias" class="tsd-kind-icon">parallax<wbr>Scale<wbr>Bias</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
-								<a href="material.html#scenename" class="tsd-kind-icon">scene<wbr>Name</a>
+								<a href="material.html#scene" class="tsd-kind-icon">scene</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-external">
 								<a href="material.html#texture" class="tsd-kind-icon">texture</a>

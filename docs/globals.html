@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>ecsy-babylon@0.0.8</title>
+	<title>ecsy-babylon@0.0.9</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="index.html" class="title">ecsy-babylon@0.0.8</a>
+					<a href="index.html" class="title">ecsy-babylon@0.0.9</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -56,7 +56,7 @@
 					<a href="globals.html">Globals</a>
 				</li>
 			</ul>
-			<h1> ecsy-babylon@0.0.8</h1>
+			<h1> ecsy-babylon@0.0.9</h1>
 		</div>
 	</div>
 </header>
@@ -95,6 +95,7 @@
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/meshsystem.html" class="tsd-kind-icon">Mesh<wbr>System</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/particle.html" class="tsd-kind-icon">Particle</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/particlesystem.html" class="tsd-kind-icon">Particle<wbr>System</a></li>
+								<li class="tsd-kind-class tsd-is-external"><a href="classes/scene.html" class="tsd-kind-icon">Scene</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/transform.html" class="tsd-kind-icon">Transform</a></li>
 								<li class="tsd-kind-class tsd-is-external"><a href="classes/transformsystem.html" class="tsd-kind-icon">Transform<wbr>System</a></li>
 							</ul>
@@ -110,7 +111,9 @@
 								<li class="tsd-kind-interface tsd-has-type-parameter tsd-is-external"><a href="interfaces/objectcomponent.html" class="tsd-kind-icon">Object<wbr>Component</a></li>
 								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/particlecolorproperties.html" class="tsd-kind-icon">Particle<wbr>Color<wbr>Properties</a></li>
 								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/particletextureproperties.html" class="tsd-kind-icon">Particle<wbr>Texture<wbr>Properties</a></li>
+								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/scenecolorproperties.html" class="tsd-kind-icon">Scene<wbr>Color<wbr>Properties</a></li>
 								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/scenecomponent.html" class="tsd-kind-icon">Scene<wbr>Component</a></li>
+								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/scenetextureproperties.html" class="tsd-kind-icon">Scene<wbr>Texture<wbr>Properties</a></li>
 								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/textureattributes.html" class="tsd-kind-icon">Texture<wbr>Attributes</a></li>
 								<li class="tsd-kind-interface tsd-has-type-parameter tsd-is-external"><a href="interfaces/texturecomponent.html" class="tsd-kind-icon">Texture<wbr>Component</a></li>
 								<li class="tsd-kind-interface tsd-is-external"><a href="interfaces/xyzproperties.html" class="tsd-kind-icon">XYZProperties</a></li>
@@ -120,14 +123,10 @@
 							<h3>Functions</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#degreetoradians" class="tsd-kind-icon">degree<wbr>ToRadians</a></li>
-								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#getactivescenename" class="tsd-kind-icon">get<wbr>Active<wbr>Scene<wbr>Name</a></li>
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#getassetmanager" class="tsd-kind-icon">get<wbr>Asset<wbr>Manager</a></li>
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#getscene" class="tsd-kind-icon">get<wbr>Scene</a></li>
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#hextocolor3" class="tsd-kind-icon">hex<wbr>ToColor3</a></li>
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#hextocolor4" class="tsd-kind-icon">hex<wbr>ToColor4</a></li>
-								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#radianstodegree" class="tsd-kind-icon">radians<wbr>ToDegree</a></li>
-								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#vector3toxyz" class="tsd-kind-icon">vector3<wbr>ToXyz</a></li>
-								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#vector3toxyzdegree" class="tsd-kind-icon">vector3<wbr>ToXyz<wbr>Degree</a></li>
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#xyztovector3" class="tsd-kind-icon">xyz<wbr>ToVector3</a></li>
 								<li class="tsd-kind-function tsd-is-external"><a href="globals.html#xyztovector3radians" class="tsd-kind-icon">xyz<wbr>ToVector3<wbr>Radians</a></li>
 							</ul>
@@ -147,7 +146,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L9">src/utils/index.ts:9</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/utils/mathUtils.ts#L8">src/utils/mathUtils.ts:8</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -169,52 +168,21 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-external">
-					<a name="getactivescenename" class="tsd-anchor"></a>
-					<h3>get<wbr>Active<wbr>Scene<wbr>Name</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Active<wbr>Scene<wbr>Name<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">System</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/gameUtils.ts#L46">src/utils/gameUtils.ts:46</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get name of active scene.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>system: <span class="tsd-signature-type">System</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>A registered ecsy System class</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">String</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-external">
 					<a name="getassetmanager" class="tsd-anchor"></a>
 					<h3>get<wbr>Asset<wbr>Manager</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Asset<wbr>Manager<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">System</span>, sceneName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AssetsManager</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Asset<wbr>Manager<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">System</span>, scene<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Entity</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AssetsManager</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/gameUtils.ts#L38">src/utils/gameUtils.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/utils/gameUtils.ts#L52">src/utils/gameUtils.ts:52</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get an AssetManager found or AssetManager in active scene if not found.</p>
+									<p>Get scene AssetManager or return AssetManager in active scene.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -226,9 +194,9 @@
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sceneName: <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> scene: <span class="tsd-signature-type">Entity</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Name of the scene</p>
+										<p>Scene entity</p>
 									</div>
 								</li>
 							</ul>
@@ -240,18 +208,18 @@
 					<a name="getscene" class="tsd-anchor"></a>
 					<h3>get<wbr>Scene</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Scene<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">System</span>, sceneName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Scene</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Scene<span class="tsd-signature-symbol">(</span>system<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">System</span>, scene<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Entity</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Scene</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/gameUtils.ts#L29">src/utils/gameUtils.ts:29</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/utils/gameUtils.ts#L39">src/utils/gameUtils.ts:39</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get a scene found or active scene if not found.</p>
+									<p>Get a scene or return active scene.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -263,9 +231,9 @@
 									</div>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sceneName: <span class="tsd-signature-type">String</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> scene: <span class="tsd-signature-type">Entity</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Name of the scene</p>
+										<p>Scene entity</p>
 									</div>
 								</li>
 							</ul>
@@ -283,7 +251,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L59">src/utils/index.ts:59</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/utils/materialUtils.ts#L47">src/utils/materialUtils.ts:47</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -314,7 +282,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L67">src/utils/index.ts:67</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/utils/materialUtils.ts#L55">src/utils/materialUtils.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -336,99 +304,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-external">
-					<a name="radianstodegree" class="tsd-anchor"></a>
-					<h3>radians<wbr>ToDegree</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">radians<wbr>ToDegree<span class="tsd-signature-symbol">(</span>radians<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">number</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L17">src/utils/index.ts:17</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Translate radians to degree.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>radians: <span class="tsd-signature-type">number</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Radians</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">number</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-external">
-					<a name="vector3toxyz" class="tsd-anchor"></a>
-					<h3>vector3<wbr>ToXyz</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">vector3<wbr>ToXyz<span class="tsd-signature-symbol">(</span>vector3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Vector3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L41">src/utils/index.ts:41</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Convert Vector3 value to XYZProperties.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>vector3: <span class="tsd-signature-type">Vector3</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Vector3 value</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-external">
-					<a name="vector3toxyzdegree" class="tsd-anchor"></a>
-					<h3>vector3<wbr>ToXyz<wbr>Degree</h3>
-					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">vector3<wbr>ToXyz<wbr>Degree<span class="tsd-signature-symbol">(</span>vector3<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Vector3</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L50">src/utils/index.ts:50</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Convert Vector3 value to XYZProperties in degrees.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>vector3: <span class="tsd-signature-type">Vector3</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Vector3 degree value</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="interfaces/xyzproperties.html" class="tsd-signature-type">XYZProperties</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-function tsd-is-external">
 					<a name="xyztovector3" class="tsd-anchor"></a>
 					<h3>xyz<wbr>ToVector3</h3>
 					<ul class="tsd-signatures tsd-kind-function tsd-is-external">
@@ -438,7 +313,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L25">src/utils/index.ts:25</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/utils/mathUtils.ts#L16">src/utils/mathUtils.ts:16</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -469,7 +344,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/utils/index.ts#L33">src/utils/index.ts:33</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/utils/mathUtils.ts#L24">src/utils/mathUtils.ts:24</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -563,6 +438,9 @@
 						<a href="classes/particlesystem.html" class="tsd-kind-icon">Particle<wbr>System</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
+						<a href="classes/scene.html" class="tsd-kind-icon">Scene</a>
+					</li>
+					<li class=" tsd-kind-class tsd-is-external">
 						<a href="classes/transform.html" class="tsd-kind-icon">Transform</a>
 					</li>
 					<li class=" tsd-kind-class tsd-is-external">
@@ -593,7 +471,13 @@
 						<a href="interfaces/particletextureproperties.html" class="tsd-kind-icon">Particle<wbr>Texture<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/scenecolorproperties.html" class="tsd-kind-icon">Scene<wbr>Color<wbr>Properties</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="interfaces/scenecomponent.html" class="tsd-kind-icon">Scene<wbr>Component</a>
+					</li>
+					<li class=" tsd-kind-interface tsd-is-external">
+						<a href="interfaces/scenetextureproperties.html" class="tsd-kind-icon">Scene<wbr>Texture<wbr>Properties</a>
 					</li>
 					<li class=" tsd-kind-interface tsd-is-external">
 						<a href="interfaces/textureattributes.html" class="tsd-kind-icon">Texture<wbr>Attributes</a>
@@ -608,9 +492,6 @@
 						<a href="globals.html#degreetoradians" class="tsd-kind-icon">degree<wbr>ToRadians</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
-						<a href="globals.html#getactivescenename" class="tsd-kind-icon">get<wbr>Active<wbr>Scene<wbr>Name</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-external">
 						<a href="globals.html#getassetmanager" class="tsd-kind-icon">get<wbr>Asset<wbr>Manager</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
@@ -621,15 +502,6 @@
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
 						<a href="globals.html#hextocolor4" class="tsd-kind-icon">hex<wbr>ToColor4</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-external">
-						<a href="globals.html#radianstodegree" class="tsd-kind-icon">radians<wbr>ToDegree</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-external">
-						<a href="globals.html#vector3toxyz" class="tsd-kind-icon">vector3<wbr>ToXyz</a>
-					</li>
-					<li class=" tsd-kind-function tsd-is-external">
-						<a href="globals.html#vector3toxyzdegree" class="tsd-kind-icon">vector3<wbr>ToXyz<wbr>Degree</a>
 					</li>
 					<li class=" tsd-kind-function tsd-is-external">
 						<a href="globals.html#xyztovector3" class="tsd-kind-icon">xyz<wbr>ToVector3</a>

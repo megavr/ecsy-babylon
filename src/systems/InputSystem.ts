@@ -1,6 +1,7 @@
+import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
-import { getScene } from "../utils/gameUtils";
-import { Input, InputTypes } from "../components/index";
+import { Input } from "../components/index";
+import { getScene, getScenes, getGameSystem } from "../utils/gameUtils";
 
 /** System for Input component */
 export class InputSystem extends System {
@@ -11,16 +12,24 @@ export class InputSystem extends System {
   /** @hidden */
   queries: any;
 
+  private _inputs: Map<String, Input> = new Map<String, Input>();
+  private _input: Input;
+
+  init() {
+    getGameSystem(this).onSceneSwitched.add(scene => this._updateOnKey(scene));
+    this._onKey = this._onKey.bind(this);
+  }
+
   /** @hidden */
   execute() {
     this.queries.input.added.forEach((entity: Entity) => {
       let input = entity.getComponent(Input);
+      let scene = getScene(this, input.scene);
       switch (input.type) {
-        case InputTypes.Keyboard:
-          if (input.onKey) {
-            // BABYLON.KeyboardEventTypes.KEYDOWN = 1, BABYLON.KeyboardEventTypes.KEYUP = 2 
-            getScene(this, input.sceneName).onKeyboardObservable.add(keyInfo =>
-              (input.onKey as any).call(input, keyInfo.event.key, keyInfo.type === 1, keyInfo.type === 2));
+        default:
+          if (!this._inputs.has(scene.uid)) {
+            this._inputs.set(scene.uid, input);
+            this._updateOnKey(scene);
           }
           break;
       }
@@ -28,11 +37,32 @@ export class InputSystem extends System {
 
     this.queries.input.removed.forEach((entity: Entity) => {
       let input = entity.getComponent(Input);
+      let scene = getScene(this, input.scene);
       switch (input.type) {
-        case InputTypes.Keyboard:
-          getScene(this, input.sceneName).onKeyboardObservable.clear();
+        default:
+          if (this._inputs.has(scene.uid)) {
+            this._inputs.delete(scene.uid);
+            this._removeOnKey(scene);
+          }
           break;
       }
     });
+  }
+
+  private _updateOnKey(targetScene: BABYLON.Scene) {
+    if (targetScene.uid === getScene(this).uid) {
+      getScenes(this).forEach(scene => this._removeOnKey(scene));
+      this._input = this._inputs.get(targetScene.uid)!;
+      this._input.onKey && targetScene.onKeyboardObservable.add(this._onKey);
+    }
+  }
+
+  private _removeOnKey(scene: BABYLON.Scene) {
+    scene.onKeyboardObservable.removeCallback(this._onKey);
+  }
+
+  private _onKey(keyInfo: BABYLON.KeyboardInfo): void {
+    // BABYLON.KeyboardEventTypes.KEYDOWN = 1, BABYLON.KeyboardEventTypes.KEYUP = 2
+    (this._input.onKey as any).call(this._input, keyInfo.event.key, keyInfo.type === 1, keyInfo.type === 2);
   }
 }

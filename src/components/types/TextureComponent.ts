@@ -1,8 +1,8 @@
-import { SceneComponent } from "./SceneComponent";
+import * as BABYLON from "@babylonjs/core";
 import { ObjectComponent } from "./ObjectComponent";
 
-/** Interface defined texture of a component, which will also have sceneName and object property. */
-export interface TextureComponent<T> extends SceneComponent, ObjectComponent<any> {
+/** Interface defined texture of a component, which will also have an object property. */
+export interface TextureComponent<T> extends ObjectComponent<BABYLON.Scene | BABYLON.Material | BABYLON.ParticleSystem> {
   /** Texture properties to be manipulated. */
   texture?: T;
 }

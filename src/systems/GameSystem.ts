@@ -1,30 +1,93 @@
 import * as BABYLON from "@babylonjs/core";
-import { System } from "ecsy";
+import { Entity, System } from "ecsy";
+import { SceneColorProperties } from "../components/types/index";
+import { Scene } from "../components/index";
 import { getWorld } from "../utils/worldUtils";
+import { disposeObject, updateObjectValue } from "../utils/objectUtils";
+import { updateTexture, hexToColor4, hexToColor3 } from "../utils/materialUtils";
 
 /** Core system of ecsy-babylon. */
 export class GameSystem extends System {
 
+  /** @hidden */
+  static queries = {
+    scene: { components: [Scene], listen: { added: true, removed: true, changed: [Scene] } },
+  };
+  /** @hidden */
+  queries: any;
+
   private _engine: BABYLON.Engine;
   /** Get canvas used for rendering. */
   get renderingCanvas() { return this._engine.getRenderingCanvas(); }
+  /** Get all scenes in engine. */
+  get scenes() { return this._engine.scenes; }
 
-  /** <Scene Name, BABYLON.Scene> */
-  private _scenes: Map<String, BABYLON.Scene> = new Map<String, BABYLON.Scene>();
+  private _activeScene: BABYLON.Scene;
+  /** Get active scene. */
+  get activeScene() { return this._activeScene; }
 
-  /** <Scene Name, BABYLON.AssetsManager> */
+  /** <Scene UID, BABYLON.AssetsManager> */
   private _assetManagers: Map<String, BABYLON.AssetsManager> = new Map<String, BABYLON.AssetsManager>();
 
   /** Observable event when active scene is switched. */
   public onSceneSwitched: BABYLON.Observable<BABYLON.Scene> = new BABYLON.Observable<BABYLON.Scene>();
 
-  private _activeSceneName: String;
-  /** Get name of active scene. */
-  get activeSceneName() { return this._activeSceneName; }
-
   /** @hidden */
   init() {
     this._render = this._render.bind(this);
+  }
+
+  /** @hidden */
+  execute() {
+    this.queries.scene.added.forEach((entity: Entity) => {
+      let scene = entity.getComponent(Scene);
+      scene.object = new BABYLON.Scene(this._engine, scene.options);
+      this._engine.scenes.length === 1 && (this._activeScene = scene.object);
+      this._updateScene(entity);
+      // add assetManager for each scenes 
+      let assetManager = new BABYLON.AssetsManager(scene.object);
+      assetManager.useDefaultLoadingScreen = false;
+      this._assetManagers.set(scene.object.uid, assetManager);
+    });
+
+    this.queries.scene.changed.forEach((entity: Entity) => {
+      this._updateScene(entity);
+    });
+
+    this.queries.scene.removed.forEach((entity: Entity) => {
+      let scene = entity.getComponent(Scene);
+      disposeObject(scene);
+    });
+  }
+
+  private _updateScene(entity: Entity) {
+    let scene = entity.getComponent(Scene);
+    for (let prop in scene) {
+      switch (prop) {
+        case "texture":
+          updateTexture(scene, scene.texture!, this.getAssetManager(entity));
+          break;
+        case "color":
+          this._updateColor(scene, scene.color!);
+          break;
+        default:
+          updateObjectValue(scene, prop);
+          break;
+      }
+    }
+  }
+
+  private _updateColor(scene: Scene, color: SceneColorProperties) {
+    for (let prop in color) {
+      switch (prop) {
+        case "clear":
+          (scene.object as any)[`${prop}Color`] = hexToColor4((color as any)[prop]);
+          break;
+        default:
+          (scene.object as any)[`${prop}Color`] = hexToColor3((color as any)[prop]);
+          break;
+      }
+    }
   }
 
   /**
@@ -42,68 +105,29 @@ export class GameSystem extends System {
   }
 
   /**
-   * Add a new scene with a name.
-   * @see https://doc.babylonjs.com/api/classes/babylon.scene#constructor
-   * @param sceneName Readable name to be used to switch or remove scene in the system
-   * @param options @see https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions
+   * Switch to a scene by given scene entity.
+   * @param scene Scene entity
    */
-  public addScene(sceneName: String, options?: BABYLON.SceneOptions): GameSystem {
-    // create a new scene
-    let scene = new BABYLON.Scene(this._engine, options);
-    this._scenes.set(sceneName, scene);
-    // create a new assetsManager with scene
-    let assetManager = new BABYLON.AssetsManager(scene);
-    assetManager.useDefaultLoadingScreen = false;
-    this._assetManagers.set(sceneName, assetManager);
-    // set scene as active when no scene in engine
-    this._engine.scenes.length === 1 && (this._activeSceneName = sceneName);
-    return this;
-  }
-
-  /** Remove an inactive scene by given name */
-  public removeScene(sceneName: String): GameSystem {
-    sceneName !== this.activeSceneName && this.getScene(sceneName).dispose();
+  public switchScene(scene: Entity): GameSystem {
+    this._activeScene = scene.getComponent(Scene).object;
+    this.onSceneSwitched.notifyObservers(this._activeScene);
     return this;
   }
 
   /**
-   * Switch to a scene by given scene name.
-   * @param sceneName Name of scene
+   * Get scene AssetManager or return AssetManager in active scene.
+   * @param scene Scene entity
    */
-  public switchScene(sceneName: String): GameSystem {
-    if (this.getScene(sceneName)) {
-      this._activeSceneName = sceneName;
-      this.onSceneSwitched.notifyObservers(this.getScene(sceneName));
-    }
-    return this;
-  }
-
-  /**
-   * Get a scene by provided name or active scene if not found.
-   * @param sceneName Name of the scene
-   */
-  public getScene(sceneName?: String): BABYLON.Scene {
-    if (sceneName) {
-      return this._scenes.get(sceneName) as BABYLON.Scene;
+  public getAssetManager(scene?: Entity): BABYLON.AssetsManager {
+    if (scene) {
+      return this._assetManagers.get(scene.getComponent(Scene).object.uid) as BABYLON.AssetsManager;
     } else {
-      return this._scenes.get(this._activeSceneName) as BABYLON.Scene;
-    }
-  }
-
-  /**
-   * Get an asset manager by provided scene name or asset manager in active scene if not found.
-   * @param sceneName Name of the scene
-   */
-  public getAssetManager(sceneName?: String): BABYLON.AssetsManager {
-    if (sceneName) {
-      return this._assetManagers.get(sceneName) as BABYLON.AssetsManager;
-    } else {
-      return this._assetManagers.get(this._activeSceneName) as BABYLON.AssetsManager;
+      return this._assetManagers.get(this._activeScene.uid) as BABYLON.AssetsManager;
     }
   }
 
   private _render() {
     getWorld(this).execute(this._engine.getDeltaTime(), performance.now());
-    getWorld(this).enabled && this.getScene().render();
+    getWorld(this).enabled && this._activeScene.render();
   }
 }

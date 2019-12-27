@@ -1,5 +1,6 @@
 import { getWorld } from "./worldUtils";
 import { GameSystem } from "../systems/GameSystem";
+import { Scene } from "../components/Scene";
 /**
  * @hidden
  * Get runtime GameSystem instance.
@@ -17,25 +18,31 @@ export function getRenderingCanvas(system) {
     return getGameSystem(system).renderingCanvas;
 }
 /**
- * Get a scene found or active scene if not found.
+ * @hidden
+ * Get all scenes in engine.
  * @param system A registered ecsy System class
- * @param sceneName Name of the scene
  */
-export function getScene(system, sceneName) {
-    return getGameSystem(system).getScene(sceneName);
+export function getScenes(system) {
+    return getGameSystem(system).scenes;
 }
 /**
- * Get an AssetManager found or AssetManager in active scene if not found.
+ * Get a scene or return active scene.
  * @param system A registered ecsy System class
- * @param sceneName Name of the scene
+ * @param scene Scene entity
  */
-export function getAssetManager(system, sceneName) {
-    return getGameSystem(system).getAssetManager(sceneName);
+export function getScene(system, scene) {
+    if (scene) {
+        return scene.getComponent(Scene).object;
+    }
+    else {
+        return getGameSystem(system).activeScene;
+    }
 }
 /**
- * Get name of active scene.
+ * Get scene AssetManager or return AssetManager in active scene.
  * @param system A registered ecsy System class
+ * @param scene Scene entity
  */
-export function getActiveSceneName(system) {
-    return getGameSystem(system).activeSceneName;
+export function getAssetManager(system, scene) {
+    return getGameSystem(system).getAssetManager(scene);
 }

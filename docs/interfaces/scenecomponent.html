@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>SceneComponent | ecsy-babylon@0.0.8</title>
+	<title>SceneComponent | ecsy-babylon@0.0.9</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ecsy-babylon@0.0.8</a>
+					<a href="../index.html" class="title">ecsy-babylon@0.0.9</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -78,14 +78,6 @@
 				<ul class="tsd-hierarchy">
 					<li>
 						<span class="target">SceneComponent</span>
-						<ul class="tsd-hierarchy">
-							<li>
-								<a href="colorcomponent.html" class="tsd-signature-type">ColorComponent</a>
-							</li>
-							<li>
-								<a href="texturecomponent.html" class="tsd-signature-type">TextureComponent</a>
-							</li>
-						</ul>
 					</li>
 				</ul>
 			</section>
@@ -96,7 +88,9 @@
 					<li><a href="../classes/camera.html" class="tsd-signature-type">Camera</a></li>
 					<li><a href="../classes/input.html" class="tsd-signature-type">Input</a></li>
 					<li><a href="../classes/light.html" class="tsd-signature-type">Light</a></li>
+					<li><a href="../classes/material.html" class="tsd-signature-type">Material</a></li>
 					<li><a href="../classes/mesh.html" class="tsd-signature-type">Mesh</a></li>
+					<li><a href="../classes/particle.html" class="tsd-signature-type">Particle</a></li>
 				</ul>
 			</section>
 			<section class="tsd-panel-group tsd-index-group">
@@ -106,7 +100,7 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="scenecomponent.html#scenename" class="tsd-kind-icon">scene<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-interface tsd-is-external"><a href="scenecomponent.html#scene" class="tsd-kind-icon">scene</a></li>
 							</ul>
 						</section>
 					</div>
@@ -115,17 +109,17 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-					<a name="scenename" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scene<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">scene<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">undefined</span><span class="tsd-signature-symbol"> | </span><span class="tsd-signature-type">string</span></div>
+					<a name="scene" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagOptional">Optional</span> scene</h3>
+					<div class="tsd-signature tsd-kind-icon">scene<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Entity</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/components/types/SceneComponent.ts#L4">src/components/types/SceneComponent.ts:4</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/components/types/SceneComponent.ts#L5">src/components/types/SceneComponent.ts:5</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>Name of the scene for system to put component.</p>
+							<p>Scene Entity to add other entities.</p>
 						</div>
 					</div>
 				</section>
@@ -147,7 +141,7 @@
 						<a href="scenecomponent.html" class="tsd-kind-icon">Scene<wbr>Component</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-interface tsd-is-external">
-								<a href="scenecomponent.html#scenename" class="tsd-kind-icon">scene<wbr>Name</a>
+								<a href="scenecomponent.html#scene" class="tsd-kind-icon">scene</a>
 							</li>
 						</ul>
 					</li>

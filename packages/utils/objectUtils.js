@@ -1,5 +1,5 @@
 import { Transform } from "../components/Transform";
-import { xyzToVector3, xyzToVector3Radians } from "./index";
+import { xyzToVector3, xyzToVector3Radians } from "./mathUtils";
 /**
  * @hidden
  * Update value of Babylon.js object's property from a property in component with same name.

@@ -1,7 +1,7 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity } from "ecsy";
 import { Transform } from "../components/Transform";
-import { ObjectComponent } from "../components/types/index";
+import { ObjectComponent } from "../components/types";
 /**
  * @hidden
  * Update value of Babylon.js object's property from a property in component with same name.
@@ -40,4 +40,4 @@ export declare function updateObjectTransform(transform: Transform, component: O
  * Dispose Babylon.js object in the component.
  * @param object Component contains Babylon.js object
  */
-export declare function disposeObject(component: ObjectComponent<BABYLON.Node | BABYLON.Material | BABYLON.ParticleSystem | BABYLON.VRExperienceHelper>): void;
+export declare function disposeObject(component: ObjectComponent<BABYLON.Scene | BABYLON.Node | BABYLON.Material | BABYLON.ParticleSystem | BABYLON.Camera>): void;

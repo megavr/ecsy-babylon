@@ -1,5 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
-import { XYZProperties, ParticleTextureProperties, TextureComponent, ColorComponent, ParticleColorProperties } from "./types/index";
+import { Entity } from "ecsy";
+import { XYZProperties, ParticleTextureProperties, TextureComponent, ColorComponent, ParticleColorProperties, SceneComponent } from "./types/index";
 import { xyz } from "../utils/mathUtils";
 
 export enum ParticleTypes {
@@ -16,17 +17,16 @@ export enum ParticleTypes {
 /**
  * @example
  * ```
- * entity.addComponent(Particle, { 
- *    sceneName: "Scene",
- *    emitter: { x: 0, y: 0, z: 1 }, 
+ * entity.addComponent(Particle, {
+ *    emitter: { x: 0, y: 0, z: 1 },
  *    texture: {
  *      diffuse: { url: "PATH_TO_PARTICLE_TEXTURE" }
  *    }
  * });
  * ```
  */
-export class Particle implements ColorComponent<ParticleColorProperties>, TextureComponent<ParticleTextureProperties> {
-  sceneName?: string;
+export class Particle implements SceneComponent, ColorComponent<ParticleColorProperties>, TextureComponent<ParticleTextureProperties> {
+  scene?: Entity;
   object: BABYLON.ParticleSystem;
   /** @default "Point" */
   type?: ParticleTypes = ParticleTypes.Point;

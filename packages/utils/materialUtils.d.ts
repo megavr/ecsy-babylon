@@ -15,3 +15,13 @@ export declare function updateTexture<T>(component: TextureComponent<T>, texture
  * @returns Object matches MaterialColorProperties
  */
 export declare function materialColorHex(diffuse?: string): MaterialColorProperties;
+/**
+ * Convert hex color value to Color3.
+ * @param hexString Text of hex color value(e.g., #123ABC)
+ */
+export declare function hexToColor3(hexString: string): BABYLON.Color3;
+/**
+ * Convert hex color value to Color4 (has alpha).
+ * @param hexString Text of hex color value(e.g., #123ABCFF)
+ */
+export declare function hexToColor4(hexString: string): BABYLON.Color4;

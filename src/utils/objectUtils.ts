@@ -1,8 +1,8 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity } from "ecsy";
 import { Transform } from "../components/Transform";
-import { ObjectComponent } from "../components/types/index";
-import { xyzToVector3, xyzToVector3Radians } from "./index";
+import { ObjectComponent } from "../components/types";
+import { xyzToVector3, xyzToVector3Radians } from "./mathUtils";
 
 /**
  * @hidden
@@ -70,6 +70,6 @@ export function updateObjectTransform(transform: Transform, component: ObjectCom
  * Dispose Babylon.js object in the component. 
  * @param object Component contains Babylon.js object
  */
-export function disposeObject(component: ObjectComponent<BABYLON.Node | BABYLON.Material | BABYLON.ParticleSystem | BABYLON.VRExperienceHelper>): void {
+export function disposeObject(component: ObjectComponent<BABYLON.Scene | BABYLON.Node | BABYLON.Material | BABYLON.ParticleSystem | BABYLON.Camera>): void {
   component.object && component.object.dispose();
 }

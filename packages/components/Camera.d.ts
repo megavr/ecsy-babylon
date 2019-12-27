@@ -1,14 +1,14 @@
 import * as BABYLON from "@babylonjs/core";
+import { Entity } from "ecsy";
 import { SceneComponent, ObjectComponent } from "./types/index";
 /**
  * @example
  * ```
- * entity.addComponent(Camera, { sceneName: "Scene" });
  * entity.addComponent(Camera, { pointerLock: true });
  * ```
  */
 export declare class Camera implements SceneComponent, ObjectComponent<BABYLON.FreeCamera> {
-    sceneName?: string;
+    scene?: Entity;
     object: BABYLON.FreeCamera;
     /**
      * Lock pointer when using the camera.

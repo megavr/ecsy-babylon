@@ -1,5 +1,5 @@
 import * as BABYLON from "@babylonjs/core";
-import { System } from "ecsy";
+import { System, Entity } from "ecsy";
 import { GameSystem } from "../systems/GameSystem";
 /**
  * @hidden
@@ -14,19 +14,20 @@ export declare function getGameSystem(system: System): GameSystem;
  */
 export declare function getRenderingCanvas(system: System): HTMLCanvasElement;
 /**
- * Get a scene found or active scene if not found.
+ * @hidden
+ * Get all scenes in engine.
  * @param system A registered ecsy System class
- * @param sceneName Name of the scene
  */
-export declare function getScene(system: System, sceneName?: String): BABYLON.Scene;
+export declare function getScenes(system: System): BABYLON.Scene[];
 /**
- * Get an AssetManager found or AssetManager in active scene if not found.
+ * Get a scene or return active scene.
  * @param system A registered ecsy System class
- * @param sceneName Name of the scene
+ * @param scene Scene entity
  */
-export declare function getAssetManager(system: System, sceneName?: string): BABYLON.AssetsManager;
+export declare function getScene(system: System, scene?: Entity): BABYLON.Scene;
 /**
- * Get name of active scene.
+ * Get scene AssetManager or return AssetManager in active scene.
  * @param system A registered ecsy System class
+ * @param scene Scene entity
  */
-export declare function getActiveSceneName(system: System): String;
+export declare function getAssetManager(system: System, scene?: Entity): BABYLON.AssetsManager;

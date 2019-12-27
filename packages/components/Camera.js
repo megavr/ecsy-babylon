@@ -1,7 +1,6 @@
 /**
  * @example
  * ```
- * entity.addComponent(Camera, { sceneName: "Scene" });
  * entity.addComponent(Camera, { pointerLock: true });
  * ```
  */

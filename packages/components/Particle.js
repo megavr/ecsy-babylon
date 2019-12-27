@@ -14,7 +14,6 @@ export var ParticleTypes;
  * @example
  * ```
  * entity.addComponent(Particle, {
- *    sceneName: "Scene",
  *    emitter: { x: 0, y: 0, z: 1 },
  *    texture: {
  *      diffuse: { url: "PATH_TO_PARTICLE_TEXTURE" }

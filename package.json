@@ -1,12 +1,12 @@
 {
   "name": "@megavr/ecsy-babylon",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "babylon.js ecsy binding and helpers",
   "main": "packages/index.js",
   "types": "packages/index.d.ts",
   "scripts": {
     "build": "eslint ./src/**/*.ts && tsc -p ./src && rollup -c",
-    "doc": "typedoc --name ecsy-babylon@0.0.8 --mode file --tsconfig src/tsconfig.json --out docs/ src/index.ts"
+    "doc": "typedoc --name ecsy-babylon@0.0.9 --mode file --tsconfig src/tsconfig.json --out docs/ src/index.ts"
   },
   "repository": {
     "type": "git",

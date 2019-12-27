@@ -10,7 +10,7 @@ export class MeshSystem extends System {
     execute() {
         this.queries.mesh.added.forEach((entity) => {
             let mesh = entity.getComponent(Mesh);
-            mesh.object = BABYLON.MeshBuilder[`Create${mesh.type}`].call(this, mesh.type, mesh.options, getScene(this, mesh.sceneName));
+            mesh.object = BABYLON.MeshBuilder[`Create${mesh.type}`].call(this, mesh.type, mesh.options, getScene(this, mesh.scene));
             updateObjectsTransform(entity);
         });
         this.queries.mesh.changed.forEach((entity) => {

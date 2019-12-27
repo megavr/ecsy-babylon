@@ -14,6 +14,12 @@ export declare class InputSystem extends System {
     };
     /** @hidden */
     queries: any;
+    private _inputs;
+    private _input;
+    init(): void;
     /** @hidden */
     execute(): void;
+    private _updateOnKey;
+    private _removeOnKey;
+    private _onKey;
 }

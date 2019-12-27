@@ -18,8 +18,8 @@ export function updateTexture<T>(component: TextureComponent<T>, textureProperti
       for (let attr in textureAttributes) { attr !== "url" && ((textureObject as any)[attr] = (textureAttributes as any)[attr]); }
       let textureName = `${prop}Texture`;
       let componentObject = component.object;
-      componentObject[textureName] && disposeObject(componentObject[textureName]);
-      componentObject[textureName] = textureObject;
+      (componentObject as any)[textureName] && disposeObject((componentObject as any)[textureName]);
+      (componentObject as any)[textureName] = textureObject;
     }
   }
   assetManager.load();
@@ -38,4 +38,20 @@ export function materialColorHex(diffuse?: string): MaterialColorProperties {
   } else {
     return { diffuse: "#ffffff" };
   }
+}
+
+/**
+ * Convert hex color value to Color3. 
+ * @param hexString Text of hex color value(e.g., #123ABC)
+ */
+export function hexToColor3(hexString: string): BABYLON.Color3 {
+  return BABYLON.Color3.FromHexString(hexString);
+}
+
+/**
+ * Convert hex color value to Color4 (has alpha). 
+ * @param hexString Text of hex color value(e.g., #123ABCFF)
+ */
+export function hexToColor4(hexString: string): BABYLON.Color4 {
+  return BABYLON.Color4.FromHexString(hexString);
 }

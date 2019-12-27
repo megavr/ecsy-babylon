@@ -1,29 +1,56 @@
 import { System } from "ecsy";
-import { getScene } from "../utils/gameUtils";
-import { Input, InputTypes } from "../components/index";
+import { Input } from "../components/index";
+import { getScene, getScenes, getGameSystem } from "../utils/gameUtils";
 /** System for Input component */
 export class InputSystem extends System {
+    constructor() {
+        super(...arguments);
+        this._inputs = new Map();
+    }
+    init() {
+        getGameSystem(this).onSceneSwitched.add(scene => this._updateOnKey(scene));
+        this._onKey = this._onKey.bind(this);
+    }
     /** @hidden */
     execute() {
         this.queries.input.added.forEach((entity) => {
             let input = entity.getComponent(Input);
+            let scene = getScene(this, input.scene);
             switch (input.type) {
-                case InputTypes.Keyboard:
-                    if (input.onKey) {
-                        // BABYLON.KeyboardEventTypes.KEYDOWN = 1, BABYLON.KeyboardEventTypes.KEYUP = 2 
-                        getScene(this, input.sceneName).onKeyboardObservable.add(keyInfo => input.onKey.call(input, keyInfo.event.key, keyInfo.type === 1, keyInfo.type === 2));
+                default:
+                    if (!this._inputs.has(scene.uid)) {
+                        this._inputs.set(scene.uid, input);
+                        this._updateOnKey(scene);
                     }
                     break;
             }
         });
         this.queries.input.removed.forEach((entity) => {
             let input = entity.getComponent(Input);
+            let scene = getScene(this, input.scene);
             switch (input.type) {
-                case InputTypes.Keyboard:
-                    getScene(this, input.sceneName).onKeyboardObservable.clear();
+                default:
+                    if (this._inputs.has(scene.uid)) {
+                        this._inputs.delete(scene.uid);
+                        this._removeOnKey(scene);
+                    }
                     break;
             }
         });
+    }
+    _updateOnKey(targetScene) {
+        if (targetScene.uid === getScene(this).uid) {
+            getScenes(this).forEach(scene => this._removeOnKey(scene));
+            this._input = this._inputs.get(targetScene.uid);
+            this._input.onKey && targetScene.onKeyboardObservable.add(this._onKey);
+        }
+    }
+    _removeOnKey(scene) {
+        scene.onKeyboardObservable.removeCallback(this._onKey);
+    }
+    _onKey(keyInfo) {
+        // BABYLON.KeyboardEventTypes.KEYDOWN = 1, BABYLON.KeyboardEventTypes.KEYUP = 2
+        this._input.onKey.call(this._input, keyInfo.event.key, keyInfo.type === 1, keyInfo.type === 2);
     }
 }
 /** @hidden */

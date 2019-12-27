@@ -15,10 +15,12 @@ export declare class CameraSystem extends System {
     /** @hidden */
     queries: any;
     /** <BABYLON.Scene.uid, Camera component> */
-    private _cameraOfScenes;
+    private _cameras;
     /** @hidden */
     init(): void;
     /** @hidden */
     execute(): void;
     private _updateControl;
+    private _removeControl;
+    private _pointerLock;
 }

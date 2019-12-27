@@ -1,3 +1,4 @@
+import { Entity } from "ecsy";
 import { SceneComponent } from "./types/index";
 export declare enum InputTypes {
     Keyboard = "Keyboard"
@@ -12,7 +13,7 @@ export declare enum InputTypes {
  * ```
  */
 export declare class Input implements SceneComponent {
-    sceneName?: string;
+    scene?: Entity;
     /** @default "Keyboard" */
     type?: InputTypes;
     /**

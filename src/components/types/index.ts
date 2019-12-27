@@ -1,4 +1,6 @@
 export * from "./SceneComponent";
+export * from "./SceneColorProperties";
+export * from "./SceneTextureProperties";
 export * from "./ObjectComponent";
 export * from "./XYZProperties";
 export * from "./MeshOptions";

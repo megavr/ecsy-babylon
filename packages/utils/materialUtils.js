@@ -1,3 +1,4 @@
+import * as BABYLON from "@babylonjs/core";
 import { disposeObject } from "./objectUtils";
 /**
  * @hidden
@@ -37,4 +38,18 @@ export function materialColorHex(diffuse) {
     else {
         return { diffuse: "#ffffff" };
     }
+}
+/**
+ * Convert hex color value to Color3.
+ * @param hexString Text of hex color value(e.g., #123ABC)
+ */
+export function hexToColor3(hexString) {
+    return BABYLON.Color3.FromHexString(hexString);
+}
+/**
+ * Convert hex color value to Color4 (has alpha).
+ * @param hexString Text of hex color value(e.g., #123ABCFF)
+ */
+export function hexToColor4(hexString) {
+    return BABYLON.Color4.FromHexString(hexString);
 }

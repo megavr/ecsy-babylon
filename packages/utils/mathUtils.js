@@ -1,3 +1,25 @@
+import * as BABYLON from "@babylonjs/core";
+/**
+ * Translate degree to radians.
+ * @param degree Degree
+ */
+export function degreeToRadians(degree) {
+    return BABYLON.Angle.FromDegrees(degree).radians();
+}
+/**
+ * Convert XYZProperties value to Vector3.
+ * @param properties XYZProperties value
+ */
+export function xyzToVector3(properties) {
+    return new BABYLON.Vector3(properties.x, properties.y, properties.z);
+}
+/**
+ * Convert XYZProperties degree value to Vector3 in radians.
+ * @param properties XYZProperties value in degrees
+ */
+export function xyzToVector3Radians(properties) {
+    return new BABYLON.Vector3(degreeToRadians(properties.x), degreeToRadians(properties.y), degreeToRadians(properties.z));
+}
 /**
  * @hidden
  * Create object by XYZ values or create all zero object.

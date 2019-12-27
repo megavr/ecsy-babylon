@@ -2,12 +2,11 @@ import { materialColorHex } from "../utils/materialUtils";
 /**
  * @example
  * ```
- * entity.addComponent(Material, {
- *    sceneName: "Scene",
+ * entity.addComponent(Mesh).addComponent(Material, {
  *    alpha: 0.7,
  *    color: { diffuse: "#E74C3C" }
  * });
- * entity.addComponent(Material, {
+ * entity.addComponent(Mesh).addComponent(Material, {
  *    texture: {
  *      diffuse: { url: "PATH_TO_TEXTURE", uScale: 4, vScale: 4 }
  *    }

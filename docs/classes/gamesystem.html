@@ -3,7 +3,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>GameSystem | ecsy-babylon@0.0.8</title>
+	<title>GameSystem | ecsy-babylon@0.0.9</title>
 	<meta name="description" content="">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" href="../assets/css/main.css">
@@ -22,7 +22,7 @@
 						<li class="state loading">Preparing search index...</li>
 						<li class="state failure">The search index is not available</li>
 					</ul>
-					<a href="../index.html" class="title">ecsy-babylon@0.0.8</a>
+					<a href="../index.html" class="title">ecsy-babylon@0.0.9</a>
 				</div>
 				<div class="table-cell" id="tsd-widgets">
 					<div id="tsd-filter">
@@ -93,10 +93,9 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Properties</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="gamesystem.html#_activescenename" class="tsd-kind-icon">_active<wbr>Scene<wbr>Name</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="gamesystem.html#_activescene" class="tsd-kind-icon">_active<wbr>Scene</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="gamesystem.html#_assetmanagers" class="tsd-kind-icon">_asset<wbr>Managers</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="gamesystem.html#_engine" class="tsd-kind-icon">_engine</a></li>
-								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="gamesystem.html#_scenes" class="tsd-kind-icon">_scenes</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="gamesystem.html#enabled" class="tsd-kind-icon">enabled</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#onsceneswitched" class="tsd-kind-icon">on<wbr>Scene<wbr>Switched</a></li>
 							</ul>
@@ -104,19 +103,19 @@
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Accessors</h3>
 							<ul class="tsd-index-list">
-								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#activescenename" class="tsd-kind-icon">active<wbr>Scene<wbr>Name</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#activescene" class="tsd-kind-icon">active<wbr>Scene</a></li>
 								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#renderingcanvas" class="tsd-kind-icon">rendering<wbr>Canvas</a></li>
+								<li class="tsd-kind-get-signature tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#scenes" class="tsd-kind-icon">scenes</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section tsd-is-external">
 							<h3>Methods</h3>
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="gamesystem.html#_render" class="tsd-kind-icon">_render</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#addscene" class="tsd-kind-icon">add<wbr>Scene</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="gamesystem.html#_updatecolor" class="tsd-kind-icon">_update<wbr>Color</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external"><a href="gamesystem.html#_updatescene" class="tsd-kind-icon">_update<wbr>Scene</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#getassetmanager" class="tsd-kind-icon">get<wbr>Asset<wbr>Manager</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#getscene" class="tsd-kind-icon">get<wbr>Scene</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="gamesystem.html#play" class="tsd-kind-icon">play</a></li>
-								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#removescene" class="tsd-kind-icon">remove<wbr>Scene</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#start" class="tsd-kind-icon">start</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external"><a href="gamesystem.html#stop" class="tsd-kind-icon">stop</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-external"><a href="gamesystem.html#switchscene" class="tsd-kind-icon">switch<wbr>Scene</a></li>
@@ -128,12 +127,12 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Properties</h2>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="_activescenename" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _active<wbr>Scene<wbr>Name</h3>
-					<div class="tsd-signature tsd-kind-icon">_active<wbr>Scene<wbr>Name<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">String</span></div>
+					<a name="_activescene" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _active<wbr>Scene</h3>
+					<div class="tsd-signature tsd-kind-icon">_active<wbr>Scene<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Scene</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L21">src/systems/GameSystem.ts:21</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L25">src/systems/GameSystem.ts:25</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -143,12 +142,12 @@
 					<div class="tsd-signature tsd-kind-icon">_asset<wbr>Managers<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">AssetsManager</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map&lt;String, BABYLON.AssetsManager&gt;()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L16">src/systems/GameSystem.ts:16</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L30">src/systems/GameSystem.ts:30</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
 						<div class="lead">
-							<p>&lt;Scene Name, BABYLON.AssetsManager&gt;</p>
+							<p>&lt;Scene UID, BABYLON.AssetsManager&gt;</p>
 						</div>
 					</div>
 				</section>
@@ -158,24 +157,9 @@
 					<div class="tsd-signature tsd-kind-icon">_engine<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Engine</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L8">src/systems/GameSystem.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L19">src/systems/GameSystem.ts:19</a></li>
 						</ul>
 					</aside>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-					<a name="_scenes" class="tsd-anchor"></a>
-					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _scenes</h3>
-					<div class="tsd-signature tsd-kind-icon">_scenes<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Map</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">, </span><span class="tsd-signature-type">Scene</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new Map&lt;String, BABYLON.Scene&gt;()</span></div>
-					<aside class="tsd-sources">
-						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L13">src/systems/GameSystem.ts:13</a></li>
-						</ul>
-					</aside>
-					<div class="tsd-comment tsd-typography">
-						<div class="lead">
-							<p>&lt;Scene Name, BABYLON.Scene&gt;</p>
-						</div>
-					</div>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 					<a name="enabled" class="tsd-anchor"></a>
@@ -199,7 +183,7 @@
 					<div class="tsd-signature tsd-kind-icon">on<wbr>Scene<wbr>Switched<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Observable</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">Scene</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol"> =&nbsp;new BABYLON.Observable&lt;BABYLON.Scene&gt;()</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L19">src/systems/GameSystem.ts:19</a></li>
+							<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L33">src/systems/GameSystem.ts:33</a></li>
 						</ul>
 					</aside>
 					<div class="tsd-comment tsd-typography">
@@ -212,24 +196,24 @@
 			<section class="tsd-panel-group tsd-member-group tsd-is-external">
 				<h2>Accessors</h2>
 				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
-					<a name="activescenename" class="tsd-anchor"></a>
-					<h3>active<wbr>Scene<wbr>Name</h3>
+					<a name="activescene" class="tsd-anchor"></a>
+					<h3>active<wbr>Scene</h3>
 					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> activeSceneName<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span></li>
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> activeScene<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Scene</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L23">src/systems/GameSystem.ts:23</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L27">src/systems/GameSystem.ts:27</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get name of active scene.</p>
+									<p>Get active scene.</p>
 								</div>
 							</div>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">String</span></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Scene</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -243,7 +227,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L10">src/systems/GameSystem.ts:10</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L21">src/systems/GameSystem.ts:21</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -255,6 +239,28 @@
 								<span class="tsd-signature-symbol"> | </span>
 								<span class="tsd-signature-type">HTMLCanvasElement</span>
 							</h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
+					<a name="scenes" class="tsd-anchor"></a>
+					<h3>scenes</h3>
+					<ul class="tsd-signatures tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon"><span class="tsd-signature-symbol">get</span> scenes<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Scene</span><span class="tsd-signature-symbol">[]</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L23">src/systems/GameSystem.ts:23</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Get all scenes in engine.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Scene</span><span class="tsd-signature-symbol">[]</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -271,52 +277,59 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L105">src/systems/GameSystem.ts:105</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L129">src/systems/GameSystem.ts:129</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
-					<a name="addscene" class="tsd-anchor"></a>
-					<h3>add<wbr>Scene</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">add<wbr>Scene<span class="tsd-signature-symbol">(</span>sceneName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span>, options<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">BABYLON.SceneOptions</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="gamesystem.html" class="tsd-signature-type">GameSystem</a></li>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+					<a name="_updatecolor" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _update<wbr>Color</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">_update<wbr>Color<span class="tsd-signature-symbol">(</span>scene<span class="tsd-signature-symbol">: </span><a href="scene.html" class="tsd-signature-type">Scene</a>, color<span class="tsd-signature-symbol">: </span><a href="../interfaces/scenecolorproperties.html" class="tsd-signature-type">SceneColorProperties</a><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L50">src/systems/GameSystem.ts:50</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L80">src/systems/GameSystem.ts:80</a></li>
 								</ul>
 							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Add a new scene with a name.</p>
-								</div>
-								<dl class="tsd-comment-tags">
-									<dt>see</dt>
-									<dd><p><a href="https://doc.babylonjs.com/api/classes/babylon.scene#constructor">https://doc.babylonjs.com/api/classes/babylon.scene#constructor</a></p>
-									</dd>
-								</dl>
-							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>sceneName: <span class="tsd-signature-type">String</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Readable name to be used to switch or remove scene in the system</p>
-									</div>
+									<h5>scene: <a href="scene.html" class="tsd-signature-type">Scene</a></h5>
 								</li>
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> options: <span class="tsd-signature-type">BABYLON.SceneOptions</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>@see <a href="https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions">https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions</a></p>
-									</div>
+									<h5>color: <a href="../interfaces/scenecolorproperties.html" class="tsd-signature-type">SceneColorProperties</a></h5>
 								</li>
 							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="gamesystem.html" class="tsd-signature-type">GameSystem</a></h4>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+					<a name="_updatescene" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> _update<wbr>Scene</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+						<li class="tsd-signature tsd-kind-icon">_update<wbr>Scene<span class="tsd-signature-symbol">(</span>entity<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Entity</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L63">src/systems/GameSystem.ts:63</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>entity: <span class="tsd-signature-type">Entity</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -324,61 +337,30 @@
 					<a name="getassetmanager" class="tsd-anchor"></a>
 					<h3>get<wbr>Asset<wbr>Manager</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Asset<wbr>Manager<span class="tsd-signature-symbol">(</span>sceneName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AssetsManager</span></li>
+						<li class="tsd-signature tsd-kind-icon">get<wbr>Asset<wbr>Manager<span class="tsd-signature-symbol">(</span>scene<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">Entity</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">AssetsManager</span></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L97">src/systems/GameSystem.ts:97</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L121">src/systems/GameSystem.ts:121</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Get an asset manager by provided scene name or asset manager in active scene if not found.</p>
+									<p>Get scene AssetManager or return AssetManager in active scene.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sceneName: <span class="tsd-signature-type">String</span></h5>
+									<h5><span class="tsd-flag ts-flagOptional">Optional</span> scene: <span class="tsd-signature-type">Entity</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Name of the scene</p>
+										<p>Scene entity</p>
 									</div>
 								</li>
 							</ul>
 							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">AssetsManager</span></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
-					<a name="getscene" class="tsd-anchor"></a>
-					<h3>get<wbr>Scene</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">get<wbr>Scene<span class="tsd-signature-symbol">(</span>sceneName<span class="tsd-signature-symbol">?: </span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Scene</span></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L85">src/systems/GameSystem.ts:85</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Get a scene by provided name or active scene if not found.</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5><span class="tsd-flag ts-flagOptional">Optional</span> sceneName: <span class="tsd-signature-type">String</span></h5>
-									<div class="tsd-comment tsd-typography">
-										<p>Name of the scene</p>
-									</div>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">Scene</span></h4>
 						</li>
 					</ul>
 				</section>
@@ -406,34 +388,6 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
-					<a name="removescene" class="tsd-anchor"></a>
-					<h3>remove<wbr>Scene</h3>
-					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">remove<wbr>Scene<span class="tsd-signature-symbol">(</span>sceneName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="gamesystem.html" class="tsd-signature-type">GameSystem</a></li>
-					</ul>
-					<ul class="tsd-descriptions">
-						<li class="tsd-description">
-							<aside class="tsd-sources">
-								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L64">src/systems/GameSystem.ts:64</a></li>
-								</ul>
-							</aside>
-							<div class="tsd-comment tsd-typography">
-								<div class="lead">
-									<p>Remove an inactive scene by given name</p>
-								</div>
-							</div>
-							<h4 class="tsd-parameters-title">Parameters</h4>
-							<ul class="tsd-parameters">
-								<li>
-									<h5>sceneName: <span class="tsd-signature-type">String</span></h5>
-								</li>
-							</ul>
-							<h4 class="tsd-returns-title">Returns <a href="gamesystem.html" class="tsd-signature-type">GameSystem</a></h4>
-						</li>
-					</ul>
-				</section>
-				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-external">
 					<a name="start" class="tsd-anchor"></a>
 					<h3>start</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
@@ -443,7 +397,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L38">src/systems/GameSystem.ts:38</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L101">src/systems/GameSystem.ts:101</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -514,26 +468,26 @@
 					<a name="switchscene" class="tsd-anchor"></a>
 					<h3>switch<wbr>Scene</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-external">
-						<li class="tsd-signature tsd-kind-icon">switch<wbr>Scene<span class="tsd-signature-symbol">(</span>sceneName<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">String</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="gamesystem.html" class="tsd-signature-type">GameSystem</a></li>
+						<li class="tsd-signature tsd-kind-icon">switch<wbr>Scene<span class="tsd-signature-symbol">(</span>scene<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">Entity</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="gamesystem.html" class="tsd-signature-type">GameSystem</a></li>
 					</ul>
 					<ul class="tsd-descriptions">
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/afa5609/src/systems/GameSystem.ts#L73">src/systems/GameSystem.ts:73</a></li>
+									<li>Defined in <a href="https://github.com/megavr/ecsy-babylon/blob/8a546a8/src/systems/GameSystem.ts#L111">src/systems/GameSystem.ts:111</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Switch to a scene by given scene name.</p>
+									<p>Switch to a scene by given scene entity.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
 							<ul class="tsd-parameters">
 								<li>
-									<h5>sceneName: <span class="tsd-signature-type">String</span></h5>
+									<h5>scene: <span class="tsd-signature-type">Entity</span></h5>
 									<div class="tsd-comment tsd-typography">
-										<p>Name of scene</p>
+										<p>Scene entity</p>
 									</div>
 								</li>
 							</ul>
@@ -559,16 +513,13 @@
 						<a href="gamesystem.html" class="tsd-kind-icon">Game<wbr>System</a>
 						<ul>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="gamesystem.html#_activescenename" class="tsd-kind-icon">_active<wbr>Scene<wbr>Name</a>
+								<a href="gamesystem.html#_activescene" class="tsd-kind-icon">_active<wbr>Scene</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="gamesystem.html#_assetmanagers" class="tsd-kind-icon">_asset<wbr>Managers</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="gamesystem.html#_engine" class="tsd-kind-icon">_engine</a>
-							</li>
-							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private tsd-is-external">
-								<a href="gamesystem.html#_scenes" class="tsd-kind-icon">_scenes</a>
 							</li>
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="gamesystem.html#enabled" class="tsd-kind-icon">enabled</a>
@@ -577,28 +528,28 @@
 								<a href="gamesystem.html#onsceneswitched" class="tsd-kind-icon">on<wbr>Scene<wbr>Switched</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
-								<a href="gamesystem.html#activescenename" class="tsd-kind-icon">active<wbr>Scene<wbr>Name</a>
+								<a href="gamesystem.html#activescene" class="tsd-kind-icon">active<wbr>Scene</a>
 							</li>
 							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
 								<a href="gamesystem.html#renderingcanvas" class="tsd-kind-icon">rendering<wbr>Canvas</a>
 							</li>
+							<li class=" tsd-kind-get-signature tsd-parent-kind-class tsd-is-external">
+								<a href="gamesystem.html#scenes" class="tsd-kind-icon">scenes</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
 								<a href="gamesystem.html#_render" class="tsd-kind-icon">_render</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
-								<a href="gamesystem.html#addscene" class="tsd-kind-icon">add<wbr>Scene</a>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+								<a href="gamesystem.html#_updatecolor" class="tsd-kind-icon">_update<wbr>Color</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private tsd-is-external">
+								<a href="gamesystem.html#_updatescene" class="tsd-kind-icon">_update<wbr>Scene</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="gamesystem.html#getassetmanager" class="tsd-kind-icon">get<wbr>Asset<wbr>Manager</a>
 							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
-								<a href="gamesystem.html#getscene" class="tsd-kind-icon">get<wbr>Scene</a>
-							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-inherited tsd-is-external">
 								<a href="gamesystem.html#play" class="tsd-kind-icon">play</a>
-							</li>
-							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
-								<a href="gamesystem.html#removescene" class="tsd-kind-icon">remove<wbr>Scene</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-external">
 								<a href="gamesystem.html#start" class="tsd-kind-icon">start</a>
