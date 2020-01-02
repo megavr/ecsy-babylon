@@ -17,6 +17,7 @@ export declare class MaterialSystem extends System {
     queries: any;
     /** @hidden */
     execute(): void;
+    private _isUrlMesh;
     private _updateMaterial;
     private _updateColor;
 }

@@ -1,7 +1,8 @@
 import * as BABYLON from "@babylonjs/core";
 import { Entity, System } from "ecsy";
 import { Input } from "../components/index";
-import { getScene, getScenes, getGameSystem } from "../utils/gameUtils";
+import { getScene, getScenes, getSystem } from "../utils/gameUtils";
+import { GameSystem } from "./GameSystem";
 
 /** System for Input component */
 export class InputSystem extends System {
@@ -16,7 +17,7 @@ export class InputSystem extends System {
   private _input: Input;
 
   init() {
-    getGameSystem(this).onSceneSwitched.add(scene => this._updateOnKey(scene));
+    getSystem(this, GameSystem).onSceneSwitched.add(scene => this._updateOnKey(scene));
     this._onKey = this._onKey.bind(this);
   }
 

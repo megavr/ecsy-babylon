@@ -1,6 +1,6 @@
 import * as BABYLON from "@babylonjs/core";
 import { System, Entity } from "ecsy";
-import { Material, Mesh } from "../components/index";
+import { Material, Mesh, MeshTypes } from "../components/index";
 import { MaterialColorProperties } from "../components/types/index";
 import { getScene, getAssetManager } from "../utils/gameUtils";
 import { updateObjectValue, disposeObject } from "../utils/objectUtils";
@@ -18,20 +18,29 @@ export class MaterialSystem extends System {
   /** @hidden */
   execute() {
     this.queries.meshMaterial.added.forEach((entity: Entity) => {
-      let material = entity.getComponent(Material);
-      material.object = new BABYLON.StandardMaterial(material.color!.diffuse!, getScene(this, material.scene));
-      this._updateMaterial(material);
-      entity.getComponent(Mesh).object.material = material.object;
+      if (!this._isUrlMesh(entity)) {
+        let material = entity.getComponent(Material);
+        material.object = new BABYLON.StandardMaterial(material.color!.diffuse!, getScene(this, material.scene));
+        this._updateMaterial(material);
+        let mesh = entity.getComponent(Mesh);
+        mesh.object.material = material.object;
+      }
     });
 
     this.queries.meshMaterial.changed.forEach((entity: Entity) => {
-      this._updateMaterial(entity.getComponent(Material));
+      this._isUrlMesh(entity) || this._updateMaterial(entity.getComponent(Material));
     });
 
     this.queries.meshMaterial.removed.forEach((entity: Entity) => {
-      disposeObject(entity.getComponent(Material));
-      entity.getComponent(Mesh).object.material = null;
+      if (!this._isUrlMesh(entity)) {
+        disposeObject(entity.getComponent(Material));
+        entity.getComponent(Mesh).object.material = null;
+      }
     });
+  }
+
+  private _isUrlMesh(entity: Entity): boolean {
+    return entity.getComponent(Mesh).type === MeshTypes.Url;
   }
 
   private _updateMaterial(material: Material) {

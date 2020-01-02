@@ -1,16 +1,12 @@
 import * as BABYLON from "@babylonjs/core";
-import { System, Entity } from "ecsy";
+import { System, Entity, SystemConstructor } from "ecsy";
 import { getWorld } from "./worldUtils";
 import { GameSystem } from "../systems/GameSystem";
 import { Scene } from "../components/Scene";
 
-/**
- * @hidden
- * Get runtime GameSystem instance. 
- * @param system A registered ecsy System class
- */
-export function getGameSystem(system: System): GameSystem {
-  return getWorld(system).getSystem(GameSystem) as GameSystem;
+/** @hidden */
+export function getSystem<T extends System>(self: System, target: SystemConstructor<T>): T {
+  return getWorld(self).getSystem(target) as T;
 }
 
 /**
@@ -19,7 +15,7 @@ export function getGameSystem(system: System): GameSystem {
  * @param system A registered ecsy System class
  */
 export function getRenderingCanvas(system: System): HTMLCanvasElement {
-  return getGameSystem(system).renderingCanvas as HTMLCanvasElement;
+  return getSystem(system, GameSystem).renderingCanvas as HTMLCanvasElement;
 }
 
 /**
@@ -28,7 +24,7 @@ export function getRenderingCanvas(system: System): HTMLCanvasElement {
  * @param system A registered ecsy System class
  */
 export function getScenes(system: System): BABYLON.Scene[] {
-  return getGameSystem(system).scenes;
+  return getSystem(system, GameSystem).scenes;
 }
 
 /**
@@ -40,7 +36,7 @@ export function getScene(system: System, scene?: Entity): BABYLON.Scene {
   if (scene) {
     return scene.getComponent(Scene).object;
   } else {
-    return getGameSystem(system).activeScene;
+    return getSystem(system, GameSystem).activeScene;
   }
 }
 
@@ -50,5 +46,5 @@ export function getScene(system: System, scene?: Entity): BABYLON.Scene {
  * @param scene Scene entity
  */
 export function getAssetManager(system: System, scene?: Entity): BABYLON.AssetsManager {
-  return getGameSystem(system).getAssetManager(scene);
+  return getSystem(system, GameSystem).getAssetManager(scene);
 }

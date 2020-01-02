@@ -8,10 +8,6 @@
      * ```
      */
     class Scene {
-        constructor() {
-            /** @see https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions */
-            this.options = {};
-        }
     }
 
     /**
@@ -92,6 +88,7 @@
         MeshTypes["Plane"] = "Plane";
         MeshTypes["Sphere"] = "Sphere";
         MeshTypes["Ground"] = "Ground";
+        MeshTypes["Url"] = "Url";
     })(MeshTypes || (MeshTypes = {}));
     /**
      * @example
@@ -99,14 +96,13 @@
      * entity.addComponent(Mesh);
      * entity.addComponent(Mesh, { type: MeshTypes.Ground, options: { width: 2, height: 2 } });
      * entity.addComponent(Mesh, { type: MeshTypes.Sphere, options: { diameter: 2 } });
+     * entity.addComponent(Mesh, { type: MeshTypes.Url, url: "PATH_TO_MESH" });
      * ```
      */
     class Mesh {
         constructor() {
             /** @default "Box" */
             this.type = MeshTypes.Box;
-            /** @default {} */
-            this.options = {};
         }
     }
 
@@ -323,23 +319,6 @@
         }
     }
 
-    var AssetTypes;
-    (function (AssetTypes) {
-        AssetTypes["Babylon"] = "Babylon";
-    })(AssetTypes || (AssetTypes = {}));
-    /**
-     * @example
-     * ```
-     * entity.addComponent(Asset, { url: "PATH_TO_ASSET" });
-     * ```
-     */
-    class Asset {
-        constructor() {
-            /** @default "Babylon" */
-            this.type = AssetTypes.Babylon;
-        }
-    }
-
     var InputTypes;
     (function (InputTypes) {
         InputTypes["Keyboard"] = "Keyboard";
@@ -495,13 +474,9 @@
         transforms: { components: [Transform], listen: { changed: [Transform] } },
     };
 
-    /**
-     * @hidden
-     * Get runtime GameSystem instance.
-     * @param system A registered ecsy System class
-     */
-    function getGameSystem(system) {
-        return getWorld(system).getSystem(GameSystem);
+    /** @hidden */
+    function getSystem(self, target) {
+        return getWorld(self).getSystem(target);
     }
     /**
      * @hidden
@@ -509,7 +484,7 @@
      * @param system A registered ecsy System class
      */
     function getRenderingCanvas(system) {
-        return getGameSystem(system).renderingCanvas;
+        return getSystem(system, GameSystem).renderingCanvas;
     }
     /**
      * @hidden
@@ -517,7 +492,7 @@
      * @param system A registered ecsy System class
      */
     function getScenes(system) {
-        return getGameSystem(system).scenes;
+        return getSystem(system, GameSystem).scenes;
     }
     /**
      * Get a scene or return active scene.
@@ -529,7 +504,7 @@
             return scene.getComponent(Scene).object;
         }
         else {
-            return getGameSystem(system).activeScene;
+            return getSystem(system, GameSystem).activeScene;
         }
     }
     /**
@@ -538,7 +513,7 @@
      * @param scene Scene entity
      */
     function getAssetManager(system, scene) {
-        return getGameSystem(system).getAssetManager(scene);
+        return getSystem(system, GameSystem).getAssetManager(scene);
     }
 
     /** System for Camera component */
@@ -550,7 +525,7 @@
         }
         /** @hidden */
         init() {
-            getGameSystem(this).onSceneSwitched.add(scene => this._updateControl(scene));
+            getSystem(this, GameSystem).onSceneSwitched.add(scene => this._updateControl(scene));
             this._pointerLock = this._pointerLock.bind(this);
         }
         /** @hidden */
@@ -597,19 +572,60 @@
         /** @hidden */
         execute() {
             this.queries.mesh.added.forEach((entity) => {
-                let mesh = entity.getComponent(Mesh);
-                mesh.object = BABYLON.MeshBuilder[`Create${mesh.type}`].call(this, mesh.type, mesh.options, getScene(this, mesh.scene));
-                updateObjectsTransform(entity);
+                this._updateMesh(entity, entity.getComponent(Mesh));
             });
             this.queries.mesh.changed.forEach((entity) => {
-                let mesh = entity.getMutableComponent(Mesh);
-                for (let prop in mesh) {
-                    updateObjectValue(mesh, prop);
-                }
+                disposeObject(entity.getComponent(Mesh));
+                this._updateMesh(entity, entity.getComponent(Mesh));
             });
             this.queries.mesh.removed.forEach((entity) => {
                 disposeObject(entity.getComponent(Mesh));
             });
+        }
+        _updateMesh(entity, mesh) {
+            switch (mesh.type) {
+                case MeshTypes.Url:
+                    mesh.url && BABYLON.SceneLoader.IsPluginForExtensionAvailable(this._fileExt(mesh.url)) ?
+                        this._loadUrlMesh(entity, mesh, mesh.url) :
+                        this._unsupportedMesh(entity, mesh);
+                    break;
+                default:
+                    mesh.object = BABYLON.MeshBuilder[`Create${mesh.type}`].call(this, mesh.type, mesh.options ? mesh.options : {}, getScene(this, mesh.scene));
+                    this._updateMeshValue(mesh);
+                    updateObjectsTransform(entity);
+                    break;
+            }
+        }
+        _fileExt(url) {
+            return url.substring(url.lastIndexOf("."), url.length);
+        }
+        _loadUrlMesh(entity, mesh, url) {
+            let assetManager = getAssetManager(this, mesh.scene);
+            let filenameIndex = url.lastIndexOf("/") + 1;
+            let task = assetManager.addMeshTask(mesh.type, "", url.substring(0, filenameIndex), url.substring(filenameIndex, url.length));
+            task.onSuccess = (task) => {
+                mesh.object = task.loadedMeshes[0];
+                this._updateMeshValue(mesh);
+                updateObjectsTransform(entity);
+            };
+            task.onError = () => { this._unsupportedMesh(entity, mesh); };
+            assetManager.load();
+            assetManager.reset();
+        }
+        _updateMeshValue(mesh) {
+            for (let prop in mesh) {
+                updateObjectValue(mesh, prop);
+            }
+        }
+        _unsupportedMesh(entity, mesh) {
+            let scene = getScene(this, mesh.scene);
+            mesh.object = BABYLON.MeshBuilder.CreatePlane("", {}, scene);
+            let material = new BABYLON.StandardMaterial("", scene);
+            const errorData = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABAAgMAAADXB5lNAAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAMUExURSgoKCgoKCgoKO88OVVpm6AAAAACdFJOU/LlgHlY8AAAAP9JREFUOMvN1MFtwzAMBVB3nU7RcQsSKDcI96EPvrPAZ0nZkRUZKXKMb36xPr+UxMvX8nB9LDRdy+fj/ff7gES4bKYUBPYDdLOQcEgDY1cx6AqIjUADQFYvUNohkAFBEbFP+Y1MRAPboU1JOKdUj8rgp1BLWo+jaQutQUdotDuqMS+eRxblzM8F3kHDkIAD8kNxcBbukCuidmADaILcITOheST/g2wDVIYEX+Gckj2q7NkjmyYMTRlU4K/+HJQNEWttGDtIwZZffgcH8rkJgtFBC2h44oYCHeCWoRztUBugQP0E15pCP32JyzT2AiZT0zyL2gvd4T3+YpeXwfy6+ANZO9QlB5svlAAAAABJRU5ErkJggg==";
+            // BABYLON.Texture.BILINEAR_SAMPLINGMODE = 2
+            material.diffuseTexture = new BABYLON.Texture("data:errorData", scene, false, false, 2, null, null, errorData, true);
+            mesh.object.material = material;
+            updateObjectsTransform(entity);
         }
     }
     /** @hidden */
@@ -680,18 +696,26 @@
         /** @hidden */
         execute() {
             this.queries.meshMaterial.added.forEach((entity) => {
-                let material = entity.getComponent(Material);
-                material.object = new BABYLON.StandardMaterial(material.color.diffuse, getScene(this, material.scene));
-                this._updateMaterial(material);
-                entity.getComponent(Mesh).object.material = material.object;
+                if (!this._isUrlMesh(entity)) {
+                    let material = entity.getComponent(Material);
+                    material.object = new BABYLON.StandardMaterial(material.color.diffuse, getScene(this, material.scene));
+                    this._updateMaterial(material);
+                    let mesh = entity.getComponent(Mesh);
+                    mesh.object.material = material.object;
+                }
             });
             this.queries.meshMaterial.changed.forEach((entity) => {
-                this._updateMaterial(entity.getComponent(Material));
+                this._isUrlMesh(entity) || this._updateMaterial(entity.getComponent(Material));
             });
             this.queries.meshMaterial.removed.forEach((entity) => {
-                disposeObject(entity.getComponent(Material));
-                entity.getComponent(Mesh).object.material = null;
+                if (!this._isUrlMesh(entity)) {
+                    disposeObject(entity.getComponent(Material));
+                    entity.getComponent(Mesh).object.material = null;
+                }
             });
+        }
+        _isUrlMesh(entity) {
+            return entity.getComponent(Mesh).type === MeshTypes.Url;
         }
         _updateMaterial(material) {
             for (let prop in material) {
@@ -799,37 +823,6 @@
         particle: { components: [Particle], listen: { added: true, removed: true, changed: [Particle] } },
     };
 
-    /** System for Asset component */
-    class AssetSystem extends ecsy.System {
-        /** @hidden */
-        execute() {
-            this.queries.asset.added.forEach((entity) => {
-                let asset = entity.getComponent(Asset);
-                let assetManager = getAssetManager(this, asset.scene);
-                switch (asset.type) {
-                    default: {
-                        let filenameIndex = asset.url.lastIndexOf("/") + 1;
-                        let task = assetManager.addMeshTask(AssetTypes.Babylon, "", asset.url.substring(0, filenameIndex), asset.url.substring(filenameIndex, asset.url.length));
-                        task.onSuccess = (task) => {
-                            asset.object = task.loadedMeshes[0];
-                            updateObjectsTransform(entity);
-                        };
-                        break;
-                    }
-                }
-                assetManager.load();
-                assetManager.reset();
-            });
-            this.queries.asset.removed.forEach((entity) => {
-                disposeObject(entity.getComponent(Asset));
-            });
-        }
-    }
-    /** @hidden */
-    AssetSystem.queries = {
-        asset: { components: [Asset], listen: { added: true, removed: true } },
-    };
-
     /** System for Input component */
     class InputSystem extends ecsy.System {
         constructor() {
@@ -837,7 +830,7 @@
             this._inputs = new Map();
         }
         init() {
-            getGameSystem(this).onSceneSwitched.add(scene => this._updateOnKey(scene));
+            getSystem(this, GameSystem).onSceneSwitched.add(scene => this._updateOnKey(scene));
             this._onKey = this._onKey.bind(this);
         }
         /** @hidden */
@@ -898,7 +891,6 @@
         LightSystem: LightSystem,
         MaterialSystem: MaterialSystem,
         ParticleSystem: ParticleSystem,
-        AssetSystem: AssetSystem,
         InputSystem: InputSystem,
         Scene: Scene,
         Transform: Transform,
@@ -910,8 +902,6 @@
         Material: Material,
         get ParticleTypes () { return ParticleTypes; },
         Particle: Particle,
-        get AssetTypes () { return AssetTypes; },
-        Asset: Asset,
         get InputTypes () { return InputTypes; },
         Input: Input,
         getScene: getScene,

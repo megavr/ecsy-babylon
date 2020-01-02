@@ -9,9 +9,8 @@ import { ColorComponent, SceneColorProperties, TextureComponent, SceneTexturePro
  */
 export class Scene implements ColorComponent<SceneColorProperties>, TextureComponent<SceneTextureProperties>{
   object: BABYLON.Scene;
-  ambientColor?: String;
   /** @see https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions */
-  options: BABYLON.SceneOptions = {};
+  options?: BABYLON.SceneOptions;
   color?: SceneColorProperties;
   texture?: SceneTextureProperties;
 }

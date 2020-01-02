@@ -1,12 +1,7 @@
 import * as BABYLON from "@babylonjs/core";
-import { System, Entity } from "ecsy";
-import { GameSystem } from "../systems/GameSystem";
-/**
- * @hidden
- * Get runtime GameSystem instance.
- * @param system A registered ecsy System class
- */
-export declare function getGameSystem(system: System): GameSystem;
+import { System, Entity, SystemConstructor } from "ecsy";
+/** @hidden */
+export declare function getSystem<T extends System>(self: System, target: SystemConstructor<T>): T;
 /**
  * @hidden
  * Get canvas used for rendering.

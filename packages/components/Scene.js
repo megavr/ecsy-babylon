@@ -5,8 +5,4 @@
  * ```
  */
 export class Scene {
-    constructor() {
-        /** @see https://doc.babylonjs.com/api/interfaces/babylon.sceneoptions */
-        this.options = {};
-    }
 }

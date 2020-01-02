@@ -1,8 +1,9 @@
 import * as BABYLON from "@babylonjs/core";
 import { System } from "ecsy";
 import { Camera } from "../components/index";
-import { getScene, getRenderingCanvas, getGameSystem, getScenes } from "../utils/gameUtils";
+import { getScene, getRenderingCanvas, getSystem, getScenes } from "../utils/gameUtils";
 import { updateObjectsTransform, disposeObject } from "../utils/objectUtils";
+import { GameSystem } from "./GameSystem";
 /** System for Camera component */
 export class CameraSystem extends System {
     constructor() {
@@ -12,7 +13,7 @@ export class CameraSystem extends System {
     }
     /** @hidden */
     init() {
-        getGameSystem(this).onSceneSwitched.add(scene => this._updateControl(scene));
+        getSystem(this, GameSystem).onSceneSwitched.add(scene => this._updateControl(scene));
         this._pointerLock = this._pointerLock.bind(this);
     }
     /** @hidden */
